@@ -6,6 +6,13 @@ import App from './App.tsx';
 
 const queryClient = new QueryClient();
 
+//개발 모드일때만 사용하겠다
+if (process.env.NODE_ENV === 'development') {
+  const { worker } = require('./mocks/browser')
+  worker.start()
+}
+
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
     <ReactQueryDevtools initialIsOpen={false} />
