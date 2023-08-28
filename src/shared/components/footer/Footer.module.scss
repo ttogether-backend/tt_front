@@ -1,0 +1,64 @@
+footer {
+    background: #FAFAFB;
+    .f_top {
+        height: 230px;
+        padding-top: 54px;
+        color: #43444A;
+        display: flex;
+        justify-content: space-between;
+        .ft_left {
+            .ft_logo {margin-bottom: 16px;}
+            p {font-size: 15px; line-height: 1.4;}
+            .sns_list {
+                margin-top: 20px;
+                display: flex;
+                gap: 16px;
+                a {
+                    width: 26px;height:26px;
+                    display: block;
+                    overflow: hidden;
+                    text-indent: -999em;
+                    &.blog {background: url("/images/icon/icon_ft_blog.png") center center no-repeat;}
+                    &.instagram {background: url("/images/icon/icon_ft_instagram.png") center center no-repeat;}
+                    &.youtube {background: url("/images/icon/icon_ft_youtube.png") center center no-repeat;}
+                    &.facebook {background: url("/images/icon/icon_ft_facebook.png") center center no-repeat;}
+                }
+            }
+        }
+        .ft_right {
+            display: flex;
+            .item {
+                width: 160px;
+                .tit {
+                    color: #1B1C21;font-weight: 800;font-size: 16px;margin-bottom: 24px;
+                    .contact {width: 16px;height: 16px;background: url("/images/icon/icon_contact.png") center center no-repeat;display: inline-block; margin-left: 8px;}
+                }
+                ul {
+                    li {
+                        margin-bottom: 12px;
+                        a{font-size: 15px;}
+                        .term {color: #64C243;font-weight: 700;}
+                    }
+                }
+                &:last-child {width: auto;
+                    .tit {display: flex;}
+                }
+                .btn_contact {background: #64C243;color: #fff;margin-bottom: 12px;display: block;width: 240px;height: 48px;border-radius: 12px;font-size: 18px;font-weight: 600;text-align: center;line-height: 48px;}
+            }
+        }
+    }
+    .f_bottom {
+        height: 130px;
+        padding-top: 24px;
+        border-top: 1px solid #eee;
+        .fb_info {
+            p {
+                color: #777;
+                line-height: 1.3;
+                font-size: 14px;
+                span {margin-right: 12px;}
+                &.copy {color: #C5C5C5;}
+            }
+        }
+    }
+}
