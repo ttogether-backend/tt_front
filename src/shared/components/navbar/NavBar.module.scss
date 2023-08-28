@@ -1,0 +1,31 @@
+.header {
+    width:100%;
+    min-width: 1392px;
+    height:128px;
+    z-index: 999;
+    transition: .3s ease;
+    border-bottom: 1px solid #eee;
+    .hd_top {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        height: 76px;
+        padding-top: 24px;
+        padding-bottom: 4px;
+        .hd_left{
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            .logo {
+                display: block;
+                background: url("/images/common/logo.svg") center center no-repeat;
+                width: 165px;
+                height: 32px;
+                box-sizing: border-box;
+                overflow: hidden;
+                text-indent: -999em;
+                .img {}
+            }
+        }
+    }
+}

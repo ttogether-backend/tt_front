@@ -1,0 +1,21 @@
+.nav_user_wrap {
+    .nav_user {
+        display: flex;
+        ul {
+            display: flex;
+            align-items: center;
+            margin-right: 36px;
+            li {
+                a {display: block;width: 25px;height: 25px;text-indent: -999em;overflow: hidden;margin-left: 24px;}
+                .calendar {background: url("/images/icon/icon_nav_cal.png") center center no-repeat;margin-left:0;}
+                .notification {background: url("/images/icon/icon_nav_bell.png") center center no-repeat;}
+                .chat {background: url("/images/icon/icon_nav_chat.png") center center no-repeat;}
+                .user {background: url("/images/common/img_user_profile_null.png") center center no-repeat;border-radius: 50%;width: 32px;height: 32px;margin-left:36px;}
+            }
+        }
+    }
+    .btn_group {
+        display: flex;
+        gap: 16px;
+    }
+}
