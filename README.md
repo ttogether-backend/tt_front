@@ -26,10 +26,17 @@
   - [ ] recoil
   - [ ] react-router-dom
 
+# Add Dependency
+```shell
+$ yarn add package-name@1.2.3
+$ yarn
+```
 # Run Server
 
 ```shell
-$ yarn set version 3.6.1 # .yarn 폴더 없는 경우
+# .yarn 폴더 없는 경우
+# .yarnrc.yml 파일 삭제 후 다음 명령 실행
+$ yarn set version 3.6.1 
 $ yarn # 의존 패키지 fetch 및 link 생성
 $ yarn vite # 서버 run
 ```
