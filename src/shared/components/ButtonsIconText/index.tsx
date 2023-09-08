@@ -4,6 +4,7 @@ import { ButtonProps } from "./ButtonsIconText.types";
 
 const ButtonsIconText: React.FC<ButtonProps> = ({label, icon, styleType }) => {
   return (
+    
     <StyledButton>
       {styleType === "more" && <MoreStyledText>{label}</MoreStyledText> }
       {styleType === "inquiry" && <InquiryStyledText>{label}</InquiryStyledText>}

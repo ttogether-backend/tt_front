@@ -43,6 +43,7 @@ export const LoginBtn = styled.button<StyleProps>`
 export const ImageButton = styled.button<StyleProps>`
   background : url(${props => props.href}) no-repeat center;
   background-size : cover;
+  width : 100%;
   `;
 
 

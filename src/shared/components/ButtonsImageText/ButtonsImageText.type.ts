@@ -4,6 +4,7 @@ export type StyleProps = {
 };
 
 export type ButtonProps = {
+  type: string;
   styleProps: StyleProps;
   text: string;
 };
