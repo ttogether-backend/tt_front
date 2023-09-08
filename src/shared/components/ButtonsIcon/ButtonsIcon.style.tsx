@@ -30,6 +30,4 @@ export const StyledButton = styled.button<ButtonStyleType>`
   export const StyledIcon = styled.svg<ButtonStyleType>`
     width: ${({ buttonWidth }) => buttonWidth};
     height: ${({ buttonHeight }) => buttonHeight};
-    width: ${({ buttonWidth }) => buttonWidth};
-    height: ${({ buttonHeight }) => buttonHeight};
   `

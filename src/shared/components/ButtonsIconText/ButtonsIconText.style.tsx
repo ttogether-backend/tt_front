@@ -25,3 +25,19 @@ export const InquiryStyledText = styled.span`
   font-style: normal;
   font-weight: 700;
 `;
+
+export const PlusButton = styled.button`
+  width: 175px;
+  height: 51px;
+  border-radius: 10px;
+  padding: 0 37px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${colors.green500};
+  border: none;
+  color: ${colors.white};
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  `;

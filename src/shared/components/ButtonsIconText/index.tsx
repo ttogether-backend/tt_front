@@ -8,7 +8,7 @@ const ButtonsIconText: React.FC<ButtonProps> = ({label, icon, styleType }) => {
       {styleType === "more" && <MoreStyledText>{label}</MoreStyledText> }
       {styleType === "inquiry" && <InquiryStyledText>{label}</InquiryStyledText>}
       <svg className="icon">
-        <use xlinkHref={`/assets/iconSprite.svg#${icon}`} />
+        <use xlinkHref={`iconSprite.svg#${icon}`} />
       </svg>
     </StyledButton>
   );
