@@ -1,16 +1,37 @@
 import { atom, RecoilState, useRecoilState } from 'recoil';
-import { FC } from 'react';
-
-import DatePicker from 'react-datepicker';
+import React, { FC } from 'react';
+import 'src/shared/components/Datepicker/Datepicker.css'
+import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
+import { ReactSVG } from 'react-svg';
+
+import { StyledDatePicker, BoxStyle, InputStyle } from './Datepicker.styles.ts';
 
 export const CustomDatepicker: FC = (
 ) => {
   const dateState:RecoilState<Date> = atom({key: 'dateState', default: new Date()});
   const [selectedDate , setSelectedDate] = useRecoilState(dateState);
 
-  return <DatePicker
+  const CustomInput=
+    React.forwardRef<HTMLInputElement, React.DetailedHTMLProps<
+        React.InputHTMLAttributes<HTMLInputElement>,HTMLInputElement>>(
+      (props, ref) => {
+        // @ts-ignore
+        return <div style={BoxStyle}>
+          <input {...props} ref={ref} style={InputStyle}/>
+          <ReactSVG
+            onClick={props.onClick}
+            className={'calendarIcon'}
+            style={{position:'relative'}}
+            src={"public/images/svg/calendar.svg"}/>
+        </div>
+  });
+
+  return <StyledDatePicker
+    locale={ko}
+    dateFormat="yyyy.MM.dd"
     selected={selectedDate}
-    onChange={(date:Date)=>setSelectedDate(date)}
+    customInput={<CustomInput/>}
+    onChange={(date:Date)=> setSelectedDate(date)}
   />
 }
