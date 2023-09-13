@@ -132,6 +132,7 @@ export const FriendListModal: React.FC<FriendListModalProps> = ({
               {listItems?.map((item: MemberInfo) => {
                 return (
                   <ListItem
+                    key={`friend-list-item-${item.memberId}`}
                     secondaryAction={
                       item?.isFollow ? (
                         <Button
