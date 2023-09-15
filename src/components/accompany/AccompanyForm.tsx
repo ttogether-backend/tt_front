@@ -1,5 +1,20 @@
+import Page from 'src/pages/layout';
+import AccompanyBasicInfo from './AccompanyBasicInfo';
+import AccompanyContent from './AccompanyContent';
+
 const AccompanyForm = () => {
-  return <>동행글 작성 폼</>;
+  return (
+    <Page>
+      <div
+        style={{
+          display: 'flex',
+        }}
+      >
+        <AccompanyBasicInfo />
+        <AccompanyContent />
+      </div>
+    </Page>
+  );
 };
 
 export default AccompanyForm;
