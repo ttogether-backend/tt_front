@@ -23,7 +23,7 @@ export const CustomDatepicker: FC = (
             onClick={props.onClick}
             className={'calendarIcon'}
             style={{position:'relative'}}
-            src={"public/images/svg/calendar.svg"}/>
+            src={"/images/svg/calendar.svg"}/>
         </div>
   });
 
