@@ -3,21 +3,26 @@ import DatePicker from 'react-datepicker';
 
 export const StyledDatePicker = styled(DatePicker)`
   display: block;
+  &.react-datepicker__month-container {
+    padding: 32px;
+  }
 `;
-export const BoxStyle = {
-  display: 'grid',
-  gridTemplateColumns: '1fr 24px',
-  width: '216px',
-  lineHeight: '50px',
-  borderRadius: '10px',
-  border: '1px solid #D4D5D2',
-  paddingInline: '20px',
-  backgroundColor: '#F7F7F7',
-};
 
-export const InputStyle = {
-  border: 'none',
-  width: '151px',
-  fontFamily: 'pretender',
-  backgroundColor: '#F7F7F7'
-};
+export const BoxStyle = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 24px;
+  width: 100%;
+  line-height: 50px;
+  border-radius: 10px;
+  border: 1px solid #d4d5d2;
+  padding-inline: 9px;
+  background: #f7f7f7;
+  cursor: pointer;
+`;
+
+export const InputStyle = styled.input`
+  width: 151px;
+  background: #f7f7f7;
+  border: none;
+  outline: none;
+`;

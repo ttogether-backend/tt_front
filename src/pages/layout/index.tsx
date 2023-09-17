@@ -1,15 +1,15 @@
 import Footer from '../../shared/components/footer';
 import Navbar from '../../shared/components/navbar';
-import { Body } from './Body.tsx';
 
-const Layout = () => {
+const Page = (props: any) => {
+  const { children } = props;
   return (
     <>
       <Navbar />
-      <Body />
+      {children}
       <Footer />
     </>
   );
 };
 
-export default Layout;
+export default Page;
