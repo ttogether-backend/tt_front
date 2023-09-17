@@ -13,8 +13,7 @@ export type ProfileImageSize =
   | '160'
 
 export interface ProfileImagePropsType {
-  src: String | ArrayBuffer | null | undefined;
-  // hasBorder: boolean;
   css?: SerializedStyles;
   imageSize: ProfileImageSize;
+  src: String | ArrayBuffer | null | undefined;
 }
