@@ -51,5 +51,6 @@ const profileImageSizeCss = {
 export const ProfileImageStyle = styled.div<ProfileImagePropsType>`
   background-size: cover;
   ${(props) => profileImageSizeCss[props.imageSize]};
+  ${(props) => props.css}
   background-image: ${(props) => `url(${props.src})`};
 `
