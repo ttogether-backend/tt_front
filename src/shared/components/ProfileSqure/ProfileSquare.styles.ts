@@ -44,14 +44,13 @@ export const tripleProfileCss = {
 export const quadrupleProfileCss = {
   'first': css({
     position: 'absolute',
-    margin: '0 auto',
     left: '0',
-    right: '0'
+    top: '0'
   }),
   'second': css({
     position: 'absolute',
     right: '0',
-    bottom: '0'
+    top: '0'
   }),
   'third': css({
     position: 'absolute',
@@ -60,7 +59,7 @@ export const quadrupleProfileCss = {
   }),
   'fourth': css({
     position: 'absolute',
-    left: '0',
+    right: '0',
     bottom: '0'
   })
 }
