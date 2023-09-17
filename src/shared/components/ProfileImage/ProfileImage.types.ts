@@ -1,3 +1,4 @@
+import { SerializedStyles } from '@emotion/react';
 export type ProfileImageSize =
   | '17.03'
   | '21.28'
@@ -14,5 +15,6 @@ export type ProfileImageSize =
 export interface ProfileImagePropsType {
   src: String | ArrayBuffer | null | undefined;
   // hasBorder: boolean;
+  css?: SerializedStyles;
   imageSize: ProfileImageSize;
 }
