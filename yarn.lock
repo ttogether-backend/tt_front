@@ -3912,13 +3912,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-rem@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "sass-rem@npm:3.0.0"
-  checksum: 58a9dd4c824237ac0a137ebb77b0eb0bb9e839f449eb29a8d39c5f0357c5de397eb754aac6d69e15bc622dfc14fe0da72a79bc2f8393dbea26762be726df863f
-  languageName: node
-  linkType: hard
-
 "sass@npm:^1.65.1":
   version: 1.65.1
   resolution: "sass@npm:1.65.1"
@@ -4287,7 +4280,6 @@ __metadata:
     react-svg: ^16.1.23
     recoil: ^0.7.7
     sass: ^1.65.1
-    sass-rem: ^3.0.0
     typescript: ^5.1.6
     vite: ^4.4.5
   languageName: unknown
