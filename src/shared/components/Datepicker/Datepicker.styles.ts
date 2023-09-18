@@ -1,14 +1,33 @@
 import styled from '@emotion/styled';
-import DatePicker from 'react-datepicker';
+import ReactDatePicker, { CalendarContainer } from 'react-datepicker';
 
-export const StyledDatePicker = styled(DatePicker)`
+export const CustomDatePicker = styled(ReactDatePicker)`
   display: block;
-  &.react-datepicker__month-container {
-    padding: 32px;
+
+  .react-datepicker-wrapper {
+    width: 50%;
   }
 `;
 
-export const BoxStyle = styled.div`
+export const CustomCalendarContainer = styled(CalendarContainer)`
+  border: none;
+
+  .sunday {
+    color: #ed6666 !important;
+  }
+
+  .react-datepicker__header {
+    background: none;
+    border: none;
+  }
+
+  .react-datepicker__navigation--previous {
+    right: 24px;
+    left: auto;
+  }
+`;
+
+export const Box = styled.div`
   display: grid;
   grid-template-columns: 1fr 24px;
   width: 100%;
@@ -20,7 +39,7 @@ export const BoxStyle = styled.div`
   cursor: pointer;
 `;
 
-export const InputStyle = styled.input`
+export const Input = styled.input`
   width: 151px;
   background: #f7f7f7;
   border: none;
