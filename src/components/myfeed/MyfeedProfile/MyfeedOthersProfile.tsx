@@ -77,17 +77,12 @@ const MyfeedMyProfile: React.FC<OthersProps> = ({profileImage, nickName, accomCo
           {isChat ? <ButtonsText label="채팅 요청하기" styleType={chatButtonStyle} css={css`margin-right:10px;`}/> : <ButtonsText label="채팅 요청됨" styleType={isChatButtonStyle} css={css`margin-right:10px;`}/>}
           {isFollow ? <ButtonsText label="팔로우하기" styleType={followButtonStyle} css={css`margin-right:24px;`}/> : <ButtonsText label="팔로우중" styleType={isFollowButtonStyle} css={css`margin-right:24px;`}/>}
           <ButtonsIcon icon="moreIcon" styleType={moreIconButtonStyle} onClick={() => {setIsMenuOpen(!isMenuOpen)}} ref={iconRef} />
-          {/* {isMenuOpen && (
-            <MenuContainer style={{
-              top: `${menuPosition.top}px`,
-              left: `${menuPosition.left}px`,
-            }}>
-              <ul>
-                <MenuItem style={{marginBottom:"8px"}}>신고</MenuItem>
-                <MenuItem>차단</MenuItem>
-              </ul>
-            </MenuContainer>
-          )} */}
+          {isMenuOpen && (
+            <MyfeedMenu
+              menuPositionTop={menuPosition.top}
+              menuPositionLeft={menuPosition.left}
+            />
+          )}
         </ButtonContainer>
       </ProfileContainer>
     </Container>
