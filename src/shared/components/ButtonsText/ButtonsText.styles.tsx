@@ -17,6 +17,8 @@ export const StyledButton = styled.button<ButtonStyleType>`
         return colors.green500;
       case 'grey':
         return colors.grey700;
+      case 'deepGrey':
+        return "#52564E";
       // ... Add more cases for other types
       default:
         return colors.white;
@@ -81,6 +83,8 @@ export const StyledButton = styled.button<ButtonStyleType>`
         return '#64C243';
       case 'white':
         return '#ffffff';
+      case 'none':
+        return 'transparent';
       // ... Add more cases for other types
       default:
         return '#ffffff';
