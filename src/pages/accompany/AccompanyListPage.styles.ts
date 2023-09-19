@@ -18,14 +18,14 @@ export const AccompanyBanner = styled.div`
             position: absolute;
             top: 74px; left: 74px;
             color: #fff;
-            .desc {font-size: 24px;margin-bottom: 16px;opacity: .72;}
-            .tit {font-size: 42px;line-height: 1.5;}
+            .desc {font-size: 24px;margin-bottom: 16px;opacity: .72;font-weight:600;}
+            .tit {font-size: 42px;line-height: 1.5;font-weight:700;}
         }
         .img-wrap {
             width:100%;
             height:100%;
             object-fit:cover;
-        }
+        } 
     }
 
 `;
@@ -51,7 +51,7 @@ export const AccompanyFilter = styled.div`
       border-radius: 10px;
       padding: 8px 24px;
       background-color: #fff;
-      font-weight: 600px;
+      font-weight: 600;
       font-size: 18px;
     }
   }
@@ -61,17 +61,17 @@ export const AccompanyFilter = styled.div`
 
 
 /* radio */
-export const Radio = styled.div`
+export const Checkbox = styled.div`
   display: flex;
   width: -webkit-fill-available;
   align-items: center;
   flex-wrap: wrap;
-  input[type='radio'] {
+  input[type='checkbox'] {
     display: none;
-    &:checked + .radioImg {
+    &:checked + .checkImg {
       border: 1px solid ${colors.green500};
     }
-    &:checked + .radioImg::before {
+    &:checked + .checkImg::before {
       background: ${colors.green500};
     }
   }
@@ -79,7 +79,7 @@ export const Radio = styled.div`
     display: flex;
     align-items: center;
     margin-right: 20px;
-    .radioImg {
+    .checkImg {
       margin-right: 10px;
       width: 20px;
       height: 20px;

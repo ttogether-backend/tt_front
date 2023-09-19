@@ -86,13 +86,14 @@ const Footer = () => {
         </div>
         <div className={styles.f_bottom}>
           <div className={styles.fb_info}>
-            <p>서울특별시청 04524 서울특별시 중구 세종대로 110, 3층 트레블투개더</p>
+            {/* <p>서울특별시청 04524 서울특별시 중구 세종대로 110, 3층 트레블투개더</p> */}
             <p>
-              <span>대표 : 김한강</span>
-              <span>대표전화: 02-120</span>
-              <span>사업자 등록번호 : 111-81-4456</span>
-              <span>대표전화 : 02-1234-5678</span>
-              <span>팩스 : 02-1234-5679</span>
+              <span>대표 : 류혜진</span>
+              {/* <span>대표전화: 02-120</span> */}
+              <span>사업자 등록번호 : 466-05-02713 투게더트래블</span>
+              {/* <span>대표전화 : 02-1234-5678</span> */}
+              {/* <span>팩스 : 02-1234-5679</span> */}
+              <span>문의 : togethertravel.com@gmail.com</span>
             </p>
             <p className={styles.copy}>© 2023 Together Travel, Inc. All Rights Reserved.</p>
           </div>
