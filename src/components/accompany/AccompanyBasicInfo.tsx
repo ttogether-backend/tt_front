@@ -20,6 +20,7 @@ import { AccompanyType } from './AccompanyForm.types';
 const AccompanyBasicInfo = () => {
   const [isNoEndDate, setIsNoEndDate] = useState(false);
   const [isAnyAge, setIsAnyAge] = useState(false);
+
   const personnel: RangeDataList[] = [
     {
       value: 1,
@@ -89,8 +90,8 @@ const AccompanyBasicInfo = () => {
   return (
     <div
       style={{
-        width: '33%',
-        margin: '50px auto',
+        width: '456px',
+        margin: '50px 144px 0 0',
       }}
     >
       <Badge>1</Badge>
@@ -114,7 +115,7 @@ const AccompanyBasicInfo = () => {
       <Box>
         <Label>동행 장소</Label>
         <PlaceWrapper>
-          <ResultInput value="이탈리아 피렌체" onChange={() => console.log('test')} />
+          <ResultInput />
           <SearchButton>검색하기</SearchButton>
         </PlaceWrapper>
       </Box>
@@ -132,12 +133,13 @@ const AccompanyBasicInfo = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
+              marginBottom: '16px',
             }}
           >
             <Checkbox
               id={'endDate'}
               checked={isNoEndDate}
-              onClick={() => setIsNoEndDate(!isNoEndDate)}
+              onChange={() => setIsNoEndDate(!isNoEndDate)}
             />{' '}
             <CheckboxLabel onClick={() => setIsNoEndDate(!isNoEndDate)}>
               종료 기간 미정
@@ -153,7 +155,11 @@ const AccompanyBasicInfo = () => {
         <Range dataList={personnel} getRangeValue={(value) => console.log(value)} />
       </Box>
 
-      <Box>
+      <div
+        style={{
+          margin: '60px 0',
+        }}
+      >
         <div
           style={{
             display: 'flex',
@@ -167,15 +173,16 @@ const AccompanyBasicInfo = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
+              marginBottom: '16px',
             }}
           >
-            <Checkbox id={'any'} checked={isAnyAge} onClick={() => setIsAnyAge(!isNoEndDate)} />{' '}
-            <CheckboxLabel onClick={() => setIsAnyAge(!isNoEndDate)}>무관</CheckboxLabel>
+            <Checkbox id={'anyAge'} checked={isAnyAge} onChange={() => setIsAnyAge(!isAnyAge)} />{' '}
+            <CheckboxLabel onClick={() => setIsAnyAge(!isAnyAge)}>무관</CheckboxLabel>
           </div>
         </div>
 
         <Range dataList={age} getRangeValue={(value) => console.log(value)} />
-      </Box>
+      </div>
 
       {/* <Label>여행 키워드</Label> */}
     </div>

@@ -43,7 +43,7 @@ export const TypeWrapper = styled.div`
   width: 100%;
 `;
 
-export const Button = styled.button<{ isSelected: boolean; background: string }>`
+export const Button = styled.button<{ isSelected?: boolean; background?: string }>`
   ${({ isSelected, background }) => `
   background: ${isSelected ? background : '#f1f2f1'};
   border: ${isSelected ? 'none' : '1px solid #d4d5d2'};
@@ -54,7 +54,6 @@ export const Button = styled.button<{ isSelected: boolean; background: string }>
   height: 50px;
   padding: 18px 0;
   border-radius: 10px;
-  /* border: 1px solid #d4d5d2; */
   text-align: center;
   font-size: 18px;
   line-height: 14px;
@@ -73,7 +72,7 @@ export const PlaceWrapper = styled.div`
   width: 100%;
 `;
 
-export const ResultInput = styled.input`
+export const ResultInput = styled.div`
   width: 70%;
   height: 50px;
   padding: 18px 6px;
@@ -107,4 +106,45 @@ export const CheckboxLabel = styled.label`
   font-size: 14px;
   font-weight: 500;
   line-height: 150%;
+`;
+
+export const SubmitButton = styled.button`
+  width: 175px;
+  height: 50px;
+  padding: 14px 0;
+
+  margin-top: 30px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  background: #64c243;
+  cursor: pointer;
+  border: none;
+`;
+
+export const TitleInput = styled.input`
+  width: 100%;
+  height: 50px;
+  padding: 12px 80px 12px 20px;
+  border: 1px solid #d4d5d2;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-bottom: 42px;
+  outline: none;
+
+  ::placeholder {
+    color: #d4d5d2;
+  }
+`;
+
+export const TitleLength = styled.div`
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  color: #a1a59e;
+  line-height: 160%;
+  font-size: 18px;
+  font-weight: 500;
 `;

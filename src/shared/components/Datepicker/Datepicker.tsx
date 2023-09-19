@@ -28,7 +28,7 @@ export const DatePicker: FC = () => {
   >((props, ref) => {
     return (
       <Box onClick={props.onClick}>
-        <Input {...props} ref={ref} />
+        <Input {...props} ref={ref} readOnly />
         <ReactSVG
           className={'calendarIcon'}
           style={{ position: 'relative' }}
@@ -42,6 +42,7 @@ export const DatePicker: FC = () => {
     return (
       <div
         style={{
+          width: '463px',
           padding: '32px',
           background: '#fff',
           borderRadius: '20px',
@@ -56,8 +57,6 @@ export const DatePicker: FC = () => {
   };
 
   const getDayName = (date: Date) => {
-    console.log('date', date);
-
     if (getDay(date) === 0) {
       return 'sunday';
     }
@@ -69,7 +68,9 @@ export const DatePicker: FC = () => {
     <div
       style={{
         display: 'flex',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        position: 'relative',
       }}
     >
       <CustomDatePicker
@@ -80,7 +81,6 @@ export const DatePicker: FC = () => {
                 marginBottom: '27px',
               }}
             >
-              {/* 이전달 */}
               <button
                 aria-label="Previous Month"
                 className={'react-datepicker__navigation react-datepicker__navigation--previous'}
@@ -105,7 +105,6 @@ export const DatePicker: FC = () => {
                 {format(monthDate, 'yyyy. MM')}
               </div>
 
-              {/* 다음달 */}
               <button
                 aria-label="Next Month"
                 className={'react-datepicker__navigation react-datepicker__navigation--next'}
@@ -116,44 +115,92 @@ export const DatePicker: FC = () => {
             </div>
           );
         }}
+        popperModifiers={[
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 10],
+            },
+          },
+        ]}
         locale={ko}
         dateFormat="yyyy.MM.dd"
         selected={startDate}
-        onChange={(date: any) => setStartDate(date)}
+        onChange={(date: Date) => setStartDate(date)}
         selectsStart
         startDate={startDate}
         endDate={endDate}
         customInput={<CustomInput />}
         calendarContainer={CalendarContainer}
+        wrapperClassName="datePicker"
         dayClassName={(date) => getDayName(date)}
       />
 
       <WaveIcon
         style={{
-          margin: '0 8px',
+          margin: '0 14px',
         }}
       />
 
       <CustomDatePicker
-        renderCustomHeader={({ monthDate, customHeaderCount, decreaseMonth, increaseMonth }) => {
+        renderCustomHeader={({ monthDate, decreaseMonth, increaseMonth }) => {
           return (
             <div
               style={{
-                textAlign: 'left',
+                marginBottom: '27px',
               }}
             >
-              {format(monthDate, 'yyyy. MM')}
+              <button
+                aria-label="Previous Month"
+                className={'react-datepicker__navigation react-datepicker__navigation--previous'}
+                onClick={decreaseMonth}
+              >
+                <LeftChevronIcon
+                  style={{
+                    marginRight: '24px',
+                  }}
+                />
+              </button>
+
+              <div
+                style={{
+                  fontFamily: 'Pretendard',
+                  fontWeight: 600,
+                  fontSize: '20px',
+                  lineHeight: '100%',
+                  textAlign: 'left',
+                }}
+              >
+                {format(monthDate, 'yyyy. MM')}
+              </div>
+
+              <button
+                aria-label="Next Month"
+                className={'react-datepicker__navigation react-datepicker__navigation--next'}
+                onClick={increaseMonth}
+              >
+                <RightChevronIcon />
+              </button>
             </div>
           );
         }}
+        popperModifiers={[
+          {
+            name: 'offset',
+            options: {
+              offset: [-249, 10],
+            },
+          },
+        ]}
         locale={ko}
         dateFormat="yyyy.MM.dd"
         selected={endDate}
-        onChange={(date: any) => setEndDate(date)}
+        onChange={(date: Date) => setEndDate(date)}
         selectsEnd
         startDate={startDate}
         endDate={endDate}
         minDate={startDate}
+        calendarContainer={CalendarContainer}
         customInput={<CustomInput />}
       />
     </div>

@@ -14,7 +14,7 @@ export const LeftChevronIcon = ({ ...args }: IconProps) => {
       xmlns="http://www.w3.org/2000/svg"
       {...args}
     >
-      <path d="M7 1L2 6L7 11" stroke="#BFC1BC" stroke-width="2" stroke-linecap="round" />
+      <path d="M7 1L2 6L7 11" stroke="#BFC1BC" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 };
