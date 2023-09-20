@@ -147,6 +147,7 @@ export const AccompanyState = styled.div<{ name: string }>`
   font-size: 14px;
   line-height: 20px;
   font-weight: 500;
+  z-index: 2;
   .category {
     padding: 8px 16px;
     color: #fff;
