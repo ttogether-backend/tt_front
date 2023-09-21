@@ -9,6 +9,6 @@ export interface FormTextPropsType {
   background?: string;
   placeholder: string;
   value: string;
-  onchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onclick: () => void;
+  onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onclick?: () => void;
 }
