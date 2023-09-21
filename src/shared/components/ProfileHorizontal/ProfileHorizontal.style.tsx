@@ -41,12 +41,13 @@ export const tripleProfileCss = {
   }),
   'second': css({
     position: 'absolute',
-    right: '17px',
-    bottom: '0'
+    left: '17px',
+    bottom: '0',
+    zIndex: '5'
   }),
   'third': css({
     position: 'absolute',
-    right: '0',
+    left: '34px',
     top: '0'
   })
 };

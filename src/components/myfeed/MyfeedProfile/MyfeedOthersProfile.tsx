@@ -9,23 +9,9 @@ import { OthersProps } from "./MyfeedProfile.type";
 import MyfeedMenu from "../MyfeedMenu";
 import { Container, IntroContainer, Nickname, NicknameContainer, ProfileContainer, UserIcon, Intro, ButtonContainer, FollowContainer, CountText, FollowText, FollowerContainer, FollowerListText, chatButtonStyle, isChatButtonStyle, followButtonStyle, isFollowButtonStyle, moreIconButtonStyle} from "./MyfeedProfile.style"
 
-const MyfeedMyProfile: React.FC<OthersProps> = ({profileImage, nickName, accomCount, introduce, followerCount, followingCount, onClickFollower, onClickFollowing, isChat, isFollow, follower=[]}) => {
+const MyfeedOthersProfile: React.FC<OthersProps> = ({profileImage, nickName, accomCount, introduce, followerCount, followingCount, onClickFollower, onClickFollowing, isChat, isFollow, follower=[]}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
-
-  const calculateMenuPosition = () => {
-    if (iconRef.current) {
-      const iconRect = iconRef.current.getBoundingClientRect(); // 아이콘 요소의 위치 정보를 얻음
-      return {
-        top: iconRect.bottom + window.scrollY, // 아이콘의 아래쪽 위치
-        left: iconRect.left + iconRect.width / 2, // 아이콘의 가로 중앙
-      };
-    }
-    return { top: 0, left: 0 };
-  };
-
-  const menuPosition = calculateMenuPosition();
-
   const styleType = {
     subType: "",
     text: `동행횟수 : ${accomCount}`,
@@ -34,18 +20,20 @@ const MyfeedMyProfile: React.FC<OthersProps> = ({profileImage, nickName, accomCo
   const nicknames = [];
   const profileImages = [];
   if(follower.length > 0){
-    for(let i = 0; i < 3; i++){
+    for(let i = 0; i < follower.length; i++){
       nicknames.push(follower[i].nickname);
       profileImages.push(follower[i].profileImage);
     }
   };
+
+  console.log(profileImages);
 
   const sameFollowerCount = follower.length;
 
 
 
   return (
-    <Container>
+    <Container isOther={true}>
       <ProfileContainer>
         <ProfileImage src={profileImage} imageSize="160" />
         <IntroContainer>
@@ -72,21 +60,21 @@ const MyfeedMyProfile: React.FC<OthersProps> = ({profileImage, nickName, accomCo
             <CountText follower={followingCount}>{followingCount}</CountText>
             <FollowText onClick={onClickFollowing}>팔로잉</FollowText>
           </FollowContainer>
-        </IntroContainer>
-        <ButtonContainer>
-          {isChat ? <ButtonsText label="채팅 요청하기" styleType={chatButtonStyle} css={css`margin-right:10px;`}/> : <ButtonsText label="채팅 요청됨" styleType={isChatButtonStyle} css={css`margin-right:10px;`}/>}
-          {isFollow ? <ButtonsText label="팔로우하기" styleType={followButtonStyle} css={css`margin-right:24px;`}/> : <ButtonsText label="팔로우중" styleType={isFollowButtonStyle} css={css`margin-right:24px;`}/>}
-          <ButtonsIcon icon="moreIcon" styleType={moreIconButtonStyle} onClick={() => {setIsMenuOpen(!isMenuOpen)}} ref={iconRef} />
+        </IntroContainer> 
+      </ProfileContainer>
+      <ButtonContainer>
+          {!isChat ? <ButtonsText label="채팅 요청하기" styleType={chatButtonStyle} /> : <ButtonsText label="채팅 요청됨" styleType={isChatButtonStyle} />}
+          {!isFollow ? <ButtonsText label="팔로우하기" styleType={followButtonStyle} /> : <ButtonsText label="팔로우중" styleType={isFollowButtonStyle} />}
+          <ButtonsIcon icon="moreIcon" styleType={moreIconButtonStyle} onClick={() => {setIsMenuOpen(!isMenuOpen)}} />
           {isMenuOpen && (
             <MyfeedMenu
-              menuPositionTop={menuPosition.top}
-              menuPositionLeft={menuPosition.left}
+              menuPositionTop={24}
+              menuPositionRight={12}
             />
           )}
         </ButtonContainer>
-      </ProfileContainer>
     </Container>
   );
 };
 
-export default MyfeedMyProfile;
+export default MyfeedOthersProfile;

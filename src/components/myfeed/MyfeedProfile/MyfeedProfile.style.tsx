@@ -12,14 +12,17 @@ const getTextWidth = (text: string, font: string): number => {
 };
 
 
-export const Container = styled.div`
+
+export const Container = styled.div<{isOther: boolean}>`
   width: 1408px;
   height: 273px;
   display: flex;
   padding: 24px;
+  background-color: white;
   justify-content: space-between;
   align-items: flex-start;
   border : 1px solid #E1E1E1;
+  margin-top: ${({ isOther }) => isOther ? "136px" : "0"};
 `;
 
 export const ProfileContainer = styled.div`
@@ -33,7 +36,7 @@ export const ProfileContainer = styled.div`
 
 export const IntroContainer = styled.div`
   width: 524px;
-  height: 188px;
+  height: auto;
   display: flex;
   flex-direction: column;
   padding: 0px;
@@ -78,6 +81,7 @@ export const ButtonContainer = styled.div`
   width: 300px;
   height: 44px;
   display: flex;
+  position: relative;
   padding: 0px;
   justify-content: flex-end;
 `
@@ -105,6 +109,7 @@ export const FollowText = styled.div`
   :hover {
     cursor : pointer;
     font-style: underline;
+    font-weight: 700;
   }
 ` 
 
@@ -122,7 +127,7 @@ export const FollowerListText = styled.div`
   height: 16px;
   font-size: 14px;
   font-weight: 400;
-  margin-right: 16px;
+  margin-left: 16px;
   color: #696E64;
 `
 
@@ -136,6 +141,7 @@ export const chatButtonStyle = {
   borderType: "border",
   buttonTextDecorationType: "none",
   borderColorType: "grey",
+  buttonMargin: "0 10px 0 0",
 };
 
 export const isChatButtonStyle = {
@@ -148,6 +154,7 @@ export const isChatButtonStyle = {
   borderType: "none",
   buttonTextDecorationType: "none",
   borderColorType: "none",
+  buttonMargin: "0 10px 0 0",
 };
 
 export const followButtonStyle = {
@@ -160,6 +167,7 @@ export const followButtonStyle = {
   borderType: "none",
   buttonTextDecorationType: "none",
   borderColorType: "none",
+  buttonMargin: "0 24px 0 0",
 };
 
 export const isFollowButtonStyle = {
@@ -172,6 +180,7 @@ export const isFollowButtonStyle = {
   borderType: "none",
   buttonTextDecorationType: "none",
   borderColorType: "none",
+  buttonMargin: "0 24px 0 0",
 };
 
 export const moreIconButtonStyle = {

@@ -1,5 +1,6 @@
 import React from "react";
 import { css } from "@emotion/react";
+import { Link } from "react-router-dom";
 import { ProfileImage } from "src/shared/components/ProfileImage/ProfileImage";
 import Badges from "src/shared/components/Badges";
 import ButtonsText from "src/shared/components/ButtonsText";
@@ -22,6 +23,7 @@ const MyfeedMyProfile: React.FC<MyProps> = ({profileImage, nickName, accomCount,
     borderType: "none",
     buttonTextDecorationType: "none",
     borderColorType: "none",
+    buttonMargin: "0 10px 0 0",
   };
 
   const editButtonStyle = {
@@ -45,7 +47,7 @@ const MyfeedMyProfile: React.FC<MyProps> = ({profileImage, nickName, accomCount,
   }
 
   return (
-    <Container>
+    <Container isOther={false}>
       <ProfileContainer>
         <ProfileImage src={profileImage} imageSize="160" />
         <IntroContainer>
@@ -63,8 +65,10 @@ const MyfeedMyProfile: React.FC<MyProps> = ({profileImage, nickName, accomCount,
         </IntroContainer>
       </ProfileContainer>
       <ButtonContainer>
-        <ButtonsText label="계정기록" styleType={recordButtonStyle} onClick={onClickRecord}/>
-        <ButtonsText label="프로필 수정" styleType={editButtonStyle} onClick={onClickEdit} css={css`margin-left:10px;`}/>
+        <Link to="/myfeed/user/record" >
+          <ButtonsText label="계정기록" styleType={recordButtonStyle} onClick={onClickRecord}/>
+        </Link>
+        <ButtonsText label="프로필 수정" styleType={editButtonStyle} onClick={onClickEdit} />
       </ButtonContainer>
     </Container>
   );

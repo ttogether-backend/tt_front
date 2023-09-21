@@ -1,10 +1,11 @@
 import React from "react";
 import { StyledButton } from "./ButtonsText.styles";
 import { ButtonProps } from "./ButtonsText.types";
+import { css } from "@emotion/react";
 
 
-const ButtonsText: React.FC<ButtonProps> = ({ label, styleType }) => {
-  return <StyledButton {...styleType}>{label}</StyledButton>;
+const ButtonsText: React.FC<ButtonProps> = ({ label, styleType, margin, onClick}) => {
+  return <StyledButton {...styleType} onClick={onClick} >{label}</StyledButton>;
 };
 
 export default ButtonsText;
