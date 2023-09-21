@@ -10,7 +10,8 @@ const Router = () => {
         {/* <Route path="/" element={<Layout />} /> */}
         <Route path="/accompany/create" element={<AccompanyCreatePage />} />
         <Route path="/accompany/modify" element={<AccompanyModifyPage />} />
-        <Route path="/accompany/:id" element={<AccompanyDetailPage />} />
+        {/* <Route path="/accompany/:accompanyId" element={<AccompanyDetailPage />} /> */}
+        <Route path="/accompany/detail" element={<AccompanyDetailPage />} />
       </Routes>
     </BrowserRouter>
   );

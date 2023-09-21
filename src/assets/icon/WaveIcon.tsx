@@ -1,4 +1,4 @@
-import { IconProps } from './LeftChevronIcon';
+import { IconProps } from './types/Icon.types';
 
 export const WaveIcon = ({ ...args }: IconProps) => {
   return (

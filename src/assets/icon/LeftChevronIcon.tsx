@@ -1,8 +1,4 @@
-import { CSSProperties } from 'react';
-
-export interface IconProps {
-  style?: CSSProperties;
-}
+import { IconProps } from './types/Icon.types';
 
 export const LeftChevronIcon = ({ ...args }: IconProps) => {
   return (

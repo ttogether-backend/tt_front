@@ -1,5 +1,14 @@
+import Page from '../layout';
+import Comment from 'src/components/accompany/Detail/AccompanyDetail.Comment';
+import Main from 'src/components/accompany/Detail/AccompanyDetail.Main';
+
 const AccompanyDetailPage = () => {
-  return '동행글 상세 페이지';
+  return (
+    <Page>
+      <Main />
+      <Comment />
+    </Page>
+  );
 };
 
 export default AccompanyDetailPage;
