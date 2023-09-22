@@ -8,6 +8,7 @@ export const ChatListRoomContainer = styled.div`
   grid-template-areas:'profile chat-room';
   grid-template-columns: fit-content(100%) 1fr;
   column-gap: 6.81px;
+  margin-bottom: 8px;
 `;
 export const ChatProfileContainer = styled.div`
   grid-area: profile;
