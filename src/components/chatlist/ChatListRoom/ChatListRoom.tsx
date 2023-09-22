@@ -2,7 +2,7 @@ import { FC } from 'react';
 import * as Style from 'src/components/chatlist/ChatListRoom/ChatListRoom.styles';
 import { ChatListRoomPropsType } from './ChatListRoom.types';
 import { ProfileSquare } from 'src/shared/components/ProfileSqure/ProfileSquare';
-import { ChatCountBadge, ChatStateBadge } from 'src/shared/components/Badges/Badges.style.tsx';
+import Badges from 'src/shared/components/Badges';
 
 export const ChatListRoom: FC<ChatListRoomPropsType> = (props) => {
   const { chatRoom, profileProps, accompanyPost, messageInfo } = props;
@@ -20,12 +20,12 @@ export const ChatListRoom: FC<ChatListRoomPropsType> = (props) => {
         <Style.ChatBody>
           <Style.ChatMessage>{messageInfo.message}</Style.ChatMessage>
           <Style.ChatAlarm>
-            <ChatCountBadge subType={""} text={chatRoom.messageCount.toString()}/>
+            <Badges badgeType='chatCount' subType={""} text={chatRoom.messageCount.toString()} styleType={{subType:'', text:chatRoom.messageCount.toString()}}/>
           </Style.ChatAlarm>
         </Style.ChatBody>
         <Style.AccompanyPost>
           <Style.AccompanyStatus>
-            <ChatStateBadge subType={""} text={accompanyPost.accompanyStatus}/>
+          <Badges badgeType='chatState' subType={""} text={accompanyPost.accompanyStatus} styleType={{subType: "", text: accompanyPost.accompanyStatus}}/>
           </Style.AccompanyStatus>
           <Style.AccompanyTitle>{accompanyPost.title}</Style.AccompanyTitle>
         </Style.AccompanyPost>
