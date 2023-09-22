@@ -18,8 +18,9 @@ export const Test1:FC = () => {
     accompanyStatus: AccompanyStatus.READY,
   };
   const myProfileProps: ProfileSquarePropsType = {
-    profileCount: 2,
+    profileCount: 3,
     src: [
+      'src/shared/components/ProfileSqure/Ellipse498.svg',
       'src/shared/components/ProfileSqure/Ellipse498.svg',
       'src/shared/components/ProfileSqure/Ellipse498.svg',
     ],
