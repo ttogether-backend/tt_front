@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { FormTextPropsType } from './FormTextBtn.types';
+import { FormTextPropsType } from 'src/shared/components/FormText/FormText.types.ts';
 import colors from '../../../styles/colors';
 
 export const FormTextContainer = styled.div<FormTextPropsType>`

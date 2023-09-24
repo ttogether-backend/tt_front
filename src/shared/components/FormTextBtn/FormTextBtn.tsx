@@ -8,9 +8,11 @@ export const FormTextBtn: React.FC<FormTextBtnPropsType> = (
 ) => {
   return (
     <Style.FormTextContainer
+      {...props}
         width={props.width}
     >
       <Style.FormTextInput
+        {...props}
         width={props.width}
         height={props.height}
         fontSize={props.fontSize}
@@ -23,7 +25,8 @@ export const FormTextBtn: React.FC<FormTextBtnPropsType> = (
         value={props.value}
         onChange={props.onchange}
       />
-      <Style.FormBtn 
+      <Style.FormBtn
+        {...props}
         onClick={props.onclick}
       />
     </Style.FormTextContainer>
