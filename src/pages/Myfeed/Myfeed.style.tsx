@@ -10,6 +10,7 @@ export const MyfeedContainer = styled.div`
   width: 1408px;
   height: 100%;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
@@ -47,5 +48,18 @@ export const AcoomRecordCardContainer = styled.div`
   align-items: flex-start;
   padding: 0px;
   margin-bottom: 90px;
+  gap: 32px;
+  row-gap: 40px;
 `;
 
+export const BackImageChangeDiv = styled.div`
+  width: 250px;
+  height: auto;
+  position: absolute;
+  top: 75px;
+  right: 120px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #E0E0E0;
+  background-color: white;
+`;

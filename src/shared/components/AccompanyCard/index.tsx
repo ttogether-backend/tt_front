@@ -2,6 +2,7 @@ import React from 'react';
 import { AccompanyCardProps } from './AccompanyCard.types';
 import * as Style from './AccompanyCard.style';
 import { Link } from 'react-router-dom';
+import Badges from '../Badges';
 
 export const AccompanyCard: React.FC<AccompanyCardProps> = (
   props: React.PropsWithChildren<AccompanyCardProps>
@@ -9,7 +10,8 @@ export const AccompanyCard: React.FC<AccompanyCardProps> = (
   return (
     <Style.AccompanyCard>
       <Link to="">
-        <Style.UserBox>
+        {props.isAccomList && (
+          <Style.UserBox>
           <div className="profile">
             <div className="img">
               <img src={props.profileImgSrc} alt="" />
@@ -19,11 +21,12 @@ export const AccompanyCard: React.FC<AccompanyCardProps> = (
           </div>
           <Style.Auth authNum={props.authNum}>{props.auth}</Style.Auth>
         </Style.UserBox>
+          )}
         <Style.CardBox>
           <div className="img-box">
             <Style.AccompanyState name="eat">
-              <div className="category">{props.category}</div>
-              <div className="status">{props.status}</div>
+              <Badges badgeType='type' text='' subType={props.category} styleType={{subType: `${props.category}`, text:''}}/>
+              <Badges badgeType='status' text='' subType={props.status} styleType={{subType: `${props.status}`, text:''}}/>
             </Style.AccompanyState>
             <div className="img-wrap">
               <img src={props.thumbSrc} alt="" />

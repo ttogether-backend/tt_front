@@ -76,3 +76,17 @@ export const blockUser = [{
   intro: "안녕하세요! 제로콜라입니다. 계획있는 여행, 없는 여행 모두 다 좋아하는 여행자입니다!",
 },
 ];
+
+export const AccompanyCardProp = {
+  auth: "string",
+  authNum: 1,
+  thumbSrc: "http://localhost:5173/images/common/img_user_profile_null.png",
+  category: "trad",
+  status: "open",
+  date: "2023.05.23",
+  cnt: 1,
+  personnel: 5,
+  title: "string",
+  location: "string",
+  tags: ["느긋한 여행", "인증샷 남기기"]
+};

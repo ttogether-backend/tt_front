@@ -43,6 +43,7 @@ export const StatusBadge = styled.div<StyleType>`
   height : 36px;
   border : none;
   justify-content : center;
+  padding: 8px 16px;
   align-items : center;
   white-space: nowrap;
   font-size: 14px;
@@ -54,6 +55,8 @@ export const StatusBadge = styled.div<StyleType>`
         return "#376B25";
       case "close":
         return "#ffffff";
+      case "cancel":
+        return "#BA1A1A"
       default:
         return "#376B25";
     }}
@@ -64,11 +67,13 @@ export const StatusBadge = styled.div<StyleType>`
         return "#F0F9EC";
       case "close":
         return "#3F433D";
+      case "cancel":
+        return "#F1F2F1"
       default:
         return "#EAF7E6";
     }}
   };
-  width: ${({ text }) => `${getTextWidth(text, "14px Pretendard")+32}px`};
+  width: auto;
 `;
 
 export const PlaceBadge = styled.div<StyleType>`

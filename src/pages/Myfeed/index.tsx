@@ -2,33 +2,61 @@ import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import MyfeedMyProfile from "src/components/myfeed/MyfeedProfile/MyfeedMyProfile";
 import MyfeedOthersProfile from "src/components/myfeed/MyfeedProfile/MyfeedOthersProfile";
-import Page from "../layout";
-import { ProfileData, sameFollowData, chatState, followState, backImage} from "./dummydata";
-import { MyfeedContainer, Wrapper, ChangeImageButtonStyle, AccomRecordTitle, AcoomRecordCardContainer } from "./Myfeed.style";
+import {NonNavbarPage} from "../layout";
+import { ProfileData, sameFollowData, chatState, followState, backImage, AccompanyCardProp} from "./dummydata";
+import { MyfeedContainer, Wrapper, ChangeImageButtonStyle, AccomRecordTitle, AcoomRecordCardContainer, BackImageChangeDiv} from "./Myfeed.style";
 import ButtonsText from "src/shared/components/ButtonsText";
 import MyfeedBackImage from "src/components/myfeed/MyfeedBackImage";
-import { css } from "@emotion/react";
+import { AccompanyCard } from "src/shared/components/AccompanyCard";
+import { AccompanyCardProps } from "src/shared/components/AccompanyCard/AccompanyCard.types";
+
+
 
 const MyfeedPage: React.FC = () => {  
   const { id } = useParams();
   const [isOther, setIsOther] = useState(false);
+  const [backImage, setBackImage] = useState<string>("http://localhost:5173/images/common/Default_back.png");
+  const [imageInput, setImageInput] = useState(false);
+  const [accompanyRecords, setAccompanyRecords] = useState<AccompanyCardProps[]>([]);
+
+  // const records = [
+  //   AccompanyCardProp,AccompanyCardProp,AccompanyCardProp,AccompanyCardProp,AccompanyCardProp,AccompanyCardProp];
+
+
+
 
   useEffect(() => {
     if(id){
       setIsOther(true);
     }
+    // setAccompanyRecords(records);
   }, []);
 
-  
+  const ChangeBackImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(e.target.files){
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        setBackImage(reader.result as string);
+        setImageInput(false);
+      }
+    }
+  }
+
+
 
   return (
-    <Page>
+    <NonNavbarPage>
       <Wrapper>
-        <MyfeedBackImage alt="배경이미지" src='http://localhost:5173/images/common/img_user_profile_null.png'/>
+        <MyfeedBackImage alt="배경이미지" src={backImage}/>
           
         {!isOther ? 
           <MyfeedContainer>
-            <ButtonsText label="배경 수정" styleType={ChangeImageButtonStyle} onClick={() => console.log("배경이미지 변경")}/> 
+            <ButtonsText label="배경 수정" styleType={ChangeImageButtonStyle} onClick={() =>setImageInput(!imageInput)}/> 
+            {imageInput &&
+              <BackImageChangeDiv>
+                <input id="fileInput" type="file" accept="image/*" onChange={ChangeBackImage}/>
+                </BackImageChangeDiv>}
             <MyfeedMyProfile 
                 profileImage={ProfileData[0].profileImage}
                 nickName={ProfileData[0].nickname}
@@ -40,7 +68,12 @@ const MyfeedPage: React.FC = () => {
                 onClickFollowing={() => console.log("팔로잉 목록")}
               />
               <AccomRecordTitle>나의 동행 기록</AccomRecordTitle>
-              <AcoomRecordCardContainer/>
+              <AcoomRecordCardContainer>
+                {accompanyRecords.length === 0 && <div>동행 기록이 없습니다.</div>}
+                {accompanyRecords.map((record, id) => (
+                  <AccompanyCard key={id} {...record}/>
+                ))}
+              </AcoomRecordCardContainer>
           </MyfeedContainer>
           :
           <MyfeedContainer>
@@ -62,7 +95,7 @@ const MyfeedPage: React.FC = () => {
             </MyfeedContainer>
           }
       </Wrapper>
-    </Page>
+    </NonNavbarPage>
   );
 }
 
