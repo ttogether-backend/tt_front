@@ -11,6 +11,8 @@ import {
   ProfileSquarePropsType
 } from 'src/shared/components/ProfileSqure/ProfileSquare.types.ts';
 import { ChatListRoom } from 'src/components/chatlist/ChatListRoom/ChatListRoom.tsx';
+import { ChatList } from 'src/components/chatlist/ChatList.tsx';
+import { chatListDummy } from 'src/components/chatlist/ChatListDummy.ts';
 
 export const Test1:FC = () => {
   const myAccompanyPost: AccompanyPost = {
@@ -38,6 +40,7 @@ export const Test1:FC = () => {
   };
   return <Page>
     {/*<CustomDatepicker />*/}
+    <ChatList chatRoomList={chatListDummy}/>
     <ChatListRoom
       accompanyPost={myAccompanyPost}
       profileProps={myProfileProps}
