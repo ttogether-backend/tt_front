@@ -2,6 +2,7 @@ const colors = {
   black: '#000000',
   white: '#ffffff',
 
+  greylight: '#F7F7F7',
   grey0: '#E9EBF8',
   grey50: '#f1f2f1',
   grey100: '#d4d5d2',
@@ -26,6 +27,7 @@ const colors = {
   green900: '#2a511c',
 
   error: '#ba1a1a',
+  error2: '#E31B1B',
   success: '#5F79D6',
   warning: '#D29C31',
 };

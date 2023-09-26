@@ -3,8 +3,7 @@
 	font-weight: 45 920;
 	font-style: normal;
 	font-display: swap;
-	src: local('Pretendard Variable'), 
-    url('/fonts/pretendard/PretendardVariable.woff2') format('woff2-variations');
+	src: url('/fonts/pretendard/PretendardVariable.woff2') format('woff2-variations');
 }
 
 @font-face {
@@ -64,13 +63,13 @@
 } 
 
 * {box-sizing: border-box;margin: 0;padding: 0;font-size: 16px;letter-spacing: -0.2px;}
-body {font-family: "Pretendard", "Noto Sans KR","Nanum Gothic", sans-serif !important; color: #000;font-size: 14px !important;}
+body {font-family: "Pretendard Variable", "Noto Sans KR","Nanum Gothic", sans-serif !important; color: #000;font-size: 14px !important;}
 
 
 a {text-decoration:none;cursor: pointer;/*color:#777;*/}
 a:link,a:visited{color: #000;text-decoration:none}
 a:hover,a:active,a:focus{text-decoration:none} 
-
+button {border: 0;}
 
 .container {
     width: 1400px;

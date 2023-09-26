@@ -26,6 +26,21 @@
   - [ ] recoil
   - [ ] react-router-dom
 
+# Add Dependency
+```shell
+$ yarn add package-name@1.2.3
+$ yarn
+```
+# Run Server
+
+```shell
+# .yarn 폴더 없는 경우
+# .yarnrc.yml 파일 삭제 후 다음 명령 실행
+$ yarn set version 3.6.1 
+$ yarn # 의존 패키지 fetch 및 link 생성
+$ yarn vite # 서버 run
+```
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -41,13 +56,15 @@ If you are developing a production application, we recommend updating the config
 
 - Configure the top-level `parserOptions` property like this:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```json
+{
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": ["./tsconfig.json", "./tsconfig.node.json"],
+    "tsconfigRootDir": "__dirname"
+  }
+}
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`

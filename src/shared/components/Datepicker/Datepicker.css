@@ -1,0 +1,7 @@
+.calendarIcon {
+    line-height: 50px;
+}
+
+.calendarIcon > div > .injected-svg {
+    vertical-align: middle;
+}
