@@ -40,9 +40,12 @@ export const UserBox = styled.div`
     .age {
         color: #727272;
     }
+    }
 `;
+
 export const CardBox = styled.div`
   border-radius: 10px 10px 0 0;
+  width: 448px;
   overflow: hidden;
   .img-box {
     position: relative;

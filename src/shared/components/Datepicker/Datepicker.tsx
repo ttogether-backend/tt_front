@@ -6,6 +6,7 @@ import { ReactSVG } from 'react-svg';
 
 import { StyledDatePicker, BoxStyle, InputStyle } from './Datepicker.styles.ts';
 import { WaveIcon } from 'src/assets/Wave.tsx';
+import { atom, RecoilState, useRecoilState } from 'recoil';
 
 export const CustomDatepicker: FC = () => {
   const dateState: RecoilState<Date> = atom({ key: 'dateState', default: new Date() });
@@ -48,7 +49,7 @@ export const CustomDatepicker: FC = () => {
         startDate={startDate}
         endDate={endDate}
         customInput={<CustomInput />}
-        calendarContainer={MyContainer}
+        // calendarContainer={MyContainer}
       />
 
       <WaveIcon />

@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
-import { FormTextBtnPropsType } from './FormTextBtn.types';
+import { FormTextPropsType } from 'src/shared/components/FormText/FormText.types.ts';
 import colors from '../../../styles/colors';
 
-export const FormTextContainer = styled.div`
+export const FormTextContainer = styled.div<FormTextPropsType>`
+  width: ${(props) => props.width};
   position: relative;
   margin-bottom: 10px;
 `;
-export const FormTextInput = styled.input<FormTextBtnPropsType>`
+export const FormTextInput = styled.input<FormTextPropsType>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border: ${(props) => props.border};
@@ -18,12 +19,12 @@ export const FormTextInput = styled.input<FormTextBtnPropsType>`
   background: ${(props) => props.background};
   color: ${colors.grey300};
   border-radius: 10px;
-  font-family: 'pretendard';
+  font-family: 'pretendard'
 `;
-export const FormBtn = styled.button<FormTextBtnPropsType>`
+export const FormBtn = styled.button<FormTextPropsType>`
   width: 48px;
   height: 48px;
-  background: transparent url('/images/icon/icon_input_close.svg') center center no-repeat !important;
+  background: transparent url('/images/icon/icon_input_close.png') center center no-repeat !important;
   position: absolute;
   right: 0;
   top: 50%;

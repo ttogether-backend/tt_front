@@ -8,6 +8,7 @@ export const FormText: React.FC<FormTextPropsType> = (
 ) => {
   return (
     <FormTextInput
+      {...props}
       width={props.width}
       height={props.height}
       fontSize={props.fontSize}

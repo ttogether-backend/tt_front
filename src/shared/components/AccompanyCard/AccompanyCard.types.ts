@@ -5,9 +5,10 @@
 // };
 
 export type AccompanyCardProps = {
-  profileImgSrc: string;
-  username: string;
-  age: string;
+  isAccomList?: boolean;
+  profileImgSrc?: string;
+  username?: string;
+  age?: string;
   auth: string;
   authNum: number;
   thumbSrc: string;
