@@ -7,11 +7,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ReactSVG } from 'react-svg';
 
 import { CustomDatePicker, Box, Input, CustomCalendarContainer } from './Datepicker.styles.ts';
-import { WaveIcon } from 'src/assets/WaveIcon.tsx';
 import { RecoilState, atom, useRecoilState } from 'recoil';
-import { LeftChevronIcon } from 'src/assets/LeftChevronIcon.tsx';
-import { RightChevronIcon } from 'src/assets/RightChevronIcon.tsx';
 import { CalendarContainerProps } from 'react-datepicker';
+import { LeftChevronIcon } from 'src/assets/icon/LeftChevronIcon.tsx';
+import { RightChevronIcon } from 'src/assets/icon/RightChevronIcon.tsx';
+import { WaveIcon } from 'src/assets/icon/WaveIcon.tsx';
 
 export const DatePicker: FC = () => {
   // const dateState: RecoilState<Date> = atom({ key: 'dateState', default: new Date() });

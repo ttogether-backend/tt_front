@@ -1,4 +1,4 @@
-import AccompanyForm from 'src/components/accompany/AccompanyForm';
+import AccompanyForm from 'src/components/accompany/Form/AccompanyForm';
 
 const AccompanyModifyPage = () => {
   return <AccompanyForm />;

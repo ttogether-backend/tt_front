@@ -10,9 +10,9 @@ import {
   MoreOptions,
   Wrapper,
 } from './AccompanyDetail.styles';
-import { AuthBadgeIcon } from 'src/assets/icon/AuthBadgeIcon';
 import { MoreIcon } from 'src/assets/icon/MoreIcon';
 import { BentArrowIcon } from 'src/assets/icon/BentArrowIcon';
+import AuthBadgeIcon from 'src/assets/icon/AuthBadgeIcon';
 
 const Comment = () => {
   return (
@@ -39,7 +39,7 @@ const Comment = () => {
         >
           <ProfileImage imageSize="46" src="/src/assets/cardDummy.png" />
           <CommentUser>
-            김행성 <AuthBadgeIcon style={{ marginLeft: '4px' }} />
+            김행성 <AuthBadgeIcon.Green style={{ marginLeft: '4px' }} />
           </CommentUser>
           <CommentCreatedAt>2023.05.17</CommentCreatedAt>
         </div>

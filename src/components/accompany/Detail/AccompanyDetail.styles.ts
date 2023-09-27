@@ -252,3 +252,79 @@ export const MoreOptions = styled.ul<{ top: string }>`
     }
   }
 `;
+
+//participant
+export const ParticipantBox = styled.div`
+  width: 340px;
+  padding: 24px 24px 20px;
+  border-radius: 10px;
+  border: 1px solid #d4d5d2;
+`;
+
+export const AccompanyOwner = styled.div`
+  display: flex;
+  margin-left: 20px;
+  color: #30332e;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+`;
+
+export const ChatButton = styled.div`
+  padding: 12px 0;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  background: #cfecc5;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+`;
+
+interface ParticipatedStatusType {
+  type: 'apply' | 'complete' | 'owner';
+}
+
+export const ParticipatedStatus = styled.div<ParticipatedStatusType>`
+  ${({ type }) => {
+    if (type === 'apply') {
+      return `
+        background-color:#000;
+        color: #fff;
+
+    `;
+    } else if (type === 'complete') {
+      return `
+        background-color:#BFC1BC;
+        color: #fff;
+
+    `;
+    } else {
+      return `
+        background-color:#f3d5c1;
+        color:#30332E;
+    `;
+    }
+  }}
+
+  padding: 12px 0;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+`;
+
+export const ParticipantListTitle = styled.div`
+  color: #000;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 150%; /* 27px */
+`;
+
+export const UserAuthLevel = styled.div`
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 28px; /* 150% */
+`;
