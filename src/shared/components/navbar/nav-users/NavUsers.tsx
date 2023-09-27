@@ -2,11 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './NavUsers.module.scss';
 
-const NavUsers = () => {
-  let login = true;
+const NavUsers:React.FC<{login?: boolean}> = ({login}) => {
+
+  const isLogin = login;
+
   return (
     <div className={styles.nav_user_wrap}>
-      {login ? (
+      {isLogin ? (
         <div className={styles.nav_user}>
           <ul>
             <li>
