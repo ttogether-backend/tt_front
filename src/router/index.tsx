@@ -14,12 +14,14 @@ import UserPersonal from 'src/pages/users/personal';
 import VerificareUser from 'src/pages/auth/sns/authSns';
 import AuthPassword from 'src/pages/auth/password/authPassword';
 import Withdrawal from 'src/pages/users/withdrawal/withdrawal';
+import Home from 'src/pages/home/home.tsx';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         {/* <Route path="/" element={<Layout />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/accompany/create" element={<AccompanyCreatePage />} />
         <Route path="/accompany/modify" element={<AccompanyModifyPage />} />
         <Route path="/accompany/:id" element={<AccompanyDetailPage />} />

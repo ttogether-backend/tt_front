@@ -5,7 +5,7 @@ import styles from './NavBar.module.scss';
 import Nav from './nav/Nav';
 import React from 'react';
 
-const Navbar:React.FC<{activeNav?:string;}> = ({activeNav}) => {
+const Navbar:React.FC<{activeNav?:string; login?:boolean;}> = ({activeNav, login}) => {
   return (
     <header className={styles.header}>
       <div className="container">
@@ -16,7 +16,7 @@ const Navbar:React.FC<{activeNav?:string;}> = ({activeNav}) => {
             </Link>
             <Search />
           </div>
-          <NavUsers />
+          <NavUsers login={login}/>
         </div>
         <Nav activeNav={activeNav}/>
       </div>
@@ -26,7 +26,7 @@ const Navbar:React.FC<{activeNav?:string;}> = ({activeNav}) => {
 
 export default Navbar;
 
-export const NonNavbar = () => {
+export const NonNavbar:React.FC<{login?:boolean;}> = ({login}) => {
   return (
     <header className={styles.header} style={{height: "72px", display: "flex", alignItems: "center", paddingBottom: "14px"}}>
       <div className="container">
@@ -37,7 +37,7 @@ export const NonNavbar = () => {
             </Link>
             <Search />
           </div>
-          <NavUsers />
+          <NavUsers login={login}/>
         </div>
       </div>
     </header>
