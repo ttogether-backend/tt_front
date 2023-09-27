@@ -38,6 +38,7 @@ export const AccompanyFilter = styled.div`
   border-radius: 16px;
   background: ${colors.grey50};
   margin-bottom: 40px;
+  gap: 20px;
   .filter-item {
     cursor: pointer;
     label {

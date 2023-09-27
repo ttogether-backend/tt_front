@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 export const Container = styled.div`
   display: flex;
   justify-content: center;
+  width: 350px;
 `;
 
 export const RangeBox = styled.div`
@@ -24,7 +25,7 @@ export const SelectedStep = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 100%;
-  background: #000;
+  background: #51A134;
   position: relative;
   cursor: pointer;
 
@@ -62,7 +63,7 @@ interface LinePropsType {
 
 export const Line = styled.div<LinePropsType>`
   ${({ isSelected, length }) => `
-  background: ${isSelected ? '#000' : '#d9d9d9'};
+  background: ${isSelected ? '#51A134' : '#d9d9d9'};
   width: calc(100% / ${length});
 `};
   height: 6px;

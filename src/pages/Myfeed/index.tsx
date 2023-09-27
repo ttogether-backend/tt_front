@@ -15,14 +15,12 @@ import { AccompanyCardProps } from "src/shared/components/AccompanyCard/Accompan
 const MyfeedPage: React.FC = () => {  
   const { id } = useParams();
   const [isOther, setIsOther] = useState(false);
-  const [backImage, setBackImage] = useState<string>("http://localhost:5173/images/common/Default_back.png");
+  const [backImage, setBackImage] = useState<string>(`${import.meta.env.VITE_PUBLIC}/images/common/Default_back.png`);
   const [imageInput, setImageInput] = useState(false);
   const [accompanyRecords, setAccompanyRecords] = useState<AccompanyCardProps[]>([]);
 
   // const records = [
   //   AccompanyCardProp,AccompanyCardProp,AccompanyCardProp,AccompanyCardProp,AccompanyCardProp,AccompanyCardProp];
-
-
 
 
   useEffect(() => {
