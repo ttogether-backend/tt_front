@@ -7,6 +7,7 @@ export const StyledButton = styled.button<ButtonStyleType>`
   height: ${({ buttonHeight }) => buttonHeight};
   font-weight: ${({ fontType }) => fontType.split(' ')[0]};
   font-size: ${({ fontType }) => fontType.split(' ')[1]};
+  margin: ${({ buttonMargin }) => buttonMargin};
   color: ${({ colorType }) => {
     switch (colorType) {
       case 'white':
@@ -17,6 +18,10 @@ export const StyledButton = styled.button<ButtonStyleType>`
         return colors.green500;
       case 'grey':
         return colors.grey700;
+      case 'deepGrey':
+        return "#52564E";
+      case 'deeperGrey':
+        return "#30332E";
       // ... Add more cases for other types
       default:
         return colors.white;
@@ -81,6 +86,8 @@ export const StyledButton = styled.button<ButtonStyleType>`
         return '#64C243';
       case 'white':
         return '#ffffff';
+      case 'none':
+        return 'transparent';
       // ... Add more cases for other types
       default:
         return '#ffffff';
