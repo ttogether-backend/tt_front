@@ -8,6 +8,7 @@ const AccompanyForm = () => {
       <div
         style={{
           display: 'flex',
+          justifyContent: 'center',
         }}
       >
         <AccompanyBasicInfo />

@@ -43,18 +43,21 @@ export const TypeWrapper = styled.div`
   width: 100%;
 `;
 
-export const Button = styled.div`
+export const Button = styled.button<{ isSelected?: boolean; background?: string }>`
+  ${({ isSelected, background }) => `
+  background: ${isSelected ? background : '#f1f2f1'};
+  border: ${isSelected ? 'none' : '1px solid #d4d5d2'};
+  color: ${isSelected ? '#fff' : '#8a9684'};
+`};
+
   width: 100%;
   height: 50px;
   padding: 18px 0;
   border-radius: 10px;
-  border: 1px solid #d4d5d2;
   text-align: center;
   font-size: 18px;
   line-height: 14px;
   letter-spacing: 0.159px;
-  color: #8a9684;
-  background: #f1f2f1;
   cursor: pointer;
 
   &:not(:last-child) {
@@ -69,7 +72,7 @@ export const PlaceWrapper = styled.div`
   width: 100%;
 `;
 
-export const ResultInput = styled.input`
+export const ResultInput = styled.div`
   width: 70%;
   height: 50px;
   padding: 18px 6px;
@@ -96,4 +99,52 @@ export const SearchButton = styled.div`
   color: #fff;
   background: #000;
   cursor: pointer;
+`;
+
+export const CheckboxLabel = styled.label`
+  color: #8f948b;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 150%;
+`;
+
+export const SubmitButton = styled.button`
+  width: 175px;
+  height: 50px;
+  padding: 14px 0;
+
+  margin-top: 30px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  background: #64c243;
+  cursor: pointer;
+  border: none;
+`;
+
+export const TitleInput = styled.input`
+  width: 100%;
+  height: 50px;
+  padding: 12px 80px 12px 20px;
+  border: 1px solid #d4d5d2;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-bottom: 42px;
+  outline: none;
+
+  ::placeholder {
+    color: #d4d5d2;
+  }
+`;
+
+export const TitleLength = styled.div`
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  color: #a1a59e;
+  line-height: 160%;
+  font-size: 18px;
+  font-weight: 500;
 `;
