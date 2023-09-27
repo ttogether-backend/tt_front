@@ -9,8 +9,8 @@ export type AccompanyCardProps = {
   profileImgSrc?: string;
   username?: string;
   age?: string;
-  auth: string;
-  authNum: number;
+  auth?: string;
+  authNum?: number;
   thumbSrc: string;
   category: string;
   status: string;

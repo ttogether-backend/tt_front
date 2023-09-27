@@ -2,14 +2,13 @@ import React from "react";
 import { StyledButton, StyledIcon } from "./ButtonsIcon.style";
 import { ButtonProps } from "./ButtonsIcon.types";
 
-const PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 const ButtonsIcon: React.FC<ButtonProps> = ({ icon, styleType, onClick }) => {
-
+  const publicUrl = import.meta.env.VITE_PUBLIC;
   return (
     <StyledButton {...styleType} onClick={onClick}>
       <StyledIcon className="icon"  {...styleType}>
-        <use xlinkHref={`http://localhost:5173/iconSprite.svg#${icon}`}/>
+        <use xlinkHref={`${publicUrl}/iconSprite.svg#${icon}`}/>
       </StyledIcon>
     </StyledButton>
   );

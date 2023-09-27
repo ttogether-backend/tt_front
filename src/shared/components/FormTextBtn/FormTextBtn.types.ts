@@ -7,8 +7,8 @@ export interface FormTextBtnPropsType {
   fontWeight?: number;
   padding?: string;
   background?: string;
-  placeholder: string;
-  value: string;
-  onchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onclick: () => void;
+  placeholder?: string;
+  value?: string;
+  onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onclick?: () => void;
 }

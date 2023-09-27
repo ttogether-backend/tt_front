@@ -95,6 +95,7 @@ const GlobalStyle = css`
   }
   button {
     font-family: 'Pretendard Variable', 'Pretendard', 'Noto Sans KR', 'Nanum Gothic', sans-serif !important;
+    border: none; cursor: pointer;background-color: transparent;
   }
 
   .container {

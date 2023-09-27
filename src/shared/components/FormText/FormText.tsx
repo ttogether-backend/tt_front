@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Style from './FormText.styles';
+import { FormTextInput } from './FormText.styles';
 import { FormTextPropsType } from './FormText.types';
 import colors from '../../../styles/colors';
 
@@ -7,7 +7,7 @@ export const FormText: React.FC<FormTextPropsType> = (
   props: React.PropsWithChildren<FormTextPropsType>
 ) => {
   return (
-    <Style.FormTextInput
+    <FormTextInput
       {...props}
       width={props.width}
       height={props.height}
@@ -26,7 +26,7 @@ export const FormText: React.FC<FormTextPropsType> = (
 
 };
 
-const defaultProps = {
+FormText.defaultProps = {
   width: '100%',
   height: 'auto',
   fontSize: 16,
@@ -37,4 +37,3 @@ const defaultProps = {
   borderColor: `${colors.grey200}`,
   placeholder: "",
 };
-FormText.defaultProps = defaultProps;

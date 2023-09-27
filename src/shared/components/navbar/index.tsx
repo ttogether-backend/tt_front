@@ -3,8 +3,9 @@ import NavUsers from './nav-users/NavUsers';
 import { Link } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 import Nav from './nav/Nav';
+import React from 'react';
 
-const Navbar = () => {
+const Navbar:React.FC<{activeNav?:string;}> = ({activeNav}) => {
   return (
     <header className={styles.header}>
       <div className="container">
@@ -17,7 +18,7 @@ const Navbar = () => {
           </div>
           <NavUsers />
         </div>
-        <Nav />
+        <Nav activeNav={activeNav}/>
       </div>
     </header>
   );

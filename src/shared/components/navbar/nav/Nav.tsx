@@ -5,9 +5,8 @@ import { Link } from 'react-router-dom';
 // import colors from '../../../../styles/colors';
 // import { css } from '@emotion/react';
 
-const Nav = () => {
-  const activeNavName = "home";
-  const activeNav = "home";
+const Nav:React.FC<{activeNav?:string;}> = ({activeNav}) => {
+  const activeNavName = activeNav || "none";
   // const myStyle = css`
   //   font-size: 16px;
   //   color: #333;
@@ -15,10 +14,10 @@ const Nav = () => {
 
   return (
     <div className={styles.nav}>
-      <Link to="/" className={activeNavName === activeNav ? styles.active : ''}>
+      <Link to="/" className={activeNavName === "home" && styles.active}>
         홈
       </Link>
-      <Link to="">동행</Link>
+      <Link to="/accompany/" className={activeNavName === "accompany" && styles.active}>동행</Link>
     </div>
   );
 }

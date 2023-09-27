@@ -1,12 +1,13 @@
+import React from 'react';
 import Footer from '../../shared/components/footer';
 import Navbar from '../../shared/components/navbar';
 import { NonNavbar } from '../../shared/components/navbar';
 
-const Page = (props: any) => {
-  const { children } = props;
+const Page:React.FC<{activeNav ?: string; children: any;}> = ({children, activeNav}) => {
+
   return (
     <>
-      <Navbar />
+      <Navbar activeNav={activeNav}/>
       {children}
       <Footer />
     </>
