@@ -259,6 +259,10 @@ export const ParticipantBox = styled.div`
   padding: 24px 24px 20px;
   border-radius: 10px;
   border: 1px solid #d4d5d2;
+
+  :first-of-type {
+    margin-bottom: 24px;
+  }
 `;
 
 export const AccompanyOwner = styled.div`
@@ -316,6 +320,7 @@ export const ParticipatedStatus = styled.div<ParticipatedStatusType>`
 `;
 
 export const ParticipantListTitle = styled.div`
+  margin-bottom: 16px;
   color: #000;
   font-size: 18px;
   font-weight: 600;

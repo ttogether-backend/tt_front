@@ -1,13 +1,10 @@
-import { ProfileImage } from 'src/shared/components/ProfileImage/ProfileImage';
 import {
-  AccompanyOwner,
   ChatButton,
   ParticipantBox,
   ParticipantListTitle,
   ParticipatedStatus,
-  UserAuthLevel,
 } from './AccompanyDetail.styles';
-import AuthBadgeIcon from 'src/assets/icon/AuthBadgeIcon';
+import User from './AccompanyDetail.User';
 
 const Participant = () => {
   return (
@@ -18,33 +15,7 @@ const Participant = () => {
       }}
     >
       <ParticipantBox>
-        {/* 아래 프로필 정보 컴포넌트화 필요 */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '20px',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <ProfileImage imageSize="40" src={'/src/assets/cardDummy.png'} />
-            <AccompanyOwner>김행성</AccompanyOwner>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-            }}
-          >
-            <AuthBadgeIcon.Primary style={{ marginRight: '8px' }} />{' '}
-            <UserAuthLevel>1차 인증</UserAuthLevel>
-          </div>
-        </div>
+        <User url="/src/assets/cardDummy.png" name="김행성" />
 
         <ChatButton>1:1 채팅</ChatButton>
         <ParticipatedStatus type="apply">동행 신청</ParticipatedStatus>
@@ -52,6 +23,12 @@ const Participant = () => {
 
       <ParticipantBox>
         <ParticipantListTitle>참여자 목록</ParticipantListTitle>
+
+        <User url="/src/assets/cardDummy.png" name="김행성" />
+        <User url="/src/assets/cardDummy.png" name="김행성" showBadge />
+        <User url="/src/assets/cardDummy.png" name="김행성" />
+        <User url="/src/assets/cardDummy.png" name="김행성" />
+
         {/* <ChatButton>채팅방 재입장</ChatButton> */}
         <ParticipatedStatus type="owner">참여자 관리</ParticipatedStatus>
       </ParticipantBox>
