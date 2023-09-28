@@ -28,11 +28,11 @@ export const TypeBadge = styled.div<StyleType>`
   border : none;
   background-color : ${({ subType }) => {
     switch (subType) {
-      case "restaurant":
+      case "FOOD":
         return "#D97736";
-      case "trad":
+      case "CULTURE":
         return "#79A3A5";
-      case "trip":
+      case "TRAVEL":
         return "#5BB13D";
       default:
         return "#D97736";
@@ -43,6 +43,7 @@ export const StatusBadge = styled.div<StyleType>`
   height : 36px;
   border : none;
   justify-content : center;
+  padding: 8px 16px;
   align-items : center;
   white-space: nowrap;
   font-size: 14px;
@@ -50,25 +51,33 @@ export const StatusBadge = styled.div<StyleType>`
   font-weight: 500;
   color : ${({ subType }) => {
     switch (subType) {
-      case "open":
+      case "READY":
         return "#376B25";
-      case "close":
+      case "CONFRM":
+        return "#376B25";
+      case "COMPLETE":
         return "#ffffff";
+      case "CANCEL":
+        return "#BA1A1A"
       default:
         return "#376B25";
     }}
   };
   background-color : ${({ subType }) => {
     switch (subType) {
-      case "open":
+      case "READY":
         return "#F0F9EC";
-      case "close":
+      case "CONFRM":
+        return "#F0F9EC";
+      case "COMPLETE":
         return "#3F433D";
+      case "CANCEL":
+        return "#F1F2F1"
       default:
         return "#EAF7E6";
     }}
   };
-  width: ${({ text }) => `${getTextWidth(text, "14px Pretendard")+32}px`};
+  width: auto;
 `;
 
 export const PlaceBadge = styled.div<StyleType>`

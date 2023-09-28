@@ -9,13 +9,14 @@ const Badges: React.FC<BadgeProps> = ({ badgeType, subType, text, styleType }) =
   switch (badgeType) {
     case "type":
       if(subType === "restaurant") badgeText = "식당";
-      else if(subType === "trad") badgeText = "전통";
+      else if(subType === "trad") badgeText = "문화";
       else badgeText = "여행";
       return <TypeBadge {...styleType}> {badgeText}</TypeBadge>;
 
     case "status":
       if(text !== "") badgeText = text;
-      else if(subType === "open") badgeText = "동행모집";
+      else if(subType === "READY" || subType === "CONFRM") badgeText = "동행모집";
+      else if(subType === "CANCLE") badgeText = "동행취소";
       else badgeText = "동행완료";
       return <StatusBadge {...styleType}>{badgeText}</StatusBadge>;
 
