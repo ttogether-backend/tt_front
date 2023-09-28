@@ -71,11 +71,10 @@ const RangeItem: React.FC<DropdownItemPropsType> = (props: DropdownItemPropsType
   const lastItem = selectedDataList.find(
     (data, index, array) => data.name === array[array.length - 1].name
   );
-    console.log(data.name + data.isSelected);
   return (
     <>
       <Style.DropdownItemText key={data.name} isSelected={data.isSelected} type={data.name} onClick={() => onClick(data.name)}>
-        {data.name}
+        {data.name === "TRAVEL" ? "여행" : data.name === "CULTURE" ? "문화" : "음식"}
       </Style.DropdownItemText>
     </>
   );

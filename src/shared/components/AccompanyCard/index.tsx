@@ -9,7 +9,7 @@ export const AccompanyCard: React.FC<AccompanyCardProps> = (
 ) => {
   return (
     <Style.AccompanyCard>
-      <Link to="">
+      <Link to={`/accompany/${props.accomId}`}>
         {props.isAccomList && (
           <Style.UserBox>
           <div className="profile">

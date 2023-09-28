@@ -7,7 +7,7 @@ function useLogin() {
   const [login, setLogin] = React.useState<boolean>(false);
 
   useEffect(() => {
-    if (localStorage.getItem("access_token")) {
+    if (localStorage.getItem("accessToken")) {
       setLogin(true);
     }
     console.log(login);

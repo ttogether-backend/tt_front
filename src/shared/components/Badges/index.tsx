@@ -15,8 +15,8 @@ const Badges: React.FC<BadgeProps> = ({ badgeType, subType, text, styleType }) =
 
     case "status":
       if(text !== "") badgeText = text;
-      else if(subType === "open") badgeText = "동행모집";
-      else if(subType === "cancle") badgeText = "동행취소";
+      else if(subType === "READY" || subType === "CONFRM") badgeText = "동행모집";
+      else if(subType === "CANCLE") badgeText = "동행취소";
       else badgeText = "동행완료";
       return <StatusBadge {...styleType}>{badgeText}</StatusBadge>;
 
