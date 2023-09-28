@@ -17,11 +17,11 @@ export const DropdownItemText = styled.div<{isSelected: boolean, type: string}>`
   border-radius: 10px;
   background-color: ${({isSelected, type}) => {
     if(isSelected) {
-      if(type === '여행') {
+      if(type === 'TRAVEL') {
         return '#51A134';
-      } else if(type === '맛집') {
+      } else if(type === 'FOOD') {
         return '#D97736';
-      }else if(type === '문화') {
+      }else if(type === 'CULTURE') {
         return '#79A3A5'
       } else {
         return '#51A134'

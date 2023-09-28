@@ -28,11 +28,11 @@ export const TypeBadge = styled.div<StyleType>`
   border : none;
   background-color : ${({ subType }) => {
     switch (subType) {
-      case "restaurant":
+      case "FOOD":
         return "#D97736";
-      case "trad":
+      case "CULTURE":
         return "#79A3A5";
-      case "trip":
+      case "TRAVEL":
         return "#5BB13D";
       default:
         return "#D97736";
@@ -51,11 +51,13 @@ export const StatusBadge = styled.div<StyleType>`
   font-weight: 500;
   color : ${({ subType }) => {
     switch (subType) {
-      case "open":
+      case "READY":
         return "#376B25";
-      case "close":
+      case "CONFRM":
+        return "#376B25";
+      case "COMPLETE":
         return "#ffffff";
-      case "cancel":
+      case "CANCEL":
         return "#BA1A1A"
       default:
         return "#376B25";
@@ -63,11 +65,13 @@ export const StatusBadge = styled.div<StyleType>`
   };
   background-color : ${({ subType }) => {
     switch (subType) {
-      case "open":
+      case "READY":
         return "#F0F9EC";
-      case "close":
+      case "CONFRM":
+        return "#F0F9EC";
+      case "COMPLETE":
         return "#3F433D";
-      case "cancel":
+      case "CANCEL":
         return "#F1F2F1"
       default:
         return "#EAF7E6";

@@ -8,7 +8,7 @@ const DateRangePicker: React.FC<DropdownPropsType> = ({ onDatesChange }) => {
   
   const formatDate = (date: Date | null) => {
     if (!date) return null;
-    const year = date.getFullYear().toString().slice(-2); // Get last two digits of the year
+    const year = date.getFullYear(); // Get last two digits of the year
     const month = (`0${date.getMonth() + 1}`).slice(-2); // Months are 0-indexed
     const day = (`0${date.getDate()}`).slice(-2);
     return `${year}-${month}-${day}`;

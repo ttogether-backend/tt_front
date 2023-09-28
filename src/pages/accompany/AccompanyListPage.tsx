@@ -1,5 +1,5 @@
 import { AccompanyCard } from "src/shared/components/AccompanyCard";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AccompanyCardProps } from "src/shared/components/AccompanyCard/AccompanyCard.types";
 import Page from "../layout";
 import * as Style from "./AccompanyListPage.styles";
@@ -8,24 +8,53 @@ import Dropdown from "src/shared/components/Dropdown";
 import { Range } from "src/shared/components/Range/Range";
 import DropdownItem from "src/components/accompany/DropdownItem";
 import DateRangePicker from "src/components/accompany/DropdownItem/Datepicker";
-import { set } from "date-fns";
+import axios from "axios";
+
+const getAccompanyList = async () => {
+  const url = `/api/v1/together/accompany/posts`;
+  const accessToken = localStorage.getItem("accessToken") || import.meta.env.VITE_TEST_ACCESS_TOKEN;
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    });
+  try {
+    if (response.status === 200) {
+      return response.data.data.accompany_summary;
+      
+    }
+  } catch (error) {
+    console.log(error);
+  };
+};
 
 
 const AccompanyListPage = () => {
-  const [accompanyCardList, setAccompanyCardList] = useState<AccompanyCardProps[]>([]);
+  const [accompanyCardList, setAccompanyCardList] = useState(null);
+  const [filteredAccompanyCardList, setFilteredAccompanyCardList] = useState([]);
   const [choicedCategory, setChoicedCategory] = useState<string[]>([]);
   const [choicedAge, setChoicedAge] = useState<number[]>([]);
   const [choicedPersonnel, setChoicedPersonnel] = useState<number[]>([]);
   const [choicedPeriod, setChoicedPeriod] = useState<string[]>([]);
+  const [isComplete, setIsComplete] = useState<boolean>(false);
   const [categoryText, setCategoryText] = useState<string>("카테고리");
   const [ageText, setAgeText] = useState<string>("동행연령");
   const [personnelText, setPersonnelText] = useState<string>("동행인원");
   const [periodText, setPeriodText] = useState<string>("여행기간");
 
+  useEffect(() => {
+    getAccompanyList().then((data) => {
+      setAccompanyCardList(data);
+      console.log(accompanyCardList)
+    });
+  }
+  , []);
+
+
   const categoryDataList = [
-    {name: "여행", isSelected: false},
-    {name: "문화", isSelected: false},
-    {name: "맛집", isSelected: false},
+    {name: "TRAVEL", isSelected: false},
+    {name: "CULTURE", isSelected: false},
+    {name: "FOOD", isSelected: false},
   ]
 
   const ageDataList = [
@@ -67,7 +96,6 @@ const AccompanyListPage = () => {
     else if(value.length === 1) setAgeText(`${value[0]}대`);
     else setAgeText(`${value[0]}대 ~ ${value[1]}대`);
   };
-  console.log(choicedCategory);
 
     const handleDatesChange = ({ startDate, endDate }) => {
       setChoicedPeriod([startDate, endDate]);
@@ -75,6 +103,55 @@ const AccompanyListPage = () => {
       else setPeriodText(`${startDate} ~ ${endDate}`);
     };
 
+    const handleComplete = () => {
+      setIsComplete(!isComplete);
+    }
+
+    useEffect(() => {
+      const filterAccompanyList = () => {
+        let filteredList = accompanyCardList;
+    
+         // Category 필터
+        if (choicedCategory.length > 0) {
+          filteredList = filteredList.filter(data => choicedCategory.includes(data.category));
+        }
+        
+         // Age 필터
+        if (choicedAge.length > 0) {
+            filteredList = filteredList.filter(data => {
+              const { minRecruitAge, maxRecruitAge } = data.recruit_age_range;
+              if(choicedAge.length === 1) return choicedAge[0] === minRecruitAge || choicedAge[0] === maxRecruitAge;
+              else return choicedAge[0] <= maxRecruitAge && choicedAge[1] >= minRecruitAge;
+            });
+        }
+        
+         // Personnel 필터
+        if (choicedPersonnel.length > 0) {
+          filteredList = filteredList.filter(data => {
+            if(choicedPersonnel.length === 1) return choicedPersonnel[0] === data.recruit_number;
+            else return choicedPersonnel[0] <= data.recruit_number && choicedPersonnel[1] >= data.recruit_number;
+          });
+        }
+        
+         // Period 필터
+        if (choicedPeriod.length === 2) {
+          const [startPeriod, endPeriod] = choicedPeriod;
+          filteredList = filteredList.filter(data => 
+            new Date(data.period.startAt) >= new Date(startPeriod) && 
+            new Date(data.period.endAt) <= new Date(endPeriod)
+          );
+        }
+        
+        if(isComplete) {
+          filteredList = filteredList.filter(data => data.status === "COMPLETE")
+        }
+
+        setFilteredAccompanyCardList(filteredList);
+      };
+      
+      filterAccompanyList();
+  }, [choicedCategory, choicedAge, choicedPersonnel, choicedPeriod, accompanyCardList, isComplete]);
+  
   return (
     <Page activeNav='accompany'>
       <Style.Container>
@@ -115,7 +192,7 @@ const AccompanyListPage = () => {
             <div className="filter-item">
               <Style.Checkbox>
                 <label>
-                  <input type="checkbox" id="" name="checkbox" value="1" />
+                  <input type="checkbox" id="" name="checkbox" value="1" onChange={handleComplete}/>
                   <div className="checkImg"></div>모집완료 보기
                 </label>
               </Style.Checkbox>
@@ -125,23 +202,28 @@ const AccompanyListPage = () => {
           </div>
         </Style.AccompanyFilter>
         <Style.AccompanyList>
-          <AccompanyCard
-            isAccomList={true}
-            profileImgSrc="/images/tmp/img_user_profile01.png"
-            username="거지"
-            age="20대"
-            auth="1차 인증"
-            authNum={1}
-            thumbSrc="/images/tmp/img_tmp_acc_card.png"
-            category="restaurant"
-            status="open"
-            date="2023.04"
-            cnt={2}
-            personnel={5}
-            title="파리 에펠탑 투어 같이 가실 분"
-            location="프랑스 파리"
-            tags={['test', 'test2']}
-          />
+          {filteredAccompanyCardList && filteredAccompanyCardList.map((data, index) => (
+            <AccompanyCard
+              key={index}
+              isAccomList={true}
+              accomId={data.accompany_id}
+              memberId={data.writer.member_id}
+              authNum={1}
+              auth="1차 인증"
+              profileImgSrc={data.writer.profile_image_path}
+              username={data.writer.nickname}
+              age={`${data.recruit_age_range.minRecruitAge}대 ~ ${data.recruit_age_range.maxRecruitAge}대`}
+              thumbSrc={data.thumbnail_url}
+              category={ data.category}
+              status={data.status}
+              date={`${data.period.startAt} ~ ${data.period.endAt}`}
+              cnt={data.joining_member_count}
+              personnel={data.recruit_number}
+              title={data.title}
+              location={data.location_info_list[0].name}
+              tags={[]}
+            />
+          ))}
         </Style.AccompanyList>
       </Style.Container>
     </Page>

@@ -11,6 +11,8 @@ export type AccompanyCardProps = {
   age?: string;
   auth?: string;
   authNum?: number;
+  accomId: number;
+  memberId: string;
   thumbSrc: string;
   category: string;
   status: string;
