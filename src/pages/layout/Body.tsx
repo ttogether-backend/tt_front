@@ -1,9 +1,13 @@
 import { FC } from 'react';
-// import { Test1 } from 'src/pages/layout/Test1.tsx';
+import { DialogTestPages } from 'src/shared/components/modals/DialogTestPages';
+// import { CustomDatepicker } from '../../shared/components/Datepicker/Datepicker.tsx';
+
 
 export const Body:FC = () => {
 
   return <div>
-    {/*<Test1/>*/}
+    {/*<CustomDatepicker/>*/}
+    <DialogTestPages />
+
   </div>
 }
