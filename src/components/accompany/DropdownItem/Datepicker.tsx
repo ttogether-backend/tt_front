@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyledDatePicker } from 'src/shared/components/Datepicker/Datepicker.styles';
+import { DatePicker } from 'src/shared/components/Datepicker/Datepicker';
 import { DropdownPropsType } from './Datepicker.type';
 
 const DateRangePicker: React.FC<DropdownPropsType> = ({ onDatesChange }) => {
@@ -27,7 +27,7 @@ const DateRangePicker: React.FC<DropdownPropsType> = ({ onDatesChange }) => {
   };
 
   return (
-    <StyledDatePicker
+    <DatePicker
       selected={startDate}
       startDate={startDate}
       endDate={endDate}
