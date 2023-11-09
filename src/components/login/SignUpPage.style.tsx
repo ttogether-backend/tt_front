@@ -11,13 +11,3 @@ export const SignUpWrap = styled.div`
   text-align: center;
   margin: 4rem 0;
 `;
-
-
-export const SignUpTitle = styled.div`
-  margin-bottom: 50px;
-  color: #000;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 150%;
-  font-family: Pretendard;
-`;

@@ -10,8 +10,10 @@ export const Container = styled.div`
 `;
 
 export const LoginWrap = styled.div`
-  width: 380px;
-  text-align: center;
+	width: 454.5px;
+	cursor: pointer;
+	text-align: center;
+	margin: 6rem 0;
 `;
 
 //로그인-회원가입 타이틀
