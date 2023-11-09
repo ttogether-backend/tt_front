@@ -8,6 +8,8 @@ import axios from 'axios';
 import { getCookie } from './cookie';
 
 
+let isValidEmail = false;
+
 type loginType = {
   nickname: string;
   loginId: string;
@@ -43,7 +45,6 @@ const SendValidationEmail = (email) => {
 
 }
 
-let codeError = false;
 
 const ValidateCode = (data) => {
 	console.log("email: ", data[0], "code: ", data[1]);
@@ -66,11 +67,11 @@ const ValidateCode = (data) => {
 		document.getElementById("emailValidateButton").setAttribute("disabled", "disabled");
 		document.getElementById("validation").style.display = 'none';
 		document.getElementById("validSuccessMessage").style.display = 'inline';
+		isValidEmail = true;
 	})
 	 .catch((error) => { 
 		if (error.response) {
 			console.log(error.response.data);
-			codeError = true;
 		  } else if (error.request) {
 			console.log(error.request);
 		  } else {
@@ -90,9 +91,41 @@ const SignUpItem = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+	if (data.password != data.passwordConfirm) {
+		console.log("비밀번호가 맞지 않습니다");
+	}
+	const jwt = getCookie('Verified-jwt');
+	axios({
+		method: 'post',
+		url: 'http://localhost:8000/api/v1/members/register/email',
+		data: {
+			loginId: data.loginId,
+			password: data.password,
+			name: data.name,
+			nickname: data.nickname,
+			phoneNumber: data.phoneNumber,
+			authority: 'USER',
+			memberType: 'EMAIL',
+			termsAgreementList: [{"termsId":1, "agree":true}, {"termsId":2, "agree":true}]
+	 	},
+		headers: {
+			'Verified-Jwt' : jwt
+		}
+	 })
+	 .then((response) => { 
+		console.log(response.data)
+	})
+	 .catch((error) => { 
+		if (error.response) {
+			console.log(error.response.data);
+		  } else if (error.request) {
+			console.log(error.request);
+		  } else {
+			console.log('Error', error.message);
+		  }
+	  });
   };
   
-//   console.log("errors", errors);
 
   return (
     <>
@@ -117,10 +150,11 @@ const SignUpItem = () => {
 						id="email"
 						className="validItemIput"
 						placeholder="이메일을 입력해주세요."{...register('loginId', {required: true,
-							pattern: /^[a-zA-Z0-9.\-+_]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/ 
+							pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+							minLength: 5,
+							maxLength: 60 
 						})}
 					/>
-					{errors.loginId && <p>이메일 형식으로 입력해주세요.</p>}
 					<button 
 						id="emailValidateButton"
 						className="validButton"
@@ -134,6 +168,7 @@ const SignUpItem = () => {
 							}
 						}}>이메일 인증</button>
 				</ValidItemDiv>
+				{errors.loginId && <p>이메일 형식으로 입력해주세요.</p>}
 				<div id="validSuccessMessage" style = {{display:'none'}}>
 					<p>이메일 인증이 완료되었습니다.</p>
 				</div>				
@@ -154,7 +189,6 @@ const SignUpItem = () => {
 								ValidateCode(data);
 							}}>인증</button>
 					</ValidItemDiv>			
-					{codeError &&  <p className="error-text">이메일 형식으로 입력해주세요.</p>}		
 				</SignUpItemDiv>
 			</div>
 			<SignUpItemDiv>
@@ -163,7 +197,10 @@ const SignUpItem = () => {
 					className="itemIput"
 					placeholder="영어,숫자,특수문자 중 2가지 이상 조합 8~20자"
 					type="password"
-					{...register('password', {required: true})}
+					{...register('password', {required: true,
+					pattern: /^(?=.*[A-Za-z])(?=.*[0-9!@#\$%^&*])[A-Za-z0-9!@#\$%^&*]+$/,
+					minLength: 8,
+					maxLength: 20})}
 				/>
 				{errors.password && <p>비밀번호는 필수입니다.</p>}
 			</SignUpItemDiv>
@@ -173,7 +210,10 @@ const SignUpItem = () => {
 					className="itemIput"
 					placeholder="영어,숫자,특수문자 중 2가지 이상 조합 8~20자"
 					type="password"
-					{...register('passwordConfirm', {required: true})}
+					{...register('passwordConfirm', {required: true,
+						pattern: /^(?=.*[A-Za-z])(?=.*[0-9!@#\$%^&*])[A-Za-z0-9!@#\$%^&*]+$/,
+						minLength: 8,
+						maxLength: 20})}
 				/>
 				{errors.passwordConfirm && <p>비밀번호 확인은 필수입니다.</p>}
 			</SignUpItemDiv>
@@ -182,7 +222,10 @@ const SignUpItem = () => {
 				<input 
 					className="itemIput"
 					placeholder="이름을 입력해주세요."
-					{...register('name', {required: true})}
+					{...register('name', {required: true,
+					pattern: /^[A-Za-z가-힣\\s]/,
+					minLength: 1,
+					maxLength: 50})}
 				/>
 				{errors.name && <p>이름은 필수입니다.</p>}
 			</SignUpItemDiv>
@@ -191,8 +234,10 @@ const SignUpItem = () => {
 				<input 
 					className="itemIput"
 					placeholder="000-0000-0000 형식으로 입력해주세요."
-					pattern="^[0-9]{3}-[0-9]{4}-[0-9]{4}$"
-					{...register('phoneNumber', {required: true})}
+					{...register('phoneNumber', {required: true,
+						pattern: /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/,
+						minLength: 3,
+						maxLength: 24})}
 				/>
 				{errors.phoneNumber && <p>휴대폰번호는 필수입니다.</p>}
 			</SignUpItemDiv>
