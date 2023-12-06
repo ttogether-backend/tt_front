@@ -15,6 +15,10 @@ import VerificareUser from 'src/pages/auth/sns/authSns';
 import AuthPassword from 'src/pages/auth/password/authPassword';
 import Withdrawal from 'src/pages/users/withdrawal/withdrawal';
 import Home from 'src/pages/home/home.tsx';
+import SignUpPage from 'src/components/login/SignUpPage.tsx';
+import LoginForm from 'src/components/login/Form/LoginForm.tsx';
+import LoginPage from 'src/components/login/LoginPage.tsx';
+import Logout from 'src/components/login/Logout.tsx';
 
 const Router = () => {
   return (
@@ -40,6 +44,9 @@ const Router = () => {
         <Route path="/myfeed/:id" element={<MyfeedPage />} />
         {/* 계정기록 */}
         <Route path="/myfeed/user/record" element={<UserRecord />} />
+		<Route path="/login" element={<LoginPage />} />
+		<Route path="/signup" element={<SignUpPage />} />
+		<Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
   );
