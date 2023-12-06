@@ -8,6 +8,7 @@ import axios from 'axios';
 import { getCookie } from './cookie';
 
 
+
 let isValidEmail = false;
 
 type loginType = {
@@ -20,20 +21,12 @@ type loginType = {
   termsAgreementList: (number | boolean)[];
 };
 
-axios.defaults.withCredentials = true;
-// axios({
-// 	method: 'get',
-// 	url: 'http://ec2-44-203-114-252.compute-1.amazonaws.com:8000/api/v1/members/register/terms'
-// })
-// .then((response) => { console.log(response.data) })
-// .catch((Error) => { console.log(Error) });
-
 const SendValidationEmail = (email) => {
 	
 	console.log(email);
 	axios({
 		method: 'post',
-		url: 'http://localhost:8000/api/v1/members/code/issue',
+		url: '/api/v1/members/code/issue',
 		data: {
 			email: email
 	 	}
@@ -49,9 +42,10 @@ const SendValidationEmail = (email) => {
 const ValidateCode = (data) => {
 	console.log("email: ", data[0], "code: ", data[1]);
 	const jwt = getCookie('Verification-Jwt');
+	console.log("jwt:", jwt);
 	axios({
 		method: 'post',
-		url: 'http://localhost:8000/api/v1/members/code/verify',
+		url: '/api/v1/members/code/verify',
 		data: {
 			email: data[0],
 			code: data[1]
@@ -97,7 +91,7 @@ const SignUpItem = () => {
 	const jwt = getCookie('Verified-jwt');
 	axios({
 		method: 'post',
-		url: 'http://localhost:8000/api/v1/members/register/email',
+		url: '/api/v1/members/register/email',
 		data: {
 			loginId: data.loginId,
 			password: data.password,

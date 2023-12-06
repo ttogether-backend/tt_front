@@ -5,17 +5,21 @@ import ButtonsText from '../../shared/components/ButtonsText/index';
 import { ButtonStyleType } from '../../shared/components/ButtonsText/ButtonsText.types';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
 import { LoginTitle, LoginItemDiv, LoginItemWrap } from './LoginItem.style';
-
+import { onLoginSuccess, onSilentRefresh } from "./Utils/LoginUtils";
+import { useNavigate } from 'react-router-dom';
 
 type loginType = {
 	email: string,
 	password: string
 };
 
-axios.defaults.withCredentials = true;
 
 const LoginItem = () => {
+	const navigate = useNavigate();
+
+	
   const {
     register, // input field 지정
     handleSubmit,
@@ -24,12 +28,17 @@ const LoginItem = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-	axios.post('http://localhost:8000/api/v1/members/login/email', {
+	axios.post('/api/v1/members/login/email', {
 		email : data.email,
 		password : data.password
 	})
 	.then((res) => {
 		console.log(res)
+		if (res.data.success) {
+			// console.log("accessToken:", accessToken, "refreshToken:", refreshToken);
+			onLoginSuccess(res.data);
+			navigate('/');
+		}
 	})
 	.catch((error) => {
 		console.log(error)
