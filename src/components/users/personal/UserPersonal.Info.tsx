@@ -202,7 +202,6 @@ const Info: FC<InfoType> = ({ nickname, bio, profile_image_url }) => {
         </Box>
       </ProfileBox>
 
-<<<<<<< Updated upstream
       <AccordionDialog
         title="어떤 여행에 관심이 가나요?"
         message="평소 좋아하는 여행이나 해보고 싶은 여행을 최대 7개까지 체크해주세요.언제든지 변경이 가능합니다."
@@ -222,26 +221,5 @@ const Info: FC<InfoType> = ({ nickname, bio, profile_image_url }) => {
     </>
   );
 };
-=======
-                </Box>
-            </ProfileBox>
-            
-            <AccordionDialog
-                title="어떤 여행에 관심이 가나요?"
-                message="평소 좋아하는 여행이나 해보고 싶은 여행을 최대 7개까지 체크해주세요.언제든지 변경이 가능합니다."
-                isOpen={isOpenBioModal}
-                list={TravelTypes}
-                confirmButtonLabel="제출하기"
-                isCloseBackgroundClick={true}
-                handleClose={() => {
-                    setIsOpenBioModal(false);
-                } } 
-                handleConfirm={function () {
-                    // patch api 있는 함수
-                    throw new Error('Function not implemented.');
-                } }                
-                // handleConfirm:(accordionItem:AccordionItem) => any;
-            />
->>>>>>> Stashed changes
 
 export default Info;
