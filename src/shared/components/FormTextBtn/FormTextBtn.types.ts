@@ -11,4 +11,6 @@ export interface FormTextBtnPropsType {
   value?: string;
   onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onclick?: () => void;
+  isLoading?:boolean;
+  useLoading?:boolean;
 }
