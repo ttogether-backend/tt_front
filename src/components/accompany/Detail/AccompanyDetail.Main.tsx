@@ -3,13 +3,13 @@ import Content from './AccompanyDetail.Content';
 import Header from './AccompanyDetail.Header';
 import { Divider, Wrapper } from './AccompanyDetail.styles';
 
-const Main = () => {
+const Main = ({ headerData, basicInfoData, contentData }) => {
   return (
     <>
       <Wrapper>
-        <Header />
-        <BasicInfo />
-        <Content />
+        <Header {...headerData} />
+        <BasicInfo {...basicInfoData} />
+        <Content {...contentData} />
       </Wrapper>
 
       <Divider />
