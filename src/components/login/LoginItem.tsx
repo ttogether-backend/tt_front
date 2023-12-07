@@ -42,6 +42,7 @@ const LoginItem = () => {
 	})
 	.catch((error) => {
 		console.log(error)
+		document.getElementById("signinFailureMessage").style.display = 'inline';
 	});
   };
 
@@ -72,6 +73,11 @@ const LoginItem = () => {
 					{...register('password', { required: true })}
 				/>
 				{errors.password && <p className="error-text">비밀번호를 입력해주세요.</p>}
+			</LoginItemDiv>
+			<LoginItemDiv>
+				<div id="signinFailureMessage" style = {{display:'none'}}>
+						<p>아이디와 비밀번호가 일치하지 않습니다.</p>
+				</div>
 			</LoginItemDiv>
 			<LoginItemDiv>
 				<button className="submitButton" type="submit">로그인</button>

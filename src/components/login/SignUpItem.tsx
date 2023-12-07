@@ -8,7 +8,6 @@ import axios from 'axios';
 import { getCookie } from './cookie';
 
 
-
 let isValidEmail = false;
 
 type loginType = {
@@ -56,12 +55,18 @@ const ValidateCode = (data) => {
 
 	 })
 	 .then((response) => { 
-		console.log(response.data)
-		document.getElementById("email").setAttribute("disabled", "disabled");
-		document.getElementById("emailValidateButton").setAttribute("disabled", "disabled");
-		document.getElementById("validation").style.display = 'none';
-		document.getElementById("validSuccessMessage").style.display = 'inline';
-		isValidEmail = true;
+		if (response.data) {
+			console.log(response.data)
+			document.getElementById("email").setAttribute("disabled", "disabled");
+			document.getElementById("emailValidateButton").setAttribute("disabled", "disabled");
+			document.getElementById("validation").style.display = 'none';
+			document.getElementById("validSuccessMessage").style.display = 'inline';
+			isValidEmail = true;
+		}
+		else {
+			alert("인증번호를 다시 확인해주세요.");
+		}
+		
 	})
 	 .catch((error) => { 
 		if (error.response) {
@@ -85,8 +90,15 @@ const SignUpItem = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+	document.getElementById("notEqualPassword").style.display = 'none';
 	if (data.password != data.passwordConfirm) {
 		console.log("비밀번호가 맞지 않습니다");
+		document.getElementById("notEqualPassword").style.display = 'inline';
+		return 
+	}
+	if (!isValidEmail) {
+		alert("이메일 인증이 필요합니다.");
+		return 
 	}
 	const jwt = getCookie('Verified-jwt');
 	axios({
@@ -189,7 +201,7 @@ const SignUpItem = () => {
 				<span className="itemName">비밀번호</span>
 				<input 
 					className="itemIput"
-					placeholder="영어,숫자,특수문자 중 2가지 이상 조합 8~20자"
+					placeholder="영어,숫자,특수문자 중 3가지 이상 조합 8~20자"
 					type="password"
 					{...register('password', {required: true,
 					pattern: /^(?=.*[A-Za-z])(?=.*[0-9!@#\$%^&*])[A-Za-z0-9!@#\$%^&*]+$/,
@@ -202,7 +214,7 @@ const SignUpItem = () => {
 				<span className="itemName">비밀번호 확인</span>
 				<input 
 					className="itemIput"
-					placeholder="영어,숫자,특수문자 중 2가지 이상 조합 8~20자"
+					placeholder="영어,숫자,특수문자 중 3가지 이상 조합 8~20자"
 					type="password"
 					{...register('passwordConfirm', {required: true,
 						pattern: /^(?=.*[A-Za-z])(?=.*[0-9!@#\$%^&*])[A-Za-z0-9!@#\$%^&*]+$/,
@@ -210,6 +222,11 @@ const SignUpItem = () => {
 						maxLength: 20})}
 				/>
 				{errors.passwordConfirm && <p>비밀번호 확인은 필수입니다.</p>}
+			</SignUpItemDiv>
+			<SignUpItemDiv>
+				<div id='notEqualPassword' style = {{display:'none'}}>
+					<p>비밀번호가 일치하지 않습니다.</p>
+				</div>
 			</SignUpItemDiv>
 			<SignUpItemDiv>
 				<span className="itemName">이름</span>
