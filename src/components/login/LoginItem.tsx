@@ -28,6 +28,7 @@ const LoginItem = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+
 	axios.post('/api/v1/members/login/email', {
 		email : data.email,
 		password : data.password

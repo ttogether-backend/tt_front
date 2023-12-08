@@ -1,21 +1,25 @@
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
+
+const cookies = new Cookies();
+const accessToken = cookies.get('accessToken') ? cookies.get('accessToken') : '';
 
 const axiosInstance = axios.create({ 
 	baseURL : 'http://localhost:8000',
-	withCredientials : true,
+	withCredentials : true,
 	headers : {
-			Authorization : ''
+			Authorization : `Bearer ${accessToken}`
 	}
 })
 
-axios.interceptors.request.use(
-	(config) => {
-		config.headers['Authorization'] = localStorage.getItem('accessToken');
-		return config;
-	},
-	(err) => {
-		return Promise.reject(err);
-	}
-)
+// axios.interceptors.request.use(
+// 	(config) => {
+// 		config.headers['Authorization'] = `Bearer ${accessToken}`;
+// 		return config;
+// 	},
+// 	(err) => {
+// 		return Promise.reject(err);
+// 	}
+// )
 
 export default axiosInstance;

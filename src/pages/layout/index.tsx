@@ -3,16 +3,37 @@ import Footer from '../../shared/components/footer';
 import Navbar from '../../shared/components/navbar';
 import { NonNavbar } from '../../shared/components/navbar';
 import { Cookies } from 'react-cookie';
+import axiosInstance from 'src/Utils/axiosInstance';
+import { onAuthStatus } from 'src/components/login/Utils/LoginUtils';
+
+// interface User {
+// 	profile : 
+// }
 
 function useLogin() {
   const [login, setLogin] = React.useState<boolean>(false);
+//   const [user, setUser] = React.useState
   const cookies = new Cookies();
 
   useEffect(() => {
-    if (cookies.get('accessToken')) {
-      setLogin(true);
-    }
-    console.log(login);
+	const fetchData = async () => {
+		if (cookies.get('accessToken')) {
+			const isLogin = await onAuthStatus();
+			console.log("isLogin = ", isLogin);
+			setLogin(isLogin);
+			if (isLogin) {
+				axiosInstance.get('/api/v1/members/' + cookies.get('memberId') + '/profile')
+				.then((res) => {
+					console.log(res);
+				})
+				.catch((err) => {
+					console.log(err);
+				})
+			}
+		}
+		console.log(login);
+	}
+	fetchData();
   },[]);
 
   return login;

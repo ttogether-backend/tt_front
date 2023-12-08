@@ -4,9 +4,10 @@ import axiosInstance from 'src/Utils/axiosInstance';
 
 const cookies = new Cookies();
 
-export const onSilentRefresh = () => {
+export const onAuthStatus = () => {
   const refreshToken = cookies.get('refreshToken');
   const memberId = cookies.get('memberId');
+  const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
 	console.log(refreshToken, memberId)
 	if (!refreshToken && !memberId) {
@@ -21,9 +22,9 @@ export const onSilentRefresh = () => {
 			}
 		})
 		.then((res) => {
-			console.log(res);
-			return res.data.data.accessToken;
+			cookies.set('accessToken', res.data.data.accessToken, {path: '/', expires: JWT_EXPRIY_TIME} );
 		})
+		return true
 	}
 	
 }
@@ -32,18 +33,11 @@ export const onLoginSuccess = (data) => {
 	const memberId = data.data.memberId;
 	const { accessToken, refreshToken } = data.data.token;
 	const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-	const config = {expires: JWT_EXPRIY_TIME, httpOnly: true} 
+	const config = {path: '/', expires: JWT_EXPRIY_TIME} 
 
 	cookies.set('accessToken', accessToken, config);
 	cookies.set('refreshToken', refreshToken, config);
 	cookies.set('memberId', memberId, config);
-	axiosInstance.get('/api/v1/members/' + memberId + '/profile')
-	.then((res) => {
-		console.log(res);
-	})
-	.catch((err) => {
-		console.log(err);
-	})
 }
 
 export const isLogin = () => {
