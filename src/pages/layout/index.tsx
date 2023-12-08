@@ -2,17 +2,17 @@ import React, {useEffect} from 'react';
 import Footer from '../../shared/components/footer';
 import Navbar from '../../shared/components/navbar';
 import { NonNavbar } from '../../shared/components/navbar';
+import { Cookies } from 'react-cookie';
 
 function useLogin() {
   const [login, setLogin] = React.useState<boolean>(false);
+  const cookies = new Cookies();
 
   useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
+    if (cookies.get('accessToken')) {
       setLogin(true);
     }
     console.log(login);
-
-    setLogin(true);
   },[]);
 
   return login;

@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import PrivacyJoin from './PrivacyJoin';
 import { SignUpTitle, SignUpItemDiv, ValidItemDiv, SignUpItemWrap } from './SignUpItem.style';
 import axios from 'axios';
+import axiosInstance from '../../Utils/axiosInstance';
 import { getCookie } from './cookie';
 
 
@@ -23,13 +24,9 @@ type loginType = {
 const SendValidationEmail = (email) => {
 	
 	console.log(email);
-	axios({
-		method: 'post',
-		url: '/api/v1/members/code/issue',
-		data: {
-			email: email
-	 	}
-	 })
+	axiosInstance.post('/api/v1/members/code/issue',
+		{ email: email }
+	 )
 	 .then((response) => { console.log(response.data) })
 	 .catch((Error) => { console.log(Error) });
 	const el = document.getElementById('validation');

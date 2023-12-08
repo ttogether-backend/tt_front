@@ -1,5 +1,6 @@
 import { Cookies } from 'react-cookie';
 import axios from "axios";
+import axiosInstance from 'src/Utils/axiosInstance';
 
 const cookies = new Cookies();
 
@@ -31,10 +32,18 @@ export const onLoginSuccess = (data) => {
 	const memberId = data.data.memberId;
 	const { accessToken, refreshToken } = data.data.token;
 	const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-			
-	localStorage.setItem('accessToken', accessToken);
-	localStorage.setItem('refreshToken', refreshToken);
-	localStorage.setItem('memberId', memberId);
+	const config = {expires: JWT_EXPRIY_TIME, httpOnly: true} 
+
+	cookies.set('accessToken', accessToken, config);
+	cookies.set('refreshToken', refreshToken, config);
+	cookies.set('memberId', memberId, config);
+	axiosInstance.get('/api/v1/members/' + memberId + '/profile')
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((err) => {
+		console.log(err);
+	})
 }
 
 export const isLogin = () => {
