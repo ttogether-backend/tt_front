@@ -6,8 +6,6 @@ import AccompanyListPage from 'src/pages/accompany/AccompanyListPage';
 import { Test1 } from 'src/pages/layout/Test1';
 import { PrivacyPolicy } from '../pages/policy/PrivacyPolicy.tsx';
 import { TermsOfService } from '../pages/policy/TermsOfService.tsx';
-import MyfeedPage from 'src/pages/Myfeed';
-import UserRecord from 'src/pages/Myfeed/UserRecord';
 
 import MypageMain from 'src/pages/users';
 import UserPersonal from 'src/pages/users/personal';
@@ -19,6 +17,7 @@ import SignUpPage from 'src/components/login/SignUpPage.tsx';
 import LoginForm from 'src/components/login/Form/LoginForm.tsx';
 import LoginPage from 'src/components/login/LoginPage.tsx';
 import Logout from 'src/components/login/Logout.tsx';
+import Myfeed from 'src/pages/myfeed/index.tsx';
 
 const Router = () => {
   return (
@@ -38,15 +37,11 @@ const Router = () => {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/test" element={<Test1 />} />
-        {/* 본인이 들어갈 때 */}
-        <Route path="/myfeed" element={<MyfeedPage />} /> 
-        {/* 남의거 볼 때 */}
-        <Route path="/myfeed/:id" element={<MyfeedPage />} />
-        {/* 계정기록 */}
-        <Route path="/myfeed/user/record" element={<UserRecord />} />
-		<Route path="/login" element={<LoginPage />} />
-		<Route path="/signup" element={<SignUpPage />} />
-		<Route path="/logout" element={<Logout />} />
+        <Route path="/myfeed" element={<Myfeed />} />
+        <Route path="/myfeed/:id" element={<Myfeed />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
   );

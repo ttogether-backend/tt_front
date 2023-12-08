@@ -1,100 +1,64 @@
-import React, {useState, useEffect} from "react";
-import { useParams } from "react-router-dom";
-import MyfeedMyProfile from "src/components/myfeed/MyfeedProfile/MyfeedMyProfile";
-import MyfeedOthersProfile from "src/components/myfeed/MyfeedProfile/MyfeedOthersProfile";
-import {NonNavbarPage} from "../layout";
-import { ProfileData, sameFollowData, chatState, followState, backImage, AccompanyCardProp} from "./dummydata";
-import { MyfeedContainer, Wrapper, ChangeImageButtonStyle, AccomRecordTitle, AcoomRecordCardContainer, BackImageChangeDiv} from "./Myfeed.style";
-import ButtonsText from "src/shared/components/ButtonsText";
-import MyfeedBackImage from "src/components/myfeed/MyfeedBackImage";
-import { AccompanyCard } from "src/shared/components/AccompanyCard";
-import { AccompanyCardProps } from "src/shared/components/AccompanyCard/AccompanyCard.types";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { NonNavbarPage } from '../layout';
+import { SideMenuContainer } from './layout/SideMenuContainer';
+import { SideMenuItemType } from './components/SideMenu';
+import ReceiveRequestList from './requestList/ReceiveRequestList';
+import SendRequestList from './requestList/SendRequestList';
 
+const menuItemList: SideMenuItemType[] = [
+  {
+    id: 'menu_profile',
+    label: '프로필',
+  },
+  {
+    id: 'menu_receive_request',
+    label: '받은 동행 신청 목록',
+  },
+  {
+    id: 'menu_send_request',
+    label: '보낸 동행 신청 목록',
+  },
+  {
+    id: 'menu_comment',
+    label: '내가 작성한 댓글',
+  },
+  {
+    id: 'menu_accompany',
+    label: '동행 진행 내역',
+  },
+];
 
-
-const MyfeedPage: React.FC = () => {  
+const Myfeed: React.FC<{ children?: React.ReactNode }> = () => {
   const { id } = useParams();
-  const [isOther, setIsOther] = useState(false);
-  const [backImage, setBackImage] = useState<string>(`${import.meta.env.VITE_PUBLIC}/images/common/Default_back.png`);
-  const [imageInput, setImageInput] = useState(false);
-  const [accompanyRecords, setAccompanyRecords] = useState<AccompanyCardProps[]>([]);
 
-  // const records = [
-  //   AccompanyCardProp,AccompanyCardProp,AccompanyCardProp,AccompanyCardProp,AccompanyCardProp,AccompanyCardProp];
-
-
-  useEffect(() => {
-    if(id){
-      setIsOther(true);
-    }
-    // setAccompanyRecords(records);
-  }, []);
-
-  const ChangeBackImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(e.target.files){
-      const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = () => {
-        setBackImage(reader.result as string);
-        setImageInput(false);
-      }
-    }
+  const validate = () => {
+    // 로그인 x 시 팝업 + 메인 홈으로 리다이렉트 : 라우트에서 공통으로 처리할 수 잇지 않나?
+    
+    return true;
   }
 
-
+  useEffect(() => {
+    console.log(id);
+    
+  }, [id]);
 
   return (
     <NonNavbarPage>
-      <Wrapper>
-        <MyfeedBackImage alt="배경이미지" src={backImage}/>
-          
-        {!isOther ? 
-          <MyfeedContainer>
-            <ButtonsText label="배경 수정" styleType={ChangeImageButtonStyle} onClick={() =>setImageInput(!imageInput)}/> 
-            {imageInput &&
-              <BackImageChangeDiv>
-                <input id="fileInput" type="file" accept="image/*" onChange={ChangeBackImage}/>
-                </BackImageChangeDiv>}
-            <MyfeedMyProfile 
-                profileImage={ProfileData[0].profileImage}
-                nickName={ProfileData[0].nickname}
-                accomCount={ProfileData[0].accomCount}
-                introduce={ProfileData[0].introduce}
-                followerCount={ProfileData[0].followerCount}
-                followingCount={ProfileData[0].followingCount}
-                onClickFollower={() => console.log("팔로워 목록")}
-                onClickFollowing={() => console.log("팔로잉 목록")}
-              />
-              <AccomRecordTitle>나의 동행 기록</AccomRecordTitle>
-              <AcoomRecordCardContainer>
-                {accompanyRecords.length === 0 && <div>동행 기록이 없습니다.</div>}
-                {accompanyRecords.map((record, id) => (
-                  <AccompanyCard key={id} {...record}/>
-                ))}
-              </AcoomRecordCardContainer>
-          </MyfeedContainer>
-          :
-          <MyfeedContainer>
-              <MyfeedOthersProfile 
-                profileImage={ProfileData[0].profileImage}
-                nickName={ProfileData[0].nickname}
-                accomCount={ProfileData[0].accomCount}
-                introduce={ProfileData[0].introduce}
-                followerCount={ProfileData[0].followerCount}
-                followingCount={ProfileData[0].followingCount}
-                onClickFollower={() => console.log("팔로워 목록")}
-                onClickFollowing={() => console.log("팔로잉 목록")}
-                isChat={chatState[0].isChat}
-                isFollow={followState[0].isFollow}
-                follower={sameFollowData}
-              />
-              <AccomRecordTitle>{ProfileData[0].nickname}님의 동행 기록</AccomRecordTitle>
-              <AcoomRecordCardContainer/>
-            </MyfeedContainer>
-          }
-      </Wrapper>
+      {id == null ? (
+        <SideMenuContainer menuItemList={menuItemList}>
+          <SideMenuContainer.SideMenuContent menuId={'menu_receive_request'}>
+            <ReceiveRequestList />
+          </SideMenuContainer.SideMenuContent>
+          <SideMenuContainer.SideMenuContent menuId={'menu_send_request'}>
+            <SendRequestList />
+          </SideMenuContainer.SideMenuContent>
+        </SideMenuContainer>
+      ) : (
+        <></>
+      )}
     </NonNavbarPage>
   );
-}
+};
 
-export default MyfeedPage;
+export default Myfeed;
