@@ -39,14 +39,15 @@ const Router = () => {
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/test" element={<Test1 />} />
         {/* 본인이 들어갈 때 */}
-        <Route path="/myfeed" element={<MyfeedPage />} /> 
+        <Route path="/myfeed" element={<MyfeedPage />} />
         {/* 남의거 볼 때 */}
         <Route path="/myfeed/:id" element={<MyfeedPage />} />
         {/* 계정기록 */}
         <Route path="/myfeed/user/record" element={<UserRecord />} />
-		<Route path="/login" element={<LoginPage />} />
-		<Route path="/signup" element={<SignUpPage />} />
-		<Route path="/logout" element={<Logout />} />
+
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
   );
