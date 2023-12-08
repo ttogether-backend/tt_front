@@ -9,8 +9,9 @@ const Logout = (() => {
 
 	useEffect(() => {
 		
-		if (cookies.get('refreshToken')) {
+		if (cookies.get('accessToken')) {
 			cookies.remove('refreshToken');
+			cookies.remove('accessToken')
 			cookies.remove('memberId');
 			console.log('logout compeletely')
 		}

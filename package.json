@@ -24,7 +24,7 @@
     "react-cookie": "^6.1.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
-  "react-quill": "^2.0.0",
+    "react-quill": "^2.0.0",
     "react-router": "^6.15.0",
     "react-router-dom": "^6.20.1",
     "recoil": "^0.7.7",
@@ -55,7 +55,7 @@
     "typescript": "^5.1.6",
     "vite": "^4.4.5"
   },
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@3.6.1",
   "msw": {
     "workerDirectory": "public"
   }
