@@ -6,10 +6,10 @@ import { onSilentRefresh } from './components/login/Utils/LoginUtils';
 
 function App() {
 
-  useEffect(() => {
-	console.log('get access Token');
-	onSilentRefresh();
-  })
+//   useEffect(() => {
+// 	console.log('get access Token');
+// 	onSilentRefresh();
+//   })
 
   return (
     <>

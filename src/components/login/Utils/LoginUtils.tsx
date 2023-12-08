@@ -9,7 +9,8 @@ export const onSilentRefresh = () => {
 
 	console.log(refreshToken, memberId)
 	if (!refreshToken && !memberId) {
-		console.log('not have a token')
+		console.log('로그인 된 유저 없음')
+		return false
 	}
 	else {
 		axios.post('/api/v1/members/token/reissue', null, {
@@ -20,7 +21,7 @@ export const onSilentRefresh = () => {
 		})
 		.then((res) => {
 			console.log(res);
-			axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.accessToken;
+			return res.data.data.accessToken;
 		})
 	}
 	
@@ -31,9 +32,9 @@ export const onLoginSuccess = (data) => {
 	const { accessToken, refreshToken } = data.data.token;
 	const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 			
-	axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-	cookies.set('refreshToken', refreshToken, { path: '/', expires: JWT_EXPRIY_TIME });
-	cookies.set('memberId', memberId, { path: '/', expires: JWT_EXPRIY_TIME });
+	localStorage.setItem('accessToken', accessToken);
+	localStorage.setItem('refreshToken', refreshToken);
+	localStorage.setItem('memberId', memberId);
 }
 
 export const isLogin = () => {

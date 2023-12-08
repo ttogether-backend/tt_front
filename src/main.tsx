@@ -7,6 +7,7 @@ import App from './App.tsx';
 import { CookiesProvider } from 'react-cookie';
 
 const queryClient = new QueryClient();
+
 axios.defaults.baseURL = "http://localhost:8000"
 axios.defaults.withCredentials = true;
 
