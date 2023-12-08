@@ -27,21 +27,21 @@ const NavUsers:React.FC<{login?: boolean}> = ({login}) => {
               </Link>
             </li>
             <li>
-              <Link to="" className={styles.user}>
+              <Link to="/myfeed" className={styles.user}>
                 마이페이지
               </Link>
             </li>
           </ul>
-          <Link to="" className="btn btn-primary btn-m btn-round">
+          <Link to="/accompany/create" className="btn btn-primary btn-m btn-round">
             동행 글 올리기
           </Link>
         </div>
       ) : (
         <div className={styles.btn_group}>
-          <Link to="" className="btn btn-transparent btn-m btn-round">
+          <Link to="/login" className="btn btn-transparent btn-m btn-round">
             로그인
           </Link>
-          <Link to="" className="btn btn-primary btn-m btn-round">
+          <Link to="/signup" className="btn btn-primary btn-m btn-round">
             회원가입
           </Link>
         </div>
