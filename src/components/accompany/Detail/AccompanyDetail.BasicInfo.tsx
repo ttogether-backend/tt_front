@@ -16,7 +16,7 @@ const BasicInfo = () => {
 
       <InfoBox>
         <Label>동행 장소</Label>
-        <Value>서울특별시 도봉구 어쩌구 아차산 앞 어쩌구 저쩌구</Value>
+        {/* <Value>{location_info_list[0].address}</Value> */}
       </InfoBox>
 
       <InfoBox>

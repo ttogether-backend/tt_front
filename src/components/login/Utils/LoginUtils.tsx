@@ -5,8 +5,8 @@ import axiosInstance from 'src/Utils/axiosInstance';
 const cookies = new Cookies();
 
 export const onSilentRefresh = () => {
-	const refreshToken = cookies.get('refreshToken');
-	const memberId = cookies.get('memberId');
+  const refreshToken = cookies.get('refreshToken');
+  const memberId = cookies.get('memberId');
 
 	console.log(refreshToken, memberId)
 	if (!refreshToken && !memberId) {
@@ -47,8 +47,8 @@ export const onLoginSuccess = (data) => {
 }
 
 export const isLogin = () => {
-	if (cookies.get('refreshToken')) {
-		return true;
-	}
-	return false;
-}
+  if (cookies.get('refreshToken')) {
+    return true;
+  }
+  return false;
+};

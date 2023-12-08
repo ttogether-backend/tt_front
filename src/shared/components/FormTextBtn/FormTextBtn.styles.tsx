@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { FormTextPropsType } from 'src/shared/components/FormText/FormText.types.ts';
+import { FormTextBtnPropsType } from 'src/shared/components/FormTextBtn/FormTextBtn.types.ts';
 import colors from '../../../styles/colors';
 
 export const FormTextContainer = styled.div<FormTextPropsType>`
@@ -29,4 +30,25 @@ export const FormBtn = styled.button<FormTextPropsType>`
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+`;
+
+export const LoadingIcon = styled.div<FormTextBtnPropsType>`
+    position: absolute;
+    top: 11.75px; right: 11.75px;
+    border: 7px solid lightgray;
+    border-top: 7px solid gray;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    animation: spin 2s linear infinite;
+  
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+  
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 `;

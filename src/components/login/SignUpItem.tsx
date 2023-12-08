@@ -80,9 +80,9 @@ const SignUpItem = () => {
   const {
     register, // input field 지정
     handleSubmit,
-	formState: { errors },
-	trigger,
-	getValues
+    formState: { errors },
+    trigger,
+    getValues,
   } = useForm<loginType>();
 
   const onSubmit = (data) => {
@@ -128,7 +128,6 @@ const SignUpItem = () => {
 		  }
 	  });
   };
-  
 
   return (
     <>

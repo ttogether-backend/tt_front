@@ -29,6 +29,14 @@ export const FormTextBtn: React.FC<FormTextBtnPropsType> = (
         {...props}
         onClick={props.onclick}
       />
+      {
+        props.useLoading && props.isLoading ?
+          <Style.LoadingIcon
+            isLoading={props.isLoading}
+          />
+          : 
+          null
+      }
     </Style.FormTextContainer>
   );
     
