@@ -13,6 +13,8 @@ const Logout = (() => {
 			cookies.remove('refreshToken');
 			cookies.remove('accessToken')
 			cookies.remove('memberId');
+			localStorage.removeItem('nickname');
+			localStorage.removeItem('profileImagePath')
 			console.log('logout compeletely')
 		}
 		else {
