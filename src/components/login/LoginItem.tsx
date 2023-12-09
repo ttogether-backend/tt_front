@@ -7,7 +7,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { LoginTitle, LoginItemDiv, LoginItemWrap, ExtraButton } from './LoginItem.style';
-import { onLoginSuccess, onSilentRefresh } from "./Utils/LoginUtils";
+import { onLoginSuccess, kakaoLogin } from "./Utils/LoginUtils";
 import { useNavigate, Link } from 'react-router-dom';
 
 type loginType = {
@@ -94,7 +94,7 @@ const LoginItem = () => {
 						</div>
 					</LoginItemDiv>
 					<LoginItemDiv>
-						<button className="kakaoLogin">카카오톡으로 로그인</button>
+						<button className="kakaoLogin" onClick={kakaoLogin}>카카오톡으로 로그인</button>
 					</LoginItemDiv>
 					<LoginItemDiv>
 						<button className="naverLogin">네이버로 로그인</button>
