@@ -9,7 +9,6 @@ export const onAuthStatus = () => {
   const memberId = cookies.get('memberId');
   const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
-	console.log(refreshToken, memberId)
 	if (!refreshToken && !memberId) {
 		console.log('로그인 된 유저 없음')
 		return false
