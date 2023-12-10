@@ -1,7 +1,7 @@
 export interface ApiResponse {
   success: boolean;
   result: ApiResult;
-  errorList: ApiError[];
+  errorList: ApiError[] | null;
 }
 
 export interface ApiResult {
