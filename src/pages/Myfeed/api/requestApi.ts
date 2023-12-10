@@ -1,36 +1,101 @@
-import axios from 'axios';
-import { ApiResponse } from 'src/common/types/api.type';
-import { SERVER_HOST } from 'src/common/utils/api.util';
+import createAxios from 'src/Utils/axiosInstance';
+import { RequestListItemProps } from '../requestList/index.type';
 
-//: 
-export const getSendRequestList = async (pageNo: number, pageSize: number) => {
-  try {
-    // const response = await axios.get(
-    //   `${SERVER_HOST}/accompany/members/my/accompany/requests/send?pageNo=${pageNo}&pageSize=${pageSize}`
-    // );
+const ACCOMPANY_REQUEST_PATH = '/api/v1/accompany/requests';
 
-   
-      const response = await axios.get(
-        `http://localhost:8000/api/v1/accompany/posts/1`,
-        {
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNTEzYWM2OC1hMjE4LTRmMWEtYTIyNS05NTVlYzVkNTU2N2MiLCJpYXQiOjE3MDIwMjYwOTIsImV4cCI6MTcwMjAyOTY5Mn0.ta3hojpKOxbWFwHSHtU7wiAth4zHjoQrVKfi5L5w9PU',
+const axiosInstance = createAxios();
+
+export const ACCOMPANY_REQUEST_STATUS = {
+  REQUESTING: {
+    code: 'REQUESTING',
+    name: '요청중',
+  },
+  ACCEPT: {
+    code: 'ACCEPT',
+    name: '수락',
+  },
+  REFUSAL: {
+    code: 'REFUSAL',
+    name: '거절',
+  },
+  CANCEL: {
+    code: 'CANCEL',
+    name: '신청 취소',
+  },
+};
+
+export const makeComponentProps = (apiResult: any): RequestListItemProps[] => {
+  if (apiResult?.total_count == 0) {
+    return null;
+  }
+
+  return apiResult?.data?.accompany_request_list?.map(
+    ({ accompany_request_id, requester, accompany, status }) => {
+      return {
+        postInfo: {
+          id: accompany?.accompany_post_id,
+          title: accompany?.title,
+        },
+        requestInfo: {
+          id: accompany_request_id,
+          requester: {
+            id: requester.member_id,
+            nickname: requester.nickname,
+            profileImagePath: requester.profile_image_path,
           },
-        }
-      );
+          date: null,
+          status: status,
+        },
+      };
+    }
+  );
+};
 
-      
-      const { data, status } = response;
-      const {success, result, errorList} = data;
+export const getSendRequestList = async (pageNo: number, pageSize: number) => {
+  const path = ACCOMPANY_REQUEST_PATH + '/send?' + `pageNo=${pageNo}` + `&pageSize=${pageSize}`;
 
-      if (success) {
-        return data;
-      } else {
-        
-      }
+  return await getData(path);
+};
 
+export const getReceiveRequestList = async (pageNo: number, pageSize: number) => {
+  const path = ACCOMPANY_REQUEST_PATH + '/receive?' + `pageNo=${pageNo}` + `&pageSize=${pageSize}`;
+
+  return await getData(path);
+};
+
+export const patchRequest = async (requestId: number, requestStatus: string) => {
+  const path = ACCOMPANY_REQUEST_PATH + `/${requestId}`;
+  const requestBody = {
+    requestStatus: requestStatus,
+  };
+
+  try {
+    const response = await axiosInstance.patch(path, requestBody);
+
+    const { data, status } = response;
+
+    if (status == 200 && data.success) {
+      return true;
+    }
+
+    return false;
   } catch (error) {
     console.log(error);
+  }
+};
+
+const getData = async (path: string) => {
+  try {
+    const response = await axiosInstance.get(path);
+    const { data, status } = response;
+
+    if (status == 200 && data.success) {
+      return data.result;
+    }
+
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };
