@@ -9,23 +9,53 @@ import { Range } from "src/shared/components/Range/Range";
 import DropdownItem from "src/components/accompany/DropdownItem";
 import DateRangePicker from "src/components/accompany/DropdownItem/Datepicker";
 import axios from "axios";
+import { Cookies } from 'react-cookie';
+import createAxios from 'src/Utils/axiosInstance';
 
 const getAccompanyList = async () => {
-  const url = `/api/v1/together/accompany/posts`;
-  const accessToken = localStorage.getItem("accessToken") || import.meta.env.VITE_TEST_ACCESS_TOKEN;
-  const response = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    });
-  try {
-    if (response.status === 200) {
-      return response.data.data.accompany_summary;
-      
-    }
-  } catch (error) {
-    console.log(error);
-  };
+  const cookies = new Cookies();
+  const axiosInstance = createAxios();
+
+  axiosInstance.post('/api/v1/accompany/posts/init')
+    .then( (res) => {
+      console.log('res',res)
+      var postId = res.data.result.data.creating_accompany_post.accompanyPostId.value
+      console.log(postId);
+      axiosInstance.post('/api/v1/accompany/posts/' + postId, {
+          "category": "TRAVEL",
+          "title": "뚜기와 함께하는 여행",
+          "content": "제주도로 가기",
+          "expected_start_at": "2024-01-20",
+          "expected_end_at": "2024-09-20",
+          "thumbnail_url": 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbK77rj%2FbtrDyF4hWX8%2FlPMPnDbvxPv4sWpdGZ3bhK%2Fimg.jpg',
+          "recruit_number": 1,
+          "is_age_free": false,
+          "min_recruit_age": 20,
+          "max_recruit_age": 30,
+          "location_info": [
+            {
+              "location_id": 3,
+              "country": "korea",
+              "city": "seoul",
+              "latitude": "12354",
+              "longitude": "4897",
+              "name": "오뚜기",
+              "address": "서울시양천구"
+            }
+          ],
+          "add_content": "밥 먹고싶어요"
+      }, {
+        headers: {
+          memberId : cookies.get('memberId'),
+          post_id : postId
+        }
+      })
+      .then( (res) => {
+        console.log('postId res',res)
+      })
+
+      })
+    .catch((Error)=>{console.log(Error)})
 };
 
 
@@ -42,11 +72,18 @@ const AccompanyListPage = () => {
   const [personnelText, setPersonnelText] = useState<string>("동행인원");
   const [periodText, setPeriodText] = useState<string>("여행기간");
 
+  const cookies = new Cookies();
+  //getAccompanyList();
   useEffect(() => {
-    getAccompanyList().then((data) => {
-      setAccompanyCardList(data);
-      console.log(accompanyCardList)
-    });
+    const axiosInstance = createAxios();
+  
+    axiosInstance.get('/api/v1/accompany/posts')
+      .then( (res) => {
+        console.log(res);
+        console.log(res.data.result.data.accompany_summary)
+        setAccompanyCardList(res.data.result.data.accompany_summary);
+      })
+      .catch((Error)=>{console.log(Error)})
   }
   , []);
 
@@ -152,6 +189,10 @@ const AccompanyListPage = () => {
       filterAccompanyList();
   }, [choicedCategory, choicedAge, choicedPersonnel, choicedPeriod, accompanyCardList, isComplete]);
   
+  useEffect(() => {
+    console.log('fil',filteredAccompanyCardList)
+  },[filteredAccompanyCardList])
+
   return (
     <Page activeNav='accompany'>
       <Style.Container>
@@ -203,27 +244,28 @@ const AccompanyListPage = () => {
         </Style.AccompanyFilter>
         <Style.AccompanyList>
           {filteredAccompanyCardList && filteredAccompanyCardList.map((data, index) => (
-            <AccompanyCard
-              key={index}
-              isAccomList={true}
-              accomId={data.accompany_id}
-              memberId={data.writer.member_id}
-              authNum={1}
-              auth="1차 인증"
-              profileImgSrc={data.writer.profile_image_path}
-              username={data.writer.nickname}
-              age={`${data.recruit_age_range.minRecruitAge}대 ~ ${data.recruit_age_range.maxRecruitAge}대`}
-              thumbSrc={data.thumbnail_url}
-              category={ data.category}
-              status={data.status}
-              date={`${data.period.startAt} ~ ${data.period.endAt}`}
-              cnt={data.joining_member_count}
-              personnel={data.recruit_number}
-              title={data.title}
-              location={data.location_info_list[0].name}
-              tags={[]}
-            />
+              <AccompanyCard
+                key={index}
+                isAccomList={true}
+                accomId={data.accompany_id}
+                memberId={data.host.member_id}
+                authNum={1}
+                auth="1차 인증"
+                profileImgSrc={data.host.profile_image_path}
+                username={data.host.nickname}
+                age={`${data.recruit_age_range.minRecruitAge}대 ~ ${data.recruit_age_range.maxRecruitAge}대`}
+                thumbSrc={data.thumbnail_url}
+                category={ data.category}
+                status={data.status}
+                date={`${data.period.startAt} ~ ${data.period.endAt}`}
+                cnt={data.joining_member_count}
+                personnel={data.recruit_number}
+                title={data.title}
+                location={data.location_info_list[0].name}
+                tags={[]}
+              />
           ))}
+          
         </Style.AccompanyList>
       </Style.Container>
     </Page>
