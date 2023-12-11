@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+//components
 import { Button } from '../components/Button';
 import { ButtonGroup } from '../components/ButtonGroup';
 import DateText from '../components/DateText';
@@ -6,8 +8,17 @@ import EllipsisTitle from '../components/EllipsisTitle';
 import { ColumnContainer } from '../layout/ColumnContainer';
 import { ListContainer, ListContainerItem } from '../layout/ListContainer';
 import { RowContainer } from '../layout/RowContainer';
+
+// utils
 import { RequestListItemProps } from './index.type';
-import { getSendRequestList } from '../api/requestApi';
+import {
+  ACCOMPANY_REQUEST_STATUS,
+  getSendRequestList,
+  makeComponentProps,
+  patchRequest,
+} from '../api/requestApi';
+import DialogUtils, { DIALOG_BUTTON_STYLE } from 'src/Utils/DialogUtils';
+import SnackbarUtils, { SNACKBAR_STYLE } from 'src/Utils/SnackbarUtils';
 
 const nicknameStyle = {
   color: '#696E64',
@@ -17,106 +28,8 @@ const nicknameStyle = {
   lineHeight: '16px',
 };
 
-const testDatas: RequestListItemProps[] = [
-  {
-    postInfo: {
-      id: 1,
-      title:
-        '일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사일이삼사오육칠팔구',
-    },
-    requestInfo: {
-      id: 1,
-      requester: {
-        id: 'e4f5d6b9-bc9b-455e-aa01-f822cef11e38',
-        nickname: '호랑이어흥',
-        profileImagePath:
-          'https://img.freepik.com/free-photo/cheerful-teenage-girl-smiling-face-portrait_53876-145642.jpg',
-      },
-      date: new Date(2023, 11, 7, 15, 21, 32),
-      status: 'REQUESTING',
-    },
-  },
-  {
-    postInfo: {
-      id: 1,
-      title:
-        '일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사일이삼사오육칠팔구',
-    },
-    requestInfo: {
-      id: 1,
-      requester: {
-        id: 'e4f5d6b9-bc9b-455e-aa01-f822cef11e38',
-        nickname: '호랑이어흥',
-        profileImagePath:
-          'https://img.freepik.com/free-photo/cheerful-teenage-girl-smiling-face-portrait_53876-145642.jpg',
-      },
-      date: new Date(2023, 11, 7, 9, 31, 32),
-      status: 'REQUESTING',
-    },
-  },
-  {
-    postInfo: {
-      id: 1,
-      title: '일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사',
-    },
-    requestInfo: {
-      id: 1,
-      requester: {
-        id: '76800dcd-6a00-4a9c-bae4-096d95ed7082',
-        nickname: '호랑이어흥',
-        profileImagePath:
-          'https://img.freepik.com/free-photo/cheerful-teenage-girl-smiling-face-portrait_53876-145642.jpg',
-      },
-      date: new Date(2023, 11, 5),
-      status: 'ACCEPT',
-    },
-  },
-  {
-    postInfo: {
-      id: 1,
-      title: '일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사',
-    },
-    requestInfo: {
-      id: 1,
-      requester: {
-        id: '76800dcd-6a00-4a9c-bae4-096d95ed7082',
-        nickname: '호랑이어흥',
-        profileImagePath:
-          'https://img.freepik.com/free-photo/cheerful-teenage-girl-smiling-face-portrait_53876-145642.jpg',
-      },
-      date: new Date(2023, 10, 12),
-      status: 'REFUSAL',
-    },
-  },
-  {
-    postInfo: {
-      id: 1,
-      title: '일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사',
-    },
-    requestInfo: {
-      id: 1,
-      requester: {
-        id: '76800dcd-6a00-4a9c-bae4-096d95ed7082',
-        nickname: '호랑이어흥',
-        profileImagePath:
-          'https://img.freepik.com/free-photo/cheerful-teenage-girl-smiling-face-portrait_53876-145642.jpg',
-      },
-      date: new Date(2023, 10, 12),
-      status: 'CANCEL',
-    },
-  },
-];
-
 const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) => {
-  const buttonText = {
-    ACCEPT: '수락',
-    REFUSAL: '거절',
-    CANCEL: '신청 취소',
-  };
-
-  useEffect(() => {
-    // getSendRequestList(1, 10);
-  }, [])
+  const [requestStatus, setRequestStatus] = useState<string>(requestInfo.status);
 
   return (
     <ListContainerItem>
@@ -137,12 +50,46 @@ const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) =>
         </ColumnContainer>
 
         <ButtonGroup>
-          {requestInfo.status === 'REQUESTING' ? (
+          {requestStatus === ACCOMPANY_REQUEST_STATUS.REQUESTING.code ? (
             <>
-              <Button className="background-black">{buttonText.CANCEL}</Button>
+              <Button
+                className="background-black"
+                onClick={() => {
+                  DialogUtils.open({
+                    title: '동행 신청 취소',
+                    message: '동행 신청을 취소하시겠습니까?',
+                    buttons: [
+                      {
+                        style: DIALOG_BUTTON_STYLE.white,
+                        label: '아니오',
+                      },
+                      {
+                        style: DIALOG_BUTTON_STYLE.red,
+                        label: '네',
+                        handleClick: async () => {
+                          const result = await patchRequest(
+                            requestInfo.id,
+                            ACCOMPANY_REQUEST_STATUS.CANCEL.code
+                          );
+
+                          if (result) {
+                            SnackbarUtils.open({
+                              message: '신청을 취소하였습니다.',
+                              type: SNACKBAR_STYLE.success,
+                            });
+                            setRequestStatus(ACCOMPANY_REQUEST_STATUS.CANCEL.code);
+                          }
+                        },
+                      },
+                    ],
+                  });
+                }}
+              >
+                {ACCOMPANY_REQUEST_STATUS.CANCEL.name}
+              </Button>
             </>
           ) : (
-            <Button disabled={true}>{buttonText[requestInfo.status]}</Button>
+            <Button disabled={true}>{ACCOMPANY_REQUEST_STATUS[requestStatus].name}</Button>
           )}
         </ButtonGroup>
       </RowContainer>
@@ -151,9 +98,18 @@ const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) =>
 };
 
 const SendRequestList = () => {
+  const [datas, setDatas] = useState<any>(null);
+
+  useEffect(() => {
+    (async function () {
+      const data = await getSendRequestList(1, 10);
+      setDatas(data);
+    })();
+  }, []);
+
   return (
     <ListContainer>
-      {testDatas?.map((requestListItem: RequestListItemProps, index: number) => {
+      {makeComponentProps(datas)?.map((requestListItem: RequestListItemProps, index: number) => {
         return <SendRequestListItem key={`send-request-list-item-${index}`} {...requestListItem} />;
       })}
     </ListContainer>

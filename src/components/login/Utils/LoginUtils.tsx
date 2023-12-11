@@ -45,3 +45,13 @@ export const isLogin = () => {
   }
   return false;
 };
+
+export const kakaoLogin = () => {
+	axios.post('/api/v1/members/login/social/KAKAO')
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((err) => {
+		console.log(err);
+	})
+}
