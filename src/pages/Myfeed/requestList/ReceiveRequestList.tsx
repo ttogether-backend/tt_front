@@ -1,15 +1,5 @@
 import { useEffect, useState } from 'react';
 
-// utils
-import { RequestListItemProps } from './index.type';
-import {
-  ACCOMPANY_REQUEST_STATUS,
-  getReceiveRequestList,
-  makeComponentProps,
-  patchRequest,
-} from '../api/requestApi';
-import { dialogButtonStyleCode } from 'src/shared/components/modals/common/DialogButton.types';
-
 //components
 import { Button } from '../components/Button';
 import { ButtonGroup } from '../components/ButtonGroup';
@@ -19,7 +9,17 @@ import UserInfo from '../components/UserInfo';
 import { ColumnContainer } from '../layout/ColumnContainer';
 import { ListContainer, ListContainerItem } from '../layout/ListContainer';
 import { RowContainer } from '../layout/RowContainer';
-import { AlertDialog } from 'src/shared/components/modals/AlertDialog';
+import DialogUtils, { DIALOG_BUTTON_STYLE } from 'src/Utils/DialogUtils';
+import SnackbarUtils, { SNACKBAR_STYLE } from 'src/Utils/SnackbarUtils';
+
+// utils
+import { RequestListItemProps } from './index.type';
+import {
+  ACCOMPANY_REQUEST_STATUS,
+  getReceiveRequestList,
+  makeComponentProps,
+  patchRequest,
+} from '../api/requestApi';
 
 const updateRequestStatus = async (
   requestId: number,
@@ -29,15 +29,16 @@ const updateRequestStatus = async (
   const result = await patchRequest(requestId, updateValue);
 
   if (result) {
-    console.log('수락했습니다.'); //todo: 스낵바 띄우기
+    SnackbarUtils.open({
+      message: `${ACCOMPANY_REQUEST_STATUS[updateValue].name}하였습니다.`,
+      type: SNACKBAR_STYLE.success,
+    });
+
     updateComponent(updateValue);
-  } else {
-    console.log('수락실패');
   }
 };
 
 const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [requestStatus, setRequestStatus] = useState<string>(requestInfo.status);
 
   return (
@@ -80,7 +81,27 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
               <Button
                 className="red"
                 onClick={() => {
-                  setIsOpen(true);
+                  DialogUtils.open({
+                    title: '동행 신청 거절',
+                    message: '동행 신청을 거절하시겠습니까?',
+                    buttons: [
+                      {
+                        style: DIALOG_BUTTON_STYLE.white,
+                        label: '취소하기',
+                      },
+                      {
+                        style: DIALOG_BUTTON_STYLE.black,
+                        label: '거절하기',
+                        handleClick: async () => {
+                          updateRequestStatus(
+                            requestInfo.id,
+                            ACCOMPANY_REQUEST_STATUS.REFUSAL.code,
+                            setRequestStatus
+                          );
+                        },
+                      },
+                    ],
+                  });
                 }}
               >
                 {ACCOMPANY_REQUEST_STATUS.REFUSAL.name}
@@ -91,35 +112,6 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
           )}
         </ButtonGroup>
       </RowContainer>
-
-      <AlertDialog
-        title="동행 신청을 거절하시겠습니까?"
-        isOpen={isOpen}
-        handleClose={() => {
-          setIsOpen(false);
-        }}
-        buttons={[
-          {
-            style: dialogButtonStyleCode.white,
-            label: '취소하기',
-            handleClick: () => {
-              setIsOpen(false);
-            },
-          },
-          {
-            style: dialogButtonStyleCode.red,
-            label: '거절하기',
-            handleClick: async () => {
-              updateRequestStatus(
-                requestInfo.id,
-                ACCOMPANY_REQUEST_STATUS.REFUSAL.code,
-                setRequestStatus
-              );
-              setIsOpen(false);
-            },
-          },
-        ]}
-      />
     </ListContainerItem>
   );
 };

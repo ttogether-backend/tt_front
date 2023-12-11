@@ -57,7 +57,11 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
           {buttons?.map(({ style, label, handleClick }, index: number) => (
             <Button
               key={`alert-diloag-button-${index}`}
-              onClick={handleClick}
+              onClick={()=>{
+                if (handleClick) handleClick();
+                
+                handleClose();
+              }}
               style={dialogStyles.button[style as any]}
             >
               {label}
