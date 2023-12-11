@@ -9,6 +9,7 @@ import { TermsOfService } from '../pages/policy/TermsOfService.tsx';
 
 import MypageMain from 'src/pages/users';
 import UserPersonal from 'src/pages/users/personal';
+import Verificare from 'src/pages/users/verificareUser/verificareUser.tsx';
 import VerificareUser from 'src/pages/auth/sns/authSns';
 import AuthPassword from 'src/pages/auth/password/authPassword';
 import Withdrawal from 'src/pages/users/withdrawal/withdrawal';
@@ -18,6 +19,7 @@ import LoginForm from 'src/components/login/Form/LoginForm.tsx';
 import LoginPage from 'src/components/login/LoginPage.tsx';
 import Logout from 'src/components/login/Logout.tsx';
 import Myfeed from 'src/pages/myfeed/index.tsx';
+import NotFound from 'src/shared/components/NotFound/NotFound.tsx';
 
 const Router = () => {
   return (
@@ -29,8 +31,10 @@ const Router = () => {
         <Route path="/accompany/modify" element={<AccompanyModifyPage />} />
         <Route path="/accompany/:id" element={<AccompanyDetailPage />} />
         <Route path="/accompany/" element={<AccompanyListPage />} />
-        <Route path="/users/:userid" element={<MypageMain />} />
+        <Route path="/users/personal/verificareUser/password" element={<AuthPassword />} />
+        <Route path="/users/personal/verificareUser" element={<Verificare />} />
         <Route path="/users/personal" element={<UserPersonal />} />
+        <Route path="/users/:userid" element={<MypageMain />} />
         <Route path="/auth/sns" element={<VerificareUser />} />
         <Route path="/auth/password" element={<AuthPassword />} />
         <Route path="/users/withdrawal" element={<Withdrawal />} />
@@ -42,6 +46,8 @@ const Router = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/logout" element={<Logout />} />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

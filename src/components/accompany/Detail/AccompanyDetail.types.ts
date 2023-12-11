@@ -21,7 +21,7 @@ export enum RecruitStatus {
 }
 
 export interface BasicInfoType {
-  status: AccompanyStatus;
+  progess_status: AccompanyStatus;
   location_info_list: LocationInfoList[];
   period: Period,
   recruit_number: number,

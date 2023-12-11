@@ -97,9 +97,10 @@ export const InputBox = styled.div`
       background: #fafafa;
     }
     .input__reset {
+      display: none;
       width: 48px;
       height: 48px;
-      background: url('/images/icon/icon_input_close.png') center center no-repeat;
+      background: url('/images/icon/icon_input_close.svg') center center no-repeat;
       text-indent: -999em;
       overflow: hidden;
       position: absolute;

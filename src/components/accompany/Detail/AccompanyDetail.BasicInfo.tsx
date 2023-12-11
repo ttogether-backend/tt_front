@@ -1,6 +1,13 @@
 import { InfoBox, Label, StatusValue, Value } from './AccompanyDetail.styles';
 
-const BasicInfo = () => {
+const BasicInfo = ({
+  progess_status,
+  location_info_list,
+  period,
+  recruit_number,
+  recruit_age_range,
+}) => {
+  console.log(location_info_list);
   return (
     <div
       style={{
@@ -11,27 +18,31 @@ const BasicInfo = () => {
     >
       <InfoBox>
         <Label>동행 상태</Label>
-        <StatusValue>동행 확정</StatusValue>
+        <StatusValue>{progess_status}</StatusValue>
       </InfoBox>
 
       <InfoBox>
         <Label>동행 장소</Label>
-        {/* <Value>{location_info_list[0].address}</Value> */}
+        <Value>{location_info_list[0].address}</Value>
       </InfoBox>
 
       <InfoBox>
         <Label>동행 일자</Label>
-        <Value>2023년 6월 17일 ~ 날짜 미정</Value>
+        <Value>
+          {period.startAt} ~ {period.endAt}
+        </Value>
       </InfoBox>
 
       <InfoBox>
         <Label>모집 인원</Label>
-        <Value>5명</Value>
+        <Value>{recruit_number}명</Value>
       </InfoBox>
 
       <InfoBox>
         <Label>모집 연령</Label>
-        <Value>무관</Value>
+        <Value>
+          {recruit_age_range.minRecruitAge}대 ~ {recruit_age_range.maxRecruitAge}대
+        </Value>
       </InfoBox>
     </div>
   );

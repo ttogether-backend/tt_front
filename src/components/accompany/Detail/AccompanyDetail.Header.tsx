@@ -9,7 +9,7 @@ import {
   ViewCount,
 } from './AccompanyDetail.styles';
 
-const Header = () => {
+const Header = ({ title, category, recruit_status, view_count }) => {
   return (
     <>
       <div
@@ -20,10 +20,10 @@ const Header = () => {
         <div>
           <TagBox>
             <Tag background="#5bb13d" color="#fff">
-              맛집
+              {category}
             </Tag>
             <Tag background="#f0f9ec" color="#376b25">
-              모집 중
+              {recruit_status}
             </Tag>
           </TagBox>
 
@@ -34,7 +34,7 @@ const Header = () => {
               position: 'relative',
             }}
           >
-            <Title>일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사</Title>
+            <Title> {title} </Title>
             <MoreIcon />
             <MoreOptions top={'56px'}>
               <li>동행 모집 상태 변경</li>
@@ -45,7 +45,7 @@ const Header = () => {
 
           <InfoBox>
             <CreatedAt>2023.05.17</CreatedAt>
-            <ViewCount>조회수 345</ViewCount>
+            <ViewCount>조회수 {view_count}</ViewCount>
           </InfoBox>
         </div>
       </div>

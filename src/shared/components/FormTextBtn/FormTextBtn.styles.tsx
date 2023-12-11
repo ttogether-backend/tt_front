@@ -20,12 +20,13 @@ export const FormTextInput = styled.input<FormTextPropsType>`
   background: ${(props) => props.background};
   color: ${colors.grey300};
   border-radius: 10px;
-  font-family: 'pretendard'
+  font-family: 'pretendard';
 `;
 export const FormBtn = styled.button<FormTextPropsType>`
+  display: none;
   width: 48px;
   height: 48px;
-  background: transparent url('/images/icon/icon_input_close.png') center center no-repeat !important;
+  background: transparent url('/images/icon/icon_input_close.svg') center center no-repeat !important;
   position: absolute;
   right: 0;
   top: 50%;
@@ -33,22 +34,23 @@ export const FormBtn = styled.button<FormTextPropsType>`
 `;
 
 export const LoadingIcon = styled.div<FormTextBtnPropsType>`
-    position: absolute;
-    top: 11.75px; right: 11.75px;
-    border: 7px solid lightgray;
-    border-top: 7px solid gray;
-    border-radius: 50%;
-    height: 30px;
-    width: 30px;
-    animation: spin 2s linear infinite;
-  
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-  
-      100% {
-        transform: rotate(360deg);
-      }
+  position: absolute;
+  top: 11.75px;
+  right: 11.75px;
+  border: 7px solid lightgray;
+  border-top: 7px solid gray;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  animation: spin 2s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
     }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;

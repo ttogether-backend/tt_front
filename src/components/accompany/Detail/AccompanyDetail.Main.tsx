@@ -4,6 +4,7 @@ import Header from './AccompanyDetail.Header';
 import { Divider, Wrapper } from './AccompanyDetail.styles';
 
 const Main = ({ headerData, basicInfoData, contentData }) => {
+  console.log(basicInfoData);
   return (
     <>
       <Wrapper>

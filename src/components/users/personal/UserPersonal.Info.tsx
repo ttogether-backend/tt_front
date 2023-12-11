@@ -1,5 +1,6 @@
 import { useEffect, useState, FC } from 'react';
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
 
 import { ProfileBox, Box, InfoItem, Label, InputBox, ModifyBtn, Desc } from './UserPersonal.styles';
 import { FormTextBtn } from '../../../shared/components/FormTextBtn/FormTextBtn';
@@ -7,6 +8,7 @@ import { AccordionDialog } from './AccordionDialog';
 import { InfoType } from './UserPersonal.types';
 import { TravelTypes } from './TravelType';
 import { AccordionItem } from 'src/components/users/personal/AccordionDialog/AccordionDialog.types';
+import createAxios from 'src/Utils/axiosInstance';
 
 const Info: FC<InfoType> = ({ nickname, bio, profile_image_url }) => {
   const [newNickname, setNewNickname] = useState(nickname); // 업데이트 될 닉네임 저장
@@ -19,60 +21,84 @@ const Info: FC<InfoType> = ({ nickname, bio, profile_image_url }) => {
   const [isOpenBioModal, setIsOpenBioModal] = useState(false);
   const useLoading = true;
 
-  var token = '';
+  const cookies = new Cookies();
+
+  useEffect(() => {
+    setNewNickname(nickname);
+    setNewBio(bio);
+    console.log(nickname, bio, newNickname, newBio);
+  }, [nickname, bio]);
+
   // 중복 검사 로직은 API 가능해지면 추가
   function NickNameChange(e) {
+    const axiosInstance = createAxios();
+
     setIsLoading(true);
 
-    const updateData = {
-      nickname: newNickname,
-    };
-    axios
-      .patch(
-        'http://ec2-44-203-114-252.compute-1.amazonaws.com:8000/api/v1/together/members',
-        updateData,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
-      .then(function (response) {
-        if (response.data.code === 200) {
-          console.log('닉네임 변경 성공');
-          //setNickName(newNickname);
+    axiosInstance
+      .get('/api/v1/members/check-nickname', {
+        params: {
+          nickname: newNickname,
+        },
+      })
+      .then(function (res) {
+        if (res.data.result.code == 'NICKNAME_EXISTS') {
+          alert('이미 존재하는 닉네임입니다.');
+          setModifyNickName(false);
+          setNewNickname(nickname);
         } else {
-          console.log('닉네임 변경 실패');
-          alert('닉네임 변경에 실패했습니다.');
+          axiosInstance
+            .put(
+              '/api/v1/members/my',
+              {
+                nickname: newNickname,
+                bio: newBio,
+              },
+              {
+                headers: {
+                  memberId: cookies.get('memberId'),
+                },
+              }
+            )
+            .then(function (response) {
+              if (response.data.success) {
+                console.log('닉네임 변경 성공');
+                setNewNickname(newNickname);
+              } else {
+                console.log('닉네임 변경 실패');
+                alert('닉네임 변경에 실패했습니다.');
+              }
+            })
+            .then(() => {
+              setIsLoading(false);
+              setModifyNickName(false);
+            })
+            .catch(function (error) {
+              console.log('닉네임 변경 실패');
+              alert('닉네임 변경에 실패했습니다.');
+              setModifyNickName(false);
+            });
         }
-      })
-      .then(() => {
-        setIsLoading(false);
-        setModifyNickName(false);
-      })
-      .catch(function (error) {
-        console.log('닉네임 변경 실패');
-        alert('닉네임 변경에 실패했습니다.');
-        setModifyNickName(false);
       });
   }
 
   function BioChange(e) {
-    const updateData = {
-      bio: newBio,
-    };
-    axios
-      .patch(
-        'http://ec2-44-203-114-252.compute-1.amazonaws.com:8000/api/v1/together/members',
-        updateData,
+    const axiosInstance = createAxios();
+    axiosInstance
+      .put(
+        '/api/v1/members/my',
+        {
+          nickname: newNickname,
+          bio: newBio,
+        },
         {
           headers: {
-            Authorization: token,
+            memberId: cookies.get('memberId'),
           },
         }
       )
       .then(function (response) {
-        if (response.data.code === 200) {
+        if (response.data.success) {
           console.log('자기소개 변경 성공');
           setNewBio(newBio);
         } else {
@@ -142,7 +168,7 @@ const Info: FC<InfoType> = ({ nickname, bio, profile_image_url }) => {
                 {!isLoading && (
                   <button
                     type="submit"
-                    disabled={!nickNameError}
+                    disabled={nickNameError.length > 0}
                     onClick={(e) => NickNameChange(e)}
                   >
                     변경하기
@@ -159,13 +185,13 @@ const Info: FC<InfoType> = ({ nickname, bio, profile_image_url }) => {
                 )}
               </InputBox>
             ) : (
-              <p className="info">{nickname}</p>
+              <p className="info">{newNickname ? newNickname : nickname}</p>
             )}
           </InfoItem>
           <InfoItem>
             <Label>
               자기소개
-              {!modifyBio && <ModifyBtn onClick={() => setIsOpenBioModal(true)}>수정</ModifyBtn>}
+              {!modifyBio && <ModifyBtn onClick={() => setModifyBio(true)}>수정</ModifyBtn>}
             </Label>
             {modifyBio ? (
               <InputBox>
@@ -183,22 +209,20 @@ const Info: FC<InfoType> = ({ nickname, bio, profile_image_url }) => {
                 </button>
               </InputBox>
             ) : (
-              <p className="info">{bio}</p>
+              <p className="info">{newBio ? newBio : bio}</p>
             )}
           </InfoItem>
-
-          {/* 
-                    1차 개발 범위 제외
-                    <InfoItem>
-                    <Label>
-                        관심 여행 키워드
-                        <ModifyBtn>수정</ModifyBtn>
-                    </Label>
-                    <Desc status={'normal'}>
-                        프로필에 관심 키워드를 추가하여 다른 사용자들과의 공통점을 찾아보세요.
-                    </Desc>
-                    <p className="info keywords">로컬여행, 아웃도어 레저여행, 맛집탐방</p>
-                    </InfoItem> */}
+          {/* 1차 개발 범위 제외 */}
+          <InfoItem>
+            <Label>
+              관심 여행 키워드
+              <ModifyBtn onClick={() => setIsOpenBioModal(true)}>수정</ModifyBtn>
+            </Label>
+            <Desc status={'normal'}>
+              프로필에 관심 키워드를 추가하여 다른 사용자들과의 공통점을 찾아보세요.
+            </Desc>
+            <p className="info keywords">로컬여행, 아웃도어 레저여행, 맛집탐방</p>
+          </InfoItem>
         </Box>
       </ProfileBox>
 

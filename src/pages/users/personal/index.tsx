@@ -16,6 +16,7 @@ import { LoadingIcon } from '../../../shared/components/LoadingIcon/LoadingIcon.
 import { FormText } from '../../../shared/components/FormText/FormText';
 import { Container } from 'src/pages/accompany/AccompanyListPage.styles';
 import Page from 'src/pages/layout';
+import createAxios from 'src/Utils/axiosInstance';
 
 export const ProfileBoxWrap = styled.div`
   width: 1108px;
@@ -43,27 +44,17 @@ const UserPersonal = () => {
   const [authData, setAuthData] = useState<AuthType>(null);
 
   useEffect(() => {
-    console.log('ㅇㅇ', axios.defaults.headers.common);
-    var memberId = cookies.get('memberId');
-
-    if (memberId) {
-      axios
-        .get('/api/v1/members/' + memberId + '/profile', {
-          headers: {
-            Authorization:
-              'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNTEzYWM2OC1hMjE4LTRmMWEtYTIyNS05NTVlYzVkNTU2N2MiLCJpYXQiOjE3MDIwMTg0MTksImV4cCI6MTcwMjAyMjAxOX0.L1p9Dc9qWy-v154sHArFqfYFA1nPn1xOvakgWLZ_tkw',
-          },
-        })
-        .then((res) => {
-          const data = res.data.data;
-          const { nickname, bio, profile_image_url } = data;
-          setInfoData({ nickname, bio, profile_image_url });
-          console.log('eee');
-        })
-        .catch((Error) => {
-          console.log(Error);
-        });
-    }
+    const axiosInstance = createAxios();
+    axiosInstance
+      .get('/api/v1/members/' + cookies.get('memberId') + '/profile')
+      .then((res) => {
+        const data = res.data.result.data;
+        const { nickname, bio, profile_image_url } = data;
+        setInfoData({ nickname, bio, profile_image_url });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   // const [isOnline, setIsOnline] = useState(navigator.onLine);
