@@ -11,5 +11,5 @@ export type DialogButtonStyleCodeType = typeof dialogButtonStyleCode[keyof typeo
 export type ModalButtonProps = {
     style: DialogButtonStyleCodeType;
     label:string;
-    handleClick: () => any;
+    handleClick?: () => any;
 }

@@ -1,9 +1,8 @@
-import createAxios from 'src/Utils/axiosInstance';
+import { getData, patchData } from 'src/Utils/ApiUtils';
 import { RequestListItemProps } from '../requestList/index.type';
 
 const ACCOMPANY_REQUEST_PATH = '/api/v1/accompany/requests';
 
-const axiosInstance = createAxios();
 
 export const ACCOMPANY_REQUEST_STATUS = {
   REQUESTING: {
@@ -54,13 +53,13 @@ export const makeComponentProps = (apiResult: any): RequestListItemProps[] => {
 export const getSendRequestList = async (pageNo: number, pageSize: number) => {
   const path = ACCOMPANY_REQUEST_PATH + '/send?' + `pageNo=${pageNo}` + `&pageSize=${pageSize}`;
 
-  return await getData(path);
+  return (await getData(path)).data;
 };
 
 export const getReceiveRequestList = async (pageNo: number, pageSize: number) => {
   const path = ACCOMPANY_REQUEST_PATH + '/receive?' + `pageNo=${pageNo}` + `&pageSize=${pageSize}`;
 
-  return await getData(path);
+  return (await getData(path)).data;
 };
 
 export const patchRequest = async (requestId: number, requestStatus: string) => {
@@ -69,33 +68,5 @@ export const patchRequest = async (requestId: number, requestStatus: string) => 
     requestStatus: requestStatus,
   };
 
-  try {
-    const response = await axiosInstance.patch(path, requestBody);
-
-    const { data, status } = response;
-
-    if (status == 200 && data.success) {
-      return true;
-    }
-
-    return false;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getData = async (path: string) => {
-  try {
-    const response = await axiosInstance.get(path);
-    const { data, status } = response;
-
-    if (status == 200 && data.success) {
-      return data.result;
-    }
-
-    return null;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  return (await patchData(path, requestBody)).success;
 };
