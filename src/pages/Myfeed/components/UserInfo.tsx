@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import Profile from './Profile';
-import { RowContainer } from '../layout/RowContainer';
+import ProfileImage from './ProfileImage';
+import { Text } from './Text';
+import { FlexContainer } from '../layout/FlexContainer';
 
 interface UserInfoProps {
   id: string;
@@ -8,22 +9,17 @@ interface UserInfoProps {
   profileImagePath: string;
 }
 
-const nicknameStyle = {
-  color: '#52564e',
-  fontSize: '14px',
-  fontStyle: 'normal',
-  fontWeight: '400',
-  lineHeight: '20px',
-};
-
 const UserInfo = ({ id, nickname, profileImagePath }: UserInfoProps) => {
   return (
-    <RowContainer style={{gap: '5px'}}>
-      <Profile src={profileImagePath} size={20} />
-      <div style={nicknameStyle}>
-        <Link style={nicknameStyle} to={`/myfeed/${id}`}>{`${nickname}님 >`}</Link>
-      </div>
-    </RowContainer>
+    <FlexContainer gap={5}>
+      <ProfileImage src={profileImagePath} size={20} />
+
+      <Link to={`/myfeed/${id}`}>
+        <Text fontType={Text.FontType.description} color={Text.FontColor.gray}>
+          {`${nickname}님 >`}
+        </Text>
+      </Link>
+    </FlexContainer>
   );
 };
 

@@ -6,11 +6,10 @@ import { ButtonGroup } from '../components/ButtonGroup';
 import DateText from '../components/DateText';
 import EllipsisTitle from '../components/EllipsisTitle';
 import UserInfo from '../components/UserInfo';
-import { ColumnContainer } from '../layout/ColumnContainer';
 import { ListContainer, ListContainerItem } from '../layout/ListContainer';
-import { RowContainer } from '../layout/RowContainer';
 import DialogUtils, { DIALOG_BUTTON_STYLE } from 'src/Utils/DialogUtils';
 import SnackbarUtils, { SNACKBAR_STYLE } from 'src/Utils/SnackbarUtils';
+import { FlexContainer } from '../layout/FlexContainer';
 
 // utils
 import { RequestListItemProps } from './index.type';
@@ -43,8 +42,8 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
 
   return (
     <ListContainerItem>
-      <RowContainer style={{ width: '100%', justifyContent: 'space-between' }}>
-        <ColumnContainer style={{ alignItems: 'flex-start', gap: 12 }}>
+      <FlexContainer width={'100%'} direction='row' justifyContent='space-between'>
+        <FlexContainer direction='column' alignItems="flex-start" gap={12}>
           <EllipsisTitle
             maxWidth={550} //개선안 찾기
             ellipsisContent={`[${postInfo.title}`}
@@ -61,7 +60,7 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
           />
 
           <DateText date={requestInfo.date} />
-        </ColumnContainer>
+        </FlexContainer>
 
         <ButtonGroup>
           {requestStatus === ACCOMPANY_REQUEST_STATUS.REQUESTING.code ? (
@@ -111,7 +110,7 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
             <Button disabled={true}>{ACCOMPANY_REQUEST_STATUS[requestStatus].name}</Button>
           )}
         </ButtonGroup>
-      </RowContainer>
+      </FlexContainer>
     </ListContainerItem>
   );
 };

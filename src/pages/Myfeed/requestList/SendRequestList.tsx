@@ -5,9 +5,8 @@ import { Button } from '../components/Button';
 import { ButtonGroup } from '../components/ButtonGroup';
 import DateText from '../components/DateText';
 import EllipsisTitle from '../components/EllipsisTitle';
-import { ColumnContainer } from '../layout/ColumnContainer';
 import { ListContainer, ListContainerItem } from '../layout/ListContainer';
-import { RowContainer } from '../layout/RowContainer';
+import { FlexContainer } from '../layout/FlexContainer';
 
 // utils
 import { RequestListItemProps } from './index.type';
@@ -33,8 +32,8 @@ const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) =>
 
   return (
     <ListContainerItem>
-      <RowContainer style={{ width: '100%', justifyContent: 'space-between' }}>
-        <ColumnContainer style={{ alignItems: 'flex-start', gap: 12 }}>
+     <FlexContainer direction='row' justifyContent='space-between'>
+        <FlexContainer direction='column' alignItems="flex-start" gap={12}>
           <EllipsisTitle
             maxWidth={550} //개선안 찾기
             ellipsisContent={`[${postInfo.title}`}
@@ -47,7 +46,7 @@ const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) =>
           <div style={nicknameStyle}>{`by ${requestInfo.requester.nickname}`}</div>
 
           <DateText date={requestInfo.date} />
-        </ColumnContainer>
+        </FlexContainer>
 
         <ButtonGroup>
           {requestStatus === ACCOMPANY_REQUEST_STATUS.REQUESTING.code ? (
@@ -92,7 +91,7 @@ const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) =>
             <Button disabled={true}>{ACCOMPANY_REQUEST_STATUS[requestStatus].name}</Button>
           )}
         </ButtonGroup>
-      </RowContainer>
+      </FlexContainer>
     </ListContainerItem>
   );
 };
