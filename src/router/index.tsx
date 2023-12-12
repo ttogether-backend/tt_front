@@ -21,6 +21,7 @@ import Myfeed from 'src/pages/myfeed/index.tsx';
 import NotFound from 'src/shared/components/NotFound/NotFound.tsx';
 import { Cookies } from 'react-cookie';
 import PrivateRoute from './PrivateRoute.tsx';
+import ChatListPage from 'src/components/chatlist/ChatListPage.tsx';
 
 const Router = () => {
 	const cookies = new Cookies();
@@ -34,8 +35,8 @@ const Router = () => {
 				<Route path="/accompany/modify" element={<PrivateRoute component={<AccompanyModifyPage />}  authenticated={token} />} />
 				<Route path="/accompany/:id" element={<AccompanyDetailPage />} />
 				<Route path="/accompany/" element={<AccompanyListPage />} />
-				<Route path="/users/personal/verificareUser/password" element={<AuthPassword />} />
-				<Route path="/users/personal/verificareUser" element={<Verificare />} />
+				{/* <Route path="/users/personal/verificareUser/password" element={<AuthPassword />} /> */}
+				{/* <Route path="/users/personal/verificareUser" element={<Verificare />} /> */}
 				<Route path="/users/personal" element={<UserPersonal />} />
 				<Route path="/users/:userid" element={<MypageMain />} />
 				<Route path="/auth/sns" element={<VerificareUser />} />
@@ -49,6 +50,7 @@ const Router = () => {
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/signup" element={<SignUpPage />} />
 				<Route path="/logout" element={<Logout />} />
+				<Route path="/chat" element={<PrivateRoute component={<ChatListPage />} authenticated={token} />} />
 
 				<Route path="*" element={<NotFound />} />
 			</Routes>

@@ -23,12 +23,6 @@ export const ChatListRoom: FC<ChatListRoomPropsType> = (props) => {
             <Badges badgeType='chatCount' subType={""} text={chatRoom.messageCount.toString()} styleType={{subType:'', text:chatRoom.messageCount.toString()}}/>
           </Style.ChatAlarm>
         </Style.ChatBody>
-        <Style.AccompanyPost>
-          <Style.AccompanyStatus>
-          <Badges badgeType='chatState' subType={""} text={accompanyPost.accompanyStatus} styleType={{subType: "", text: accompanyPost.accompanyStatus}}/>
-          </Style.AccompanyStatus>
-          <Style.AccompanyTitle>{accompanyPost.title}</Style.AccompanyTitle>
-        </Style.AccompanyPost>
       </Style.ChatRoom>
 
     </Style.ChatListRoomContainer>
