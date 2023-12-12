@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SideMenu, { SideMenuItemIdType, SideMenuItemType } from '../components/SideMenu';
-import { RowContainer } from './RowContainer';
+import { FlexContainer } from './FlexContainer';
 
 interface SideMenuContainerProps {
   children: React.ReactNode;
@@ -13,16 +13,8 @@ interface SideMenuContentProps {
 }
 
 const containerStyle = {
-  width: '1408px',
   margin: '0 auto',
   padding: '136px 0px',
-  justifyContent: 'flex-start',
-  gap: '32px'
-};
-
-const contentStyle = {
-  alignItems: 'flex-start',
-  justifyContent: 'center',
 };
 
 export const SideMenuContent: React.FC<SideMenuContentProps> = ({
@@ -30,17 +22,25 @@ export const SideMenuContent: React.FC<SideMenuContentProps> = ({
   menuId,
 }: SideMenuContentProps) => {
   return (
-    <RowContainer style={contentStyle} id={menuId}>
+    <FlexContainer direction="row" alignItems="flex-start" justifyContent="flex-start" width={'100%'} id={menuId}>
       {children}
-    </RowContainer>
+    </FlexContainer>
   );
 };
 
-export const SideMenuContainer: React.FC<SideMenuContainerProps> & {SideMenuContent: React.FC<SideMenuContentProps>} = ({ children, menuItemList }) => {
+export const SideMenuContainer: React.FC<SideMenuContainerProps> & {
+  SideMenuContent: React.FC<SideMenuContentProps>;
+} = ({ children, menuItemList }) => {
   const [activeMenuId, setActiveMenuId] = useState<SideMenuItemIdType>(menuItemList[0].id);
 
   return (
-    <RowContainer style={containerStyle}>
+    <FlexContainer
+      direction="row"
+      justifyContent="center"
+      gap={32}
+      style={containerStyle}
+      width={'1408px'} 
+    >
       <SideMenu
         menuItemList={menuItemList}
         activeMenuId={activeMenuId}
@@ -56,7 +56,7 @@ export const SideMenuContainer: React.FC<SideMenuContainerProps> & {SideMenuCont
         }
         return null;
       })}
-    </RowContainer>
+    </FlexContainer>
   );
 };
 

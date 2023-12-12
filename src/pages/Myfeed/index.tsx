@@ -5,6 +5,8 @@ import { SideMenuContainer } from './layout/SideMenuContainer';
 import { SideMenuItemType } from './components/SideMenu';
 import ReceiveRequestList from './requestList/ReceiveRequestList';
 import SendRequestList from './requestList/SendRequestList';
+import Feed from './feed/Feed';
+import { FlexContainer } from './layout/FlexContainer';
 
 const menuItemList: SideMenuItemType[] = [
   {
@@ -20,10 +22,6 @@ const menuItemList: SideMenuItemType[] = [
     label: '보낸 동행 신청 목록',
   },
   {
-    id: 'menu_comment',
-    label: '내가 작성한 댓글',
-  },
-  {
     id: 'menu_accompany',
     label: '동행 진행 내역',
   },
@@ -31,31 +29,27 @@ const menuItemList: SideMenuItemType[] = [
 
 const Myfeed: React.FC<{ children?: React.ReactNode }> = () => {
   const { id } = useParams();
-
-  const validate = () => {
-    // 로그인 x 시 팝업 + 메인 홈으로 리다이렉트 : 라우트에서 공통으로 처리할 수 잇지 않나?
-    
-    return true;
-  }
-
-  useEffect(() => {
-    console.log(id);
-    
-  }, [id]);
-
   return (
     <NonNavbarPage>
-      {id == null ? (
+      {!id ? (
         <SideMenuContainer menuItemList={menuItemList}>
+          <SideMenuContainer.SideMenuContent menuId={'menu_profile'}>
+            <Feed />
+          </SideMenuContainer.SideMenuContent>
           <SideMenuContainer.SideMenuContent menuId={'menu_receive_request'}>
             <ReceiveRequestList />
           </SideMenuContainer.SideMenuContent>
           <SideMenuContainer.SideMenuContent menuId={'menu_send_request'}>
             <SendRequestList />
           </SideMenuContainer.SideMenuContent>
+          <SideMenuContainer.SideMenuContent menuId={'menu_accompany'}>
+            <></>
+          </SideMenuContainer.SideMenuContent>
         </SideMenuContainer>
       ) : (
-        <></>
+        <FlexContainer direction="row" justifyContent="center" gap={32} width={'1408px'}>
+          <Feed userId={id} />
+        </FlexContainer>
       )}
     </NonNavbarPage>
   );

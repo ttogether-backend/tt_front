@@ -1,4 +1,4 @@
-import { RowContainer } from "../layout/RowContainer";
+import { FlexContainer } from "../layout/FlexContainer";
 
 interface TitleProps {
   maxWidth: number;
@@ -30,10 +30,10 @@ const EllipsisTitle = ({
 }: TitleProps) => {
 
   return (
-    <RowContainer style={{ ...containerStyle, maxWidth}} onClick={onClick}>
+    <FlexContainer style={{ ...containerStyle, maxWidth}} onClick={onClick}>
       <div style={{ ...ellipsisStyle }}>{ellipsisContent}</div>
       <div>{subContent}</div>
-    </RowContainer>
+    </FlexContainer>
   );
 };
 
