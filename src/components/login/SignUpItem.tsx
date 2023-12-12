@@ -30,8 +30,9 @@ const SendValidationEmail = (email) => {
 	axiosInstance.post('/api/v1/members/code/issue',
 		{ email: email }
 	)
-		.then((response) => { console.log(response.data) })
-		.catch((Error) => { console.log(Error) });
+		.then((response) => { 
+			console.log("send email = ", response.data) })
+		.catch((Error) => { console.log("send email = ", Error) });
 	const el = document.getElementById('validation');
 	el.style.display = 'inline';
 
@@ -39,9 +40,8 @@ const SendValidationEmail = (email) => {
 
 
 const ValidateCode = (data) => {
-	console.log("email: ", data[0], "code: ", data[1]);
 	const jwt = getCookie('Verification-Jwt');
-	console.log("jwt:", jwt);
+
 	axios({
 		method: 'post',
 		url: '/api/v1/members/code/verify',
@@ -55,9 +55,7 @@ const ValidateCode = (data) => {
 
 	})
 		.then((response) => {
-			if (response.data) {
-				console.log(response.data)
-				document.getElementById("email").setAttribute("disabled", "disabled");
+			if (response.data.data) {
 				document.getElementById("emailValidateButton").setAttribute("disabled", "disabled");
 				document.getElementById("validation").style.display = 'none';
 				document.getElementById("validSuccessMessage").style.display = 'inline';

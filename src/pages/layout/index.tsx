@@ -4,7 +4,7 @@ import Navbar from '../../shared/components/navbar';
 import { NonNavbar } from '../../shared/components/navbar';
 import { Cookies } from 'react-cookie';
 import createAxios from 'src/Utils/axiosInstance';
-import { onAuthStatus } from 'src/components/login/Utils/LoginUtils';
+import { onSilentRefresh, setItemWithExpire } from 'src/components/login/Utils/LoginUtils';
 
 interface UserProfile {
 	nickname : string,
@@ -18,6 +18,7 @@ function useLogin() {
 
   const setProfile = (() => {
 	const axiosInstance = createAxios();
+
 	if (!localStorage.getItem('nickname')) {
 		axiosInstance.get('/api/v1/members/' + cookies.get('memberId') + '/profile')
 		.then((res) => {
@@ -27,33 +28,43 @@ function useLogin() {
 				profileImagePath : res.data.result.data.profileImagePath
 			};
 			setUserProfile(profile);
-			localStorage.setItem('nickname', profile.nickname);
-			localStorage.setItem('profileImagePath', profile.profileImagePath);
+			setItemWithExpire('nickname', res.data.result.data.nickname, 3600000);
+			setItemWithExpire('profileImagePath', res.data.result.data.profilImagePath, 3600000);
 			console.log(profile);
 		})
 		.catch((err) => {
 			console.log(err);
 		})
 	} else {
+		const nickname = JSON.parse(localStorage.getItem('nickname')).value
+		const profileImagePath = JSON.parse(localStorage.getItem('profileImagePath')).value
+		setItemWithExpire('nickname', nickname.value, 3600000);
+		setItemWithExpire('profileImagePath', profileImagePath.value, 3600000);
 		const profile = {
-			nickname : localStorage.getItem('nickname'),
-			profileImagePath : localStorage.getItem('profileImagePath')
+			nickname : JSON.parse(localStorage.getItem('nickname')).value,
+			profileImagePath : JSON.parse(localStorage.getItem('profileImagePath')).value
 		}
 		setUserProfile(profile);
 	}	
   })
 
+  const removeExpiredData = (() => {
+	const nickname = JSON.parse(localStorage.getItem('nickname'));
+	// console.log("nickname = ", nickname);
+	if (nickname && Date.now() < nickname.expire) {
+		localStorage.removeItem('nickname');
+		localStorage.removeItem('profileImagePath');
+	}
+  })
+
   useEffect(() => {
 	const fetchData = async () => {
+		removeExpiredData();
 		if (cookies.get('accessToken')) {
-			const isLogin = await onAuthStatus();
-			console.log("isLogin = ", isLogin);
-			setLogin(isLogin);
-			if (isLogin) {
-				setProfile();
-			}
+			await setLogin(true);
+			onSilentRefresh();
+			setProfile();
 		}
-		console.log(login);
 	}
 	fetchData();
   },[]);

@@ -15,7 +15,6 @@ import AuthPassword from 'src/pages/auth/password/authPassword';
 import Withdrawal from 'src/pages/users/withdrawal/withdrawal';
 import Home from 'src/pages/home/home.tsx';
 import SignUpPage from 'src/components/login/SignUpPage.tsx';
-import LoginForm from 'src/components/login/Form/LoginForm.tsx';
 import LoginPage from 'src/components/login/LoginPage.tsx';
 import Logout from 'src/components/login/Logout.tsx';
 import Myfeed from 'src/pages/myfeed/index.tsx';

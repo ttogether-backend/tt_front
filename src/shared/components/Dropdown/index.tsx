@@ -13,7 +13,7 @@ const Dropdown: React.FC<DropdownProps> = (props: DropdownProps) => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    if(props.choicedItem.length > 0) {
+    if(props.choicedItem && props.choicedItem.length > 0) {
       setIsChoicedItem(true);
     }
   }, [props.choicedItem]);
@@ -37,7 +37,7 @@ const Dropdown: React.FC<DropdownProps> = (props: DropdownProps) => {
   return (
     <Style.DropdownContainer ref={dropdownRef}>
       <Style.DropdownButton isOpen={isDropdownOpen} choicedItem={isChoicedItem} onClick={toggleDropdown}>
-        {props.choicedItem.length > 0 ? props.dropdownText : props.dropdownTitle}
+        {props.choicedItem && props.choicedItem.length > 0 ? props.dropdownText : props.dropdownTitle}
       </Style.DropdownButton>
       {isDropdownOpen && (
         <Style.DropdownContentContainer>
