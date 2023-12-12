@@ -13,14 +13,4 @@ const createAxios = (() => {
 	})
 })
 
-// axios.interceptors.request.use(
-// 	(config) => {
-// 		config.headers['Authorization'] = `Bearer ${accessToken}`;
-// 		return config;
-// 	},
-// 	(err) => {
-// 		return Promise.reject(err);
-// 	}
-// )
-
 export default createAxios;

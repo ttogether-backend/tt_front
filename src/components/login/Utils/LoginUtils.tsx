@@ -1,37 +1,29 @@
 import { Cookies } from 'react-cookie';
 import axios from "axios";
-import axiosInstance from 'src/Utils/axiosInstance';
 
 const cookies = new Cookies();
 
-export const onAuthStatus = () => {
-  const refreshToken = cookies.get('refreshToken');
-  const memberId = cookies.get('memberId');
-  const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+export const onSilentRefresh = () => {
+	const refreshToken = cookies.get('refreshToken');
+	const memberId = cookies.get('memberId');
+	const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 1 * 60 * 60 * 1000);
 
-	if (!refreshToken && !memberId) {
-		console.log('로그인 된 유저 없음')
-		return false
-	}
-	else {
-		axios.post('/api/v1/members/token/reissue', null, {
-			headers: {
-				'Authorization-Refresh' : refreshToken,
-				'Member-Id' : memberId
-			}
-		})
-		.then((res) => {
-			cookies.set('accessToken', res.data.data.accessToken, {path: '/', expires: JWT_EXPRIY_TIME} );
-		})
-		return true
-	}
+	axios.post('/api/v1/members/token/reissue', null, {
+		headers: {
+			'Authorization-Refresh' : refreshToken,
+			'Member-Id' : memberId
+		}
+	})
+	.then((res) => {
+		cookies.set('accessToken', res.data.data.accessToken, {path: '/', expires: JWT_EXPRIY_TIME} );
+	})
 	
 }
 
 export const onLoginSuccess = (data) => {
 	const memberId = data.data.memberId;
 	const { accessToken, refreshToken } = data.data.token;
-	const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+	const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 1 * 60 * 60 * 1000);
 	const config = {path: '/', expires: JWT_EXPRIY_TIME} 
 
 	cookies.set('accessToken', accessToken, config);
@@ -54,4 +46,14 @@ export const kakaoLogin = () => {
 	.catch((err) => {
 		console.log(err);
 	})
+}
+
+export const setItemWithExpire = (key, value, tts) =>  {
+	const obj = {
+		value : value,
+		expire : Date.now() + tts
+	}
+
+	const objString = JSON.stringify(obj);
+	localStorage.setItem(key, objString);
 }
