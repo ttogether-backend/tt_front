@@ -19,37 +19,41 @@ import LoginPage from 'src/components/login/LoginPage.tsx';
 import Logout from 'src/components/login/Logout.tsx';
 import Myfeed from 'src/pages/myfeed/index.tsx';
 import NotFound from 'src/shared/components/NotFound/NotFound.tsx';
+import { Cookies } from 'react-cookie';
+import PrivateRoute from './PrivateRoute.tsx';
 
 const Router = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* <Route path="/" element={<Layout />} /> */}
-        <Route path="/" element={<Home />} />
-        <Route path="/accompany/create" element={<AccompanyCreatePage />} />
-        <Route path="/accompany/modify" element={<AccompanyModifyPage />} />
-        <Route path="/accompany/:id" element={<AccompanyDetailPage />} />
-        <Route path="/accompany/" element={<AccompanyListPage />} />
-        <Route path="/users/personal/verificareUser/password" element={<AuthPassword />} />
-        <Route path="/users/personal/verificareUser" element={<Verificare />} />
-        <Route path="/users/personal" element={<UserPersonal />} />
-        <Route path="/users/:userid" element={<MypageMain />} />
-        <Route path="/auth/sns" element={<VerificareUser />} />
-        <Route path="/auth/password" element={<AuthPassword />} />
-        <Route path="/users/withdrawal" element={<Withdrawal />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/test" element={<Test1 />} />
-        <Route path="/myfeed" element={<Myfeed />} />
-        <Route path="/myfeed/:id" element={<Myfeed />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/logout" element={<Logout />} />
+	const cookies = new Cookies();
+	const token = cookies.get('accessToken');
+	return (
+		<BrowserRouter>
+			<Routes>
+				{/* <Route path="/" element={<Layout />} /> */}
+				<Route path="/" element={<Home />} />
+				<Route path="/accompany/create" element={<PrivateRoute component={<AccompanyCreatePage />} authenticated={token} />} />
+				<Route path="/accompany/modify" element={<PrivateRoute component={<AccompanyModifyPage />}  authenticated={token} />} />
+				<Route path="/accompany/:id" element={<AccompanyDetailPage />} />
+				<Route path="/accompany/" element={<AccompanyListPage />} />
+				<Route path="/users/personal/verificareUser/password" element={<AuthPassword />} />
+				<Route path="/users/personal/verificareUser" element={<Verificare />} />
+				<Route path="/users/personal" element={<UserPersonal />} />
+				<Route path="/users/:userid" element={<MypageMain />} />
+				<Route path="/auth/sns" element={<VerificareUser />} />
+				<Route path="/auth/password" element={<AuthPassword />} />
+				<Route path="/users/withdrawal" element={<Withdrawal />} />
+				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+				<Route path="/terms-of-service" element={<TermsOfService />} />
+				<Route path="/test" element={<Test1 />} />
+				<Route path="/myfeed" element={<Myfeed />} />
+				<Route path="/myfeed/:id" element={<Myfeed />} />
+				<Route path="/login" element={<LoginPage />} />
+				<Route path="/signup" element={<SignUpPage />} />
+				<Route path="/logout" element={<Logout />} />
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
+				<Route path="*" element={<NotFound />} />
+			</Routes>
+		</BrowserRouter>
+	);
 };
 
 export default Router;
