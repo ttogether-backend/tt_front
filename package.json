@@ -10,10 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^1.10.1",
+    "@chatscope/chat-ui-kit-styles": "^1.4.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.8",
-    "@mui/material": "^5.14.8",
+    "@mui-treasury/layout": "next",
+    "@mui-treasury/mockup": "next",
+    "@mui/icons-material": "next",
+    "@mui/material": "next",
     "@mui/styled-engine-sc": "^5.14.8",
     "@mui/styles": "^5.14.7",
     "@tanstack/react-query": "^4.32.6",

@@ -5,6 +5,8 @@ export interface ChatListRoomPropsType {
   profileProps: ProfileSquarePropsType;
   messageInfo: LatestMessage;
   chatRoom: ChatRoom;
+  chatId: string;
+  setChatId: any;
 }
 
 export interface ChatRoom {

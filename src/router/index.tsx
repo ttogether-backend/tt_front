@@ -22,7 +22,7 @@ import NotFound from 'src/shared/components/NotFound/NotFound.tsx';
 import { Cookies } from 'react-cookie';
 import PrivateRoute from './PrivateRoute.tsx';
 import ChatListPage from 'src/components/chatlist/ChatListPage.tsx';
-import ChatRoomPage from 'src/components/chatlist/ChatRoomPage.tsx';
+import ChatRoomPage from 'src/components/chatlist/ChatRoom.tsx';
 
 const Router = () => {
 	const cookies = new Cookies();
