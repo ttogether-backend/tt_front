@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SideMenu, { SideMenuItemIdType, SideMenuItemType } from '../components/SideMenu';
 import { FlexContainer } from './FlexContainer';
 

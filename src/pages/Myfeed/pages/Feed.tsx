@@ -15,7 +15,7 @@ import { NonNavbarPage } from 'src/pages/layout';
 import { SideMenuContainer } from '../layout/SideMenuContainer';
 import { myfeedMenuList } from './index.type';
 import { isUUID } from 'src/Utils/UuidUtils';
-import { isPageLoding } from 'src/Utils/PageUtils';
+import { LoadingPage, isPageLoding } from 'src/Utils/PageUtils';
 
 interface FeedData {
   profile: any;
@@ -152,7 +152,7 @@ const FeedContainer = ({ memberId }: FeedProps) => {
   }, [memberId]);
 
   return isPageLoding(datas) ? (
-    <></>
+    <LoadingPage />
   ) : (
     <>
       <FeedBackground src={datas?.profile?.myfeed_image_path} />

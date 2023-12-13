@@ -21,7 +21,7 @@ import SnackbarUtils, { SNACKBAR_STYLE } from 'src/Utils/SnackbarUtils';
 import { useNavigate } from 'react-router';
 import { NonNavbarPage } from 'src/pages/layout';
 import { SideMenuContainer } from '../layout/SideMenuContainer';
-import { isPageLoding } from 'src/Utils/PageUtils';
+import { LoadingPage, isPageLoding } from 'src/Utils/PageUtils';
 
 const nicknameStyle = {
   color: '#696E64',
@@ -116,7 +116,7 @@ const SendRequestList = () => {
       <SideMenuContainer menuItemList={myfeedMenuList} activeMenuId="menu_send_request">
         <SideMenuContainer.SideMenuContent>
           {isPageLoding(datas) ? (
-            <></>
+            <LoadingPage />
           ) : (
             <ListContainer>
               {makeComponentProps(datas)?.map(

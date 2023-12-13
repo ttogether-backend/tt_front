@@ -22,7 +22,7 @@ import {
 import { useNavigate } from 'react-router';
 import { NonNavbarPage } from 'src/pages/layout';
 import { SideMenuContainer } from '../layout/SideMenuContainer';
-import { isPageLoding } from 'src/Utils/PageUtils';
+import { LoadingPage, isPageLoding } from 'src/Utils/PageUtils';
 
 const updateRequestStatus = async (
   requestId: number,
@@ -63,7 +63,6 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
             nickname={requestInfo.requester.nickname}
             profileImagePath={requestInfo.requester.profileImagePath}
           />
-
           <DateText date={requestInfo.requestAt} />
         </FlexContainer>
 
@@ -135,7 +134,7 @@ const ReceiveRequestList = () => {
       <SideMenuContainer menuItemList={myfeedMenuList} activeMenuId="menu_receive_request">
         <SideMenuContainer.SideMenuContent>
           {isPageLoding(datas) ? (
-            <></>
+            <LoadingPage />
           ) : (
             <ListContainer>
               {makeComponentProps(datas)?.map(
