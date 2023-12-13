@@ -29,6 +29,7 @@ const menuItemList: SideMenuItemType[] = [
 
 const Myfeed: React.FC<{ children?: React.ReactNode }> = () => {
   const { id } = useParams();
+  
   return (
     <NonNavbarPage>
       {!id ? (
