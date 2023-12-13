@@ -5,11 +5,7 @@ import { FlexContainer } from './FlexContainer';
 interface SideMenuContainerProps {
   children: React.ReactNode;
   menuItemList: SideMenuItemType[];
-}
-
-interface SideMenuContentProps {
-  children: React.ReactNode;
-  menuId: SideMenuItemIdType;
+  activeMenuId: SideMenuItemIdType;
 }
 
 const containerStyle = {
@@ -17,45 +13,32 @@ const containerStyle = {
   padding: '136px 0px',
 };
 
-export const SideMenuContent: React.FC<SideMenuContentProps> = ({
-  children,
-  menuId,
-}: SideMenuContentProps) => {
+export const SideMenuContent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <FlexContainer direction="row" alignItems="flex-start" justifyContent="flex-start" width={'100%'} id={menuId}>
+    <FlexContainer
+      direction="row"
+      alignItems="flex-start"
+      justifyContent="flex-start"
+      width={'100%'}
+    >
       {children}
     </FlexContainer>
   );
 };
 
 export const SideMenuContainer: React.FC<SideMenuContainerProps> & {
-  SideMenuContent: React.FC<SideMenuContentProps>;
-} = ({ children, menuItemList }) => {
-  const [activeMenuId, setActiveMenuId] = useState<SideMenuItemIdType>(menuItemList[0].id);
-
+  SideMenuContent: React.FC<{ children: React.ReactNode }>;
+} = ({ children, menuItemList, activeMenuId }) => {
   return (
     <FlexContainer
       direction="row"
       justifyContent="center"
       gap={32}
       style={containerStyle}
-      width={'1408px'} 
+      width={'1408px'}
     >
-      <SideMenu
-        menuItemList={menuItemList}
-        activeMenuId={activeMenuId}
-        setActiveMenuId={setActiveMenuId}
-      />
-
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
-          const childId = (child.props as SideMenuContentProps).menuId;
-          if (childId === activeMenuId) {
-            return child;
-          }
-        }
-        return null;
-      })}
+      <SideMenu menuItemList={menuItemList} activeMenuId={activeMenuId} />
+      {children}
     </FlexContainer>
   );
 };

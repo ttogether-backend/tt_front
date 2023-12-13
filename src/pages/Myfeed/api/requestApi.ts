@@ -1,5 +1,5 @@
 import { getData, patchData } from 'src/Utils/ApiUtils';
-import { RequestListItemProps } from '../requestList/index.type';
+import { RequestListItemProps } from '../pages/index.type';
 
 const ACCOMPANY_REQUEST_PATH = '/api/v1/accompany/requests';
 

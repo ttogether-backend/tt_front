@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ProfileImage from '../components/ProfileImage';
 import { Text } from '../components/Text';
 import { Button } from '../components/Button';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { getCookie } from 'src/components/login/cookie';
 import { getAccompany, getProfile, makeComponentProps } from '../api/feedApi';
 import { AccompanyCard } from 'src/shared/components/AccompanyCard';
@@ -11,6 +11,11 @@ import { AccompanyCardProps } from 'src/shared/components/AccompanyCard/Accompan
 import { Badge } from '../components/Badge';
 import { FeedBackground } from '../components/FeedBackground';
 import { FlexContainer } from '../layout/FlexContainer';
+import { NonNavbarPage } from 'src/pages/layout';
+import { SideMenuContainer } from '../layout/SideMenuContainer';
+import { myfeedMenuList } from './index.type';
+import { isUUID } from 'src/Utils/UuidUtils';
+import { isPageLoding } from 'src/Utils/PageUtils';
 
 interface FeedData {
   profile: any;
@@ -19,7 +24,7 @@ interface FeedData {
 }
 
 interface FeedProps {
-  userId?: string;
+  memberId?: string;
 }
 
 interface ProfileCardProps {
@@ -118,30 +123,37 @@ const FeedContent = ({ title, moreContentLinkPath, contentDatas }: FeedContentPr
   );
 };
 
-const Feed = ({ userId }: FeedProps) => {
+const FeedContainer = ({ memberId }: FeedProps) => {
   const [datas, setDatas] = useState<FeedData>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const memberId = userId ? userId : getCookie('memberId');
-
     (async function () {
-      const profileResult = await getProfile(memberId);
-      const hostAccompanyListResult = await getAccompany(
-        { memberId: memberId, role: ['HOST'] },
-        1,
-        5
-      );
-      // const completeAccompanyList = await getAccompany({ memberId: memberId, progressStatus: ['COMPLETE'] },1,5); //api수정중
+      const id = memberId ? memberId : getCookie('memberId'); //todo lcoalstorage 로직으로 변경
 
-      setDatas({
-        profile: profileResult.data,
-        hostAccompanyList: hostAccompanyListResult.data?.accompany_member_list,
-        completeAccompanyList: null,
-      });
+      const profileResult = await getProfile(id);
+
+      if (!profileResult) {
+        alert('없는 회원입니다.');
+        navigate(-1);
+        return;
+      } else {
+        const hostAccompanyListResult = await getAccompany({ memberId: id, role: ['HOST'] }, 1, 5);
+
+        // const completeAccompanyList = await getAccompany({ memberId: memberId, progressStatus: ['COMPLETE'] },1,5); //todo api수정중
+
+        setDatas({
+          profile: profileResult.data,
+          hostAccompanyList: hostAccompanyListResult.data?.accompany_member_list,
+          completeAccompanyList: null,
+        });
+      }
     })();
-  }, [userId]);
+  }, [memberId]);
 
-  return (
+  return isPageLoding(datas) ? (
+    <></>
+  ) : (
     <>
       <FeedBackground src={datas?.profile?.myfeed_image_path} />
 
@@ -149,10 +161,10 @@ const Feed = ({ userId }: FeedProps) => {
         direction="column"
         gap={40}
         width={'1048px'}
-        style={{ marginTop: userId ? 144 : 0, marginBottom: 238 }}
+        style={{ marginTop: memberId ? 144 : 0, marginBottom: 238 }}
       >
         <ProfileCard
-          isMyFeed={!userId}
+          isMyFeed={!memberId}
           nickname={datas?.profile?.nickname}
           bio={datas?.profile?.bio}
           profileImagePath={datas?.profile?.profile_image_path}
@@ -160,16 +172,55 @@ const Feed = ({ userId }: FeedProps) => {
         />
         <FeedContent
           title="동행 기록"
-          moreContentLinkPath={`/myfeed/${datas?.profile?.member_id}/completed-accompany`}
+          moreContentLinkPath={`/feed/${datas?.profile?.member_id}/completed-accompany`}
           contentDatas={makeComponentProps(datas?.completeAccompanyList)}
         />
         <FeedContent
           title="모집한 동행"
-          moreContentLinkPath={`/myfeed/${datas?.profile?.member_id}/hosted-accompany`}
+          moreContentLinkPath={`/feed/${datas?.profile?.member_id}/hosted-accompany`}
           contentDatas={makeComponentProps(datas?.hostAccompanyList)}
         />
       </FlexContainer>
     </>
+  );
+};
+
+const Feed = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const validId = () => {
+    if (id && !isUUID(id)) {
+      alert('잘못된 접근입니다.');
+      navigate(-1);
+      return false;
+    }
+
+    return true;
+  };
+
+  const isMyFeed = () => {
+    if (id) {
+      return false;
+    }
+
+    return true;
+  };
+
+  return (
+    <NonNavbarPage>
+      {!isMyFeed() && validId() ? (
+        <FlexContainer justifyContent="center">
+          <FeedContainer memberId={id} />
+        </FlexContainer>
+      ) : (
+        <SideMenuContainer menuItemList={myfeedMenuList} activeMenuId="menu_profile">
+          <SideMenuContainer.SideMenuContent>
+            <FeedContainer />
+          </SideMenuContainer.SideMenuContent>
+        </SideMenuContainer>
+      )}
+    </NonNavbarPage>
   );
 };
 

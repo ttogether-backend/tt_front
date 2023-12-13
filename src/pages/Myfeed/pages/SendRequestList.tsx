@@ -9,7 +9,7 @@ import { ListContainer, ListContainerItem } from '../layout/ListContainer';
 import { FlexContainer } from '../layout/FlexContainer';
 
 // utils
-import { RequestListItemProps } from './index.type';
+import { RequestListItemProps, myfeedMenuList } from './index.type';
 import {
   ACCOMPANY_REQUEST_STATUS,
   getSendRequestList,
@@ -19,6 +19,9 @@ import {
 import DialogUtils, { DIALOG_BUTTON_STYLE } from 'src/Utils/DialogUtils';
 import SnackbarUtils, { SNACKBAR_STYLE } from 'src/Utils/SnackbarUtils';
 import { useNavigate } from 'react-router';
+import { NonNavbarPage } from 'src/pages/layout';
+import { SideMenuContainer } from '../layout/SideMenuContainer';
+import { isPageLoding } from 'src/Utils/PageUtils';
 
 const nicknameStyle = {
   color: '#696E64',
@@ -34,7 +37,7 @@ const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) =>
 
   return (
     <ListContainerItem>
-      <FlexContainer width={'100%'} direction='row' justifyContent='space-between'>
+      <FlexContainer width={'100%'} direction="row" justifyContent="space-between">
         <FlexContainer direction="column" alignItems="flex-start" gap={12}>
           <EllipsisTitle
             maxWidth={550} //개선안 찾기
@@ -109,11 +112,28 @@ const SendRequestList = () => {
   }, []);
 
   return (
-    <ListContainer>
-      {makeComponentProps(datas)?.map((requestListItem: RequestListItemProps, index: number) => {
-        return <SendRequestListItem key={`send-request-list-item-${index}`} {...requestListItem} />;
-      })}
-    </ListContainer>
+    <NonNavbarPage>
+      <SideMenuContainer menuItemList={myfeedMenuList} activeMenuId="menu_send_request">
+        <SideMenuContainer.SideMenuContent>
+          {isPageLoding(datas) ? (
+            <></>
+          ) : (
+            <ListContainer>
+              {makeComponentProps(datas)?.map(
+                (requestListItem: RequestListItemProps, index: number) => {
+                  return (
+                    <SendRequestListItem
+                      key={`send-request-list-item-${index}`}
+                      {...requestListItem}
+                    />
+                  );
+                }
+              )}
+            </ListContainer>
+          )}
+        </SideMenuContainer.SideMenuContent>
+      </SideMenuContainer>
+    </NonNavbarPage>
   );
 };
 

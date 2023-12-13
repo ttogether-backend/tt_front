@@ -14,7 +14,7 @@ const UserInfo = ({ id, nickname, profileImagePath }: UserInfoProps) => {
     <FlexContainer gap={5}>
       <ProfileImage src={profileImagePath} size={20} />
 
-      <Link to={`/myfeed/${id}`}>
+      <Link to={`/feed/${id}`}>
         <Text fontType={Text.FontType.description} color={Text.FontColor.gray}>
           {`${nickname}님 >`}
         </Text>

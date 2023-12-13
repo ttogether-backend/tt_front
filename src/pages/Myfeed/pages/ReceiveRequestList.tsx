@@ -12,7 +12,7 @@ import SnackbarUtils, { SNACKBAR_STYLE } from 'src/Utils/SnackbarUtils';
 import { FlexContainer } from '../layout/FlexContainer';
 
 // utils
-import { RequestListItemProps } from './index.type';
+import { RequestListItemProps, myfeedMenuList } from './index.type';
 import {
   ACCOMPANY_REQUEST_STATUS,
   getReceiveRequestList,
@@ -20,6 +20,9 @@ import {
   patchRequest,
 } from '../api/requestApi';
 import { useNavigate } from 'react-router';
+import { NonNavbarPage } from 'src/pages/layout';
+import { SideMenuContainer } from '../layout/SideMenuContainer';
+import { isPageLoding } from 'src/Utils/PageUtils';
 
 const updateRequestStatus = async (
   requestId: number,
@@ -44,8 +47,8 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
 
   return (
     <ListContainerItem>
-      <FlexContainer width={'100%'} direction='row' justifyContent='space-between'>
-        <FlexContainer direction='column' alignItems="flex-start" gap={12}>
+      <FlexContainer width={'100%'} direction="row" justifyContent="space-between">
+        <FlexContainer direction="column" alignItems="flex-start" gap={12}>
           <EllipsisTitle
             maxWidth={550} //개선안 찾기
             ellipsisContent={`[${postInfo.title}`}
@@ -128,13 +131,28 @@ const ReceiveRequestList = () => {
   }, []);
 
   return (
-    <ListContainer>
-      {makeComponentProps(datas)?.map((requestListItem: RequestListItemProps, index: number) => {
-        return (
-          <ReceiveRequestListItem key={`receive-request-list-item-${index}`} {...requestListItem} />
-        );
-      })}
-    </ListContainer>
+    <NonNavbarPage>
+      <SideMenuContainer menuItemList={myfeedMenuList} activeMenuId="menu_receive_request">
+        <SideMenuContainer.SideMenuContent>
+          {isPageLoding(datas) ? (
+            <></>
+          ) : (
+            <ListContainer>
+              {makeComponentProps(datas)?.map(
+                (requestListItem: RequestListItemProps, index: number) => {
+                  return (
+                    <ReceiveRequestListItem
+                      key={`receive-request-list-item-${index}`}
+                      {...requestListItem}
+                    />
+                  );
+                }
+              )}
+            </ListContainer>
+          )}
+        </SideMenuContainer.SideMenuContent>
+      </SideMenuContainer>
+    </NonNavbarPage>
   );
 };
 

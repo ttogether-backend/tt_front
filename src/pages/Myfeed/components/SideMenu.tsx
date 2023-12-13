@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router';
 
 export interface SideMenuItemType {
   id: SideMenuItemIdType;
   label: string;
+  path: string;
 }
 
 export type SideMenuItemIdType = string;
@@ -10,7 +12,6 @@ export type SideMenuItemIdType = string;
 interface SideMenuProps {
   menuItemList: SideMenuItemType[];
   activeMenuId: SideMenuItemIdType;
-  setActiveMenuId: (MyfeedMenuItemIdType) => void;
 }
 
 interface SideMenuItemProps {
@@ -18,12 +19,6 @@ interface SideMenuItemProps {
   isActive: boolean;
   onClick: () => void;
 }
-
-const activeStyle: any = {
-  background: '#F1F8F3',
-  color: '#000',
-  fontWeight: 700,
-};
 
 const defaultStyle: any = {
   background: '#FFF',
@@ -49,21 +44,34 @@ const ItemContainer = styled.li`
   flex-shrink: 0;
   border-radius: 10px;
   padding-left: 24px;
+  cursor: pointer;
+  background: #fff;
+  color: #868b91;
+  font-weight: 500;
+
+  &.active {
+    background: #F1F8F3;
+    color: #000;
+    font-weight: 700;
+  }
+  
+  &:hover:not(.active){
+    color: #000;
+    font-weight: 700;
+  }
 `;
 
 const SideMenuItem = ({ menuItem, isActive, onClick }: SideMenuItemProps) => {
   return (
-    <ItemContainer
-      key={menuItem.id}
-      onClick={onClick}
-      style={isActive ? activeStyle : defaultStyle}
-    >
+    <ItemContainer key={menuItem.id} onClick={onClick} className={isActive ? 'active' : 'devault'}>
       {menuItem.label}
     </ItemContainer>
   );
 };
 
-export const SideMenu = ({ menuItemList, activeMenuId, setActiveMenuId }: SideMenuProps) => {
+export const SideMenu = ({ menuItemList, activeMenuId }: SideMenuProps) => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       {menuItemList?.map((menuItem: SideMenuItemType) => (
@@ -71,7 +79,7 @@ export const SideMenu = ({ menuItemList, activeMenuId, setActiveMenuId }: SideMe
           menuItem={menuItem}
           isActive={activeMenuId === menuItem.id}
           onClick={() => {
-            setActiveMenuId(menuItem.id);
+            navigate(menuItem.path);
           }}
         />
       ))}

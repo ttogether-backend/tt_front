@@ -17,12 +17,14 @@ import Home from 'src/pages/home/home.tsx';
 import SignUpPage from 'src/components/login/SignUpPage.tsx';
 import LoginPage from 'src/components/login/LoginPage.tsx';
 import Logout from 'src/components/login/Logout.tsx';
-import Myfeed from 'src/pages/myfeed/index.tsx';
 import NotFound from 'src/shared/components/NotFound/NotFound.tsx';
 import { Cookies } from 'react-cookie';
 import PrivateRoute from './PrivateRoute.tsx';
 import ChatListPage from 'src/components/chatlist/ChatListPage.tsx';
 import ChatRoomPage from 'src/components/chatlist/ChatRoom.tsx';
+import Feed from 'src/pages/Myfeed/pages/Feed.tsx';
+import SendRequestList from 'src/pages/Myfeed/pages/SendRequestList.tsx';
+import ReceiveRequestList from 'src/pages/Myfeed/pages/ReceiveRequestList.tsx';
 
 const Router = () => {
 	return (
@@ -44,8 +46,12 @@ const Router = () => {
 				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
 				<Route path="/terms-of-service" element={<TermsOfService />} />
 				<Route path="/test" element={<Test1 />} />
-				<Route path="/myfeed" element={<PrivateRoute component={<Myfeed />} />} />
-				<Route path="/myfeed/:id" element={<Myfeed />} />
+
+				<Route path="/feed/my/send-accompany-request" element={<PrivateRoute component={<SendRequestList />} />} />
+				<Route path="/feed/my/receive-accompany-request" element={<PrivateRoute component={<ReceiveRequestList />} />} />
+				<Route path="/feed/my" element={<PrivateRoute component={<Feed />} />} />
+				<Route path="/feed/:id" element={<PrivateRoute component={<Feed />} />} />
+
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/signup" element={<SignUpPage />} />
 				<Route path="/logout" element={<Logout />} />
