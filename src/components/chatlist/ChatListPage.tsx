@@ -50,10 +50,6 @@ const ChatListPage = () => {
 			res.data.data.map((data) => (
 				rooms.push(setChatRoom(data))
 			))
-			// for (const data in res.data.data) {
-			// 	console.log("data:", data)
-			// 	rooms.push(setChatRoom(data));
-			// }
 			setChatRoomList(rooms);
 			console.log("rooms:", rooms);
 

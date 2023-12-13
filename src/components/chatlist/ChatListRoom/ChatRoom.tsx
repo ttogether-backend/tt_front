@@ -6,38 +6,38 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
 export default function ChatRoomItem(props) {
 	const { chatRoom, profileProps, accompanyPost, messageInfo } = props;
 	return (
-		<List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
+		<Link to="/">
 			<ListItem alignItems="flex-start">
-
-			
-			<ListItemAvatar>
-
-			</ListItemAvatar>
-			<ListItemText
-				primary={
-					<React.Fragment>
-						{chatRoom.title}
-						<Typography
-							sx={{ display: 'inline' }}
-							component="span"
-							variant="body2"
-							color="text.primary"
-						>
-							{chatRoom.memberCount}
-							{messageInfo.time}
-						</Typography>
-					</React.Fragment>
-				} 
-				secondary={
-					messageInfo.message
-				}
-			/>
+				<ListItemAvatar>
+					<Avatar alt="profile" src={profileProps.src[0]} />
+				</ListItemAvatar>
+				<ListItemText
+					primary={
+						<React.Fragment>
+							{chatRoom.title + " "}
+							<Typography
+								sx={{ display: 'inline' }}
+								component="span"
+								variant="body2"
+								color="text.primary"
+							>
+								{chatRoom.memberCount}
+								{messageInfo.time}
+							</Typography>
+						</React.Fragment>
+					}
+					secondary={
+						messageInfo.message
+					}
+				/>
 			</ListItem>
 			<Divider variant="inset" component="li" />
-		</List>
+		</Link>
+
 	)
 }

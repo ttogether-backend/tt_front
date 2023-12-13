@@ -22,6 +22,7 @@ import NotFound from 'src/shared/components/NotFound/NotFound.tsx';
 import { Cookies } from 'react-cookie';
 import PrivateRoute from './PrivateRoute.tsx';
 import ChatListPage from 'src/components/chatlist/ChatListPage.tsx';
+import ChatRoomPage from 'src/components/chatlist/ChatRoomPage.tsx';
 
 const Router = () => {
 	const cookies = new Cookies();
@@ -51,7 +52,7 @@ const Router = () => {
 				<Route path="/signup" element={<SignUpPage />} />
 				<Route path="/logout" element={<Logout />} />
 				<Route path="/chat" element={<PrivateRoute component={<ChatListPage />} authenticated={token} />} />
-
+				<Route path="/chat/:chatid" element={<PrivateRoute component={<ChatRoomPage />} authenticated={token} />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>
