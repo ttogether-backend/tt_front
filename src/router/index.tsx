@@ -25,15 +25,13 @@ import ChatListPage from 'src/components/chatlist/ChatListPage.tsx';
 import ChatRoomPage from 'src/components/chatlist/ChatRoom.tsx';
 
 const Router = () => {
-	const cookies = new Cookies();
-	const token = cookies.get('accessToken');
 	return (
 		<BrowserRouter>
 			<Routes>
 				{/* <Route path="/" element={<Layout />} /> */}
 				<Route path="/" element={<Home />} />
-				<Route path="/accompany/create" element={<PrivateRoute component={<AccompanyCreatePage />} authenticated={token} />} />
-				<Route path="/accompany/modify" element={<PrivateRoute component={<AccompanyModifyPage />}  authenticated={token} />} />
+				<Route path="/accompany/create" element={<PrivateRoute component={<AccompanyCreatePage />} />} />
+				<Route path="/accompany/modify" element={<PrivateRoute component={<AccompanyModifyPage />} />} />
 				<Route path="/accompany/:id" element={<AccompanyDetailPage />} />
 				<Route path="/accompany/" element={<AccompanyListPage />} />
 				{/* <Route path="/users/personal/verificareUser/password" element={<AuthPassword />} /> */}
@@ -46,13 +44,13 @@ const Router = () => {
 				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
 				<Route path="/terms-of-service" element={<TermsOfService />} />
 				<Route path="/test" element={<Test1 />} />
-				<Route path="/myfeed" element={<Myfeed />} />
+				<Route path="/myfeed" element={<PrivateRoute component={<Myfeed />} />} />
 				<Route path="/myfeed/:id" element={<Myfeed />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/signup" element={<SignUpPage />} />
 				<Route path="/logout" element={<Logout />} />
-				<Route path="/chat" element={<PrivateRoute component={<ChatListPage />} authenticated={token} />} />
-				<Route path="/chat/:chatid" element={<PrivateRoute component={<ChatRoomPage />} authenticated={token} />} />
+				<Route path="/chat" element={<PrivateRoute component={<ChatListPage />} />} />
+				{/* <Route path="/chat/:chatid" element={<PrivateRoute component={<ChatRoomPage />} authenticated={token} />} /> */}
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>
