@@ -18,6 +18,7 @@ import {
 } from '../api/requestApi';
 import DialogUtils, { DIALOG_BUTTON_STYLE } from 'src/Utils/DialogUtils';
 import SnackbarUtils, { SNACKBAR_STYLE } from 'src/Utils/SnackbarUtils';
+import { useNavigate } from 'react-router';
 
 const nicknameStyle = {
   color: '#696E64',
@@ -29,23 +30,24 @@ const nicknameStyle = {
 
 const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) => {
   const [requestStatus, setRequestStatus] = useState<string>(requestInfo.status);
+  const navigate = useNavigate();
 
   return (
     <ListContainerItem>
-     <FlexContainer direction='row' justifyContent='space-between'>
-        <FlexContainer direction='column' alignItems="flex-start" gap={12}>
+      <FlexContainer width={'100%'} direction='row' justifyContent='space-between'>
+        <FlexContainer direction="column" alignItems="flex-start" gap={12}>
           <EllipsisTitle
             maxWidth={550} //개선안 찾기
             ellipsisContent={`[${postInfo.title}`}
             subContent="] 글로 보낸 동행 신청"
             onClick={() => {
-              console.log(postInfo.id);
+              navigate(`/accompany/${postInfo.id}`);
             }}
           />
 
           <div style={nicknameStyle}>{`by ${requestInfo.requester.nickname}`}</div>
 
-          <DateText date={requestInfo.date} />
+          <DateText date={requestInfo.requestAt} />
         </FlexContainer>
 
         <ButtonGroup>

@@ -16,9 +16,9 @@ const containerStyle = {
 
 const ellipsisStyle = {
   flex: 1,
-  overflow: 'hidden' as 'hidden',
-  textOverflow: 'ellipsis' as 'ellipsis',
-  whiteSpace: 'nowrap' as 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 };
 
 
@@ -30,7 +30,7 @@ const EllipsisTitle = ({
 }: TitleProps) => {
 
   return (
-    <FlexContainer style={{ ...containerStyle, maxWidth}} onClick={onClick}>
+    <FlexContainer style={{ ...containerStyle, maxWidth, cursor: 'pointer'}} onClick={onClick}>
       <div style={{ ...ellipsisStyle }}>{ellipsisContent}</div>
       <div>{subContent}</div>
     </FlexContainer>

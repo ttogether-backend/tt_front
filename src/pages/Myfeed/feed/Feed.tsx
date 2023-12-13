@@ -1,17 +1,22 @@
-import { ListContainerItem } from '../layout/ListContainer';
 import { useEffect, useState } from 'react';
 import ProfileImage from '../components/ProfileImage';
 import { Text } from '../components/Text';
 import { Button } from '../components/Button';
 import { useNavigate } from 'react-router';
 import { getCookie } from 'src/components/login/cookie';
-import { getProfile } from './profileApi';
+import { getAccompany, getProfile, makeComponentProps } from '../api/feedApi';
 import { AccompanyCard } from 'src/shared/components/AccompanyCard';
 import { VerticalScrollContainer } from '../layout/VerticalScrollContainer';
 import { AccompanyCardProps } from 'src/shared/components/AccompanyCard/AccompanyCard.types';
 import { Badge } from '../components/Badge';
 import { FeedBackground } from '../components/FeedBackground';
 import { FlexContainer } from '../layout/FlexContainer';
+
+interface FeedData {
+  profile: any;
+  hostAccompanyList: any[];
+  completeAccompanyList: any[];
+}
 
 interface FeedProps {
   userId?: string;
@@ -25,44 +30,11 @@ interface ProfileCardProps {
   accompanyComplteCount: number;
 }
 
-const data = {
-  category: 'TRAVEL',
-  title: '뚜기와 함께하는 여행',
-  accompany_id: 1,
-  thumbnail_url:
-    'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbK77rj%2FbtrDyF4hWX8%2FlPMPnDbvxPv4sWpdGZ3bhK%2Fimg.jpg',
-  recruit_number: 1,
-  is_age_free: false,
-  min_recruit_age: 20,
-  max_recruit_age: 30,
-  location_info_list: [
-    {
-      location_id: 3,
-      country: 'korea',
-      city: 'seoul',
-      latitude: '12354',
-      longitude: '4897',
-      name: '오뚜기',
-      address: '서울시양천구',
-    },
-  ],
-  add_content: '밥 먹고싶어요',
-  host: {
-    member_id: 'test',
-    nickname: 'test',
-    profile_image_path: 'test',
-  },
-  joining_member_count: 1,
-  period: {
-    startAt: '2022-11-22',
-    endAt: '2022-11-22',
-  },
-  recruit_age_range: {
-    minRecruitAge: 10,
-    maxRecruitAge: 20,
-  },
-  status: 'COMPLETE',
-};
+interface FeedContentProps {
+  title: string;
+  moreContentLinkPath: string;
+  contentDatas: AccompanyCardProps[];
+}
 
 const ProfileCard = ({
   isMyFeed,
@@ -113,106 +85,65 @@ const ProfileCard = ({
   );
 };
 
-interface FeedContentProps {
-  title: string;
-  moreContentLinkPath: string;
-  contentDatas: AccompanyCardProps[];
-}
-
 const FeedContent = ({ title, moreContentLinkPath, contentDatas }: FeedContentProps) => {
+  const navigate = useNavigate();
+
   return (
     <FlexContainer direction="column" gap={24}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Text fontType={Text.FontType.subTitle}>{title}</Text>
-        <Button>더보기</Button>
+        {!contentDatas || (contentDatas instanceof Array && contentDatas.length == 0) ? (
+          <></>
+        ) : (
+          <Button
+            onClick={() => {
+              navigate(moreContentLinkPath);
+            }}
+          >
+            더보기
+          </Button>
+        )}
       </div>
 
-      <VerticalScrollContainer>
-        <AccompanyCard
-          key={1}
-          isAccomList={true}
-          accomId={data.accompany_id}
-          memberId={data.host.member_id}
-          authNum={1}
-          auth="1차 인증"
-          profileImgSrc={data.host.profile_image_path}
-          username={data.host.nickname}
-          age={`${data.recruit_age_range.minRecruitAge}대 ~ ${data.recruit_age_range.maxRecruitAge}대`}
-          thumbSrc={data.thumbnail_url}
-          category={data.category}
-          status={data.status}
-          date={`${data.period.startAt} ~ ${data.period.endAt}`}
-          cnt={data.joining_member_count}
-          personnel={data.recruit_number}
-          title={data.title}
-          location={data.location_info_list[0].name}
-          tags={[]}
-        />
-        <AccompanyCard
-          key={1}
-          isAccomList={true}
-          accomId={data.accompany_id}
-          memberId={data.host.member_id}
-          authNum={1}
-          auth="1차 인증"
-          profileImgSrc={data.host.profile_image_path}
-          username={data.host.nickname}
-          age={`${data.recruit_age_range.minRecruitAge}대 ~ ${data.recruit_age_range.maxRecruitAge}대`}
-          thumbSrc={data.thumbnail_url}
-          category={data.category}
-          status={data.status}
-          date={`${data.period.startAt} ~ ${data.period.endAt}`}
-          cnt={data.joining_member_count}
-          personnel={data.recruit_number}
-          title={data.title}
-          location={data.location_info_list[0].name}
-          tags={[]}
-        />
-        <AccompanyCard
-          key={1}
-          isAccomList={true}
-          accomId={data.accompany_id}
-          memberId={data.host.member_id}
-          authNum={1}
-          auth="1차 인증"
-          profileImgSrc={data.host.profile_image_path}
-          username={data.host.nickname}
-          age={`${data.recruit_age_range.minRecruitAge}대 ~ ${data.recruit_age_range.maxRecruitAge}대`}
-          thumbSrc={data.thumbnail_url}
-          category={data.category}
-          status={data.status}
-          date={`${data.period.startAt} ~ ${data.period.endAt}`}
-          cnt={data.joining_member_count}
-          personnel={data.recruit_number}
-          title={data.title}
-          location={data.location_info_list[0].name}
-          tags={[]}
-        />
-      </VerticalScrollContainer>
+      {!contentDatas || (contentDatas instanceof Array && contentDatas.length == 0) ? (
+        <>{title}이 없습니다.</>
+      ) : (
+        <VerticalScrollContainer>
+          {contentDatas?.map((props: AccompanyCardProps, index: number) => {
+            return <AccompanyCard key={`accompany-card-${title}-${index}`} {...props} />;
+          })}
+        </VerticalScrollContainer>
+      )}
     </FlexContainer>
   );
 };
 
 const Feed = ({ userId }: FeedProps) => {
-  const [datas, setDatas] = useState<any>(null);
+  const [datas, setDatas] = useState<FeedData>(null);
 
   useEffect(() => {
-    if (userId) {
-      (async function () {
-        const result = await getProfile(userId);
-        setDatas(result.data);
-      })();
-    } else {
-      (async function () {
-        const result = await getProfile(getCookie('memberId'));
-        setDatas(result.data);
-      })();
-    }
+    const memberId = userId ? userId : getCookie('memberId');
+
+    (async function () {
+      const profileResult = await getProfile(memberId);
+      const hostAccompanyListResult = await getAccompany(
+        { memberId: memberId, role: ['HOST'] },
+        1,
+        5
+      );
+      // const completeAccompanyList = await getAccompany({ memberId: memberId, progressStatus: ['COMPLETE'] },1,5); //api수정중
+
+      setDatas({
+        profile: profileResult.data,
+        hostAccompanyList: hostAccompanyListResult.data?.accompany_member_list,
+        completeAccompanyList: null,
+      });
+    })();
   }, [userId]);
 
   return (
     <>
-      <FeedBackground src={datas?.myfeed_image_path} />
+      <FeedBackground src={datas?.profile?.myfeed_image_path} />
 
       <FlexContainer
         direction="column"
@@ -222,13 +153,21 @@ const Feed = ({ userId }: FeedProps) => {
       >
         <ProfileCard
           isMyFeed={!userId}
-          nickname={datas?.nickname}
-          bio={datas?.bio}
-          profileImagePath={datas?.profile_image_path}
-          accompanyComplteCount={datas?.completed_accompany_count}
+          nickname={datas?.profile?.nickname}
+          bio={datas?.profile?.bio}
+          profileImagePath={datas?.profile?.profile_image_path}
+          accompanyComplteCount={datas?.profile?.completed_accompany_count}
         />
-        <FeedContent title="동행 기록" moreContentLinkPath="" contentDatas={null} />
-        <FeedContent title="모집한 동행" moreContentLinkPath="" contentDatas={null} />
+        <FeedContent
+          title="동행 기록"
+          moreContentLinkPath={`/myfeed/${datas?.profile?.member_id}/completed-accompany`}
+          contentDatas={makeComponentProps(datas?.completeAccompanyList)}
+        />
+        <FeedContent
+          title="모집한 동행"
+          moreContentLinkPath={`/myfeed/${datas?.profile?.member_id}/hosted-accompany`}
+          contentDatas={makeComponentProps(datas?.hostAccompanyList)}
+        />
       </FlexContainer>
     </>
   );

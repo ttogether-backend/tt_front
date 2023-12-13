@@ -19,6 +19,7 @@ import {
   makeComponentProps,
   patchRequest,
 } from '../api/requestApi';
+import { useNavigate } from 'react-router';
 
 const updateRequestStatus = async (
   requestId: number,
@@ -39,6 +40,7 @@ const updateRequestStatus = async (
 
 const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) => {
   const [requestStatus, setRequestStatus] = useState<string>(requestInfo.status);
+  const navigate = useNavigate();
 
   return (
     <ListContainerItem>
@@ -49,7 +51,7 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
             ellipsisContent={`[${postInfo.title}`}
             subContent="] 글에서 동행 신청이 왔습니다."
             onClick={() => {
-              console.log(postInfo.id); //todo: post 로 이동
+              navigate(`/accompany/${postInfo.id}`);
             }}
           />
 
@@ -59,7 +61,7 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
             profileImagePath={requestInfo.requester.profileImagePath}
           />
 
-          <DateText date={requestInfo.date} />
+          <DateText date={requestInfo.requestAt} />
         </FlexContainer>
 
         <ButtonGroup>

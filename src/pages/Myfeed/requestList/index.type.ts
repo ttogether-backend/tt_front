@@ -11,7 +11,7 @@ export interface AccompanyPostType {
 export interface AccompanyRequestType {
   id: number;
   requester: AccompanyRequesterType;
-  date: Date;
+  requestAt: Date;
   status: string;
 }
 
