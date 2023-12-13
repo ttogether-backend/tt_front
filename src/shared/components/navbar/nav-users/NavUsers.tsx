@@ -54,7 +54,7 @@ const NavUsers: React.FC<{ login?: boolean }> = ({ login }) => {
 									'aria-labelledby': 'basic-button',
 								}}
 							>
-								<MenuItem onClick={() => {navigate("/myfeed")}}>마이페이지</MenuItem>
+								<MenuItem onClick={() => {navigate("/feed/my")}}>마이페이지</MenuItem>
 								<MenuItem onClick={() => {navigate("/logout")}}>로그아웃</MenuItem>
 							</Menu>
 						</li>

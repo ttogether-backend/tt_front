@@ -1,5 +1,5 @@
 import { getData, patchData } from 'src/Utils/ApiUtils';
-import { RequestListItemProps } from '../requestList/index.type';
+import { RequestListItemProps } from '../pages/index.type';
 
 const ACCOMPANY_REQUEST_PATH = '/api/v1/accompany/requests';
 
@@ -29,7 +29,7 @@ export const makeComponentProps = (apiResult: any): RequestListItemProps[] => {
   }
 
   return apiResult?.data?.accompany_request_list?.map(
-    ({ accompany_request_id, requester, accompany, status }) => {
+    ({ accompany_request_id, requester, accompany, status, request_at }) => {
       return {
         postInfo: {
           id: accompany?.accompany_post_id,
@@ -42,7 +42,7 @@ export const makeComponentProps = (apiResult: any): RequestListItemProps[] => {
             nickname: requester.nickname,
             profileImagePath: requester.profile_image_path,
           },
-          date: null,
+          requestAt: request_at,
           status: status,
         },
       };
@@ -65,7 +65,7 @@ export const getReceiveRequestList = async (pageNo: number, pageSize: number) =>
 export const patchRequest = async (requestId: number, requestStatus: string) => {
   const path = ACCOMPANY_REQUEST_PATH + `/${requestId}`;
   const requestBody = {
-    requestStatus: requestStatus,
+    request_status: requestStatus,
   };
 
   return (await patchData(path, requestBody)).success;

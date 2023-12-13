@@ -6,20 +6,23 @@ import { ButtonGroup } from '../components/ButtonGroup';
 import DateText from '../components/DateText';
 import EllipsisTitle from '../components/EllipsisTitle';
 import UserInfo from '../components/UserInfo';
-import { ColumnContainer } from '../layout/ColumnContainer';
 import { ListContainer, ListContainerItem } from '../layout/ListContainer';
-import { RowContainer } from '../layout/RowContainer';
 import DialogUtils, { DIALOG_BUTTON_STYLE } from 'src/Utils/DialogUtils';
 import SnackbarUtils, { SNACKBAR_STYLE } from 'src/Utils/SnackbarUtils';
+import { FlexContainer } from '../layout/FlexContainer';
 
 // utils
-import { RequestListItemProps } from './index.type';
+import { RequestListItemProps, myfeedMenuList } from './index.type';
 import {
   ACCOMPANY_REQUEST_STATUS,
   getReceiveRequestList,
   makeComponentProps,
   patchRequest,
 } from '../api/requestApi';
+import { useNavigate } from 'react-router';
+import { NonNavbarPage } from 'src/pages/layout';
+import { SideMenuContainer } from '../layout/SideMenuContainer';
+import { LoadingPage, isPageLoding } from 'src/Utils/PageUtils';
 
 const updateRequestStatus = async (
   requestId: number,
@@ -40,17 +43,18 @@ const updateRequestStatus = async (
 
 const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) => {
   const [requestStatus, setRequestStatus] = useState<string>(requestInfo.status);
+  const navigate = useNavigate();
 
   return (
     <ListContainerItem>
-      <RowContainer style={{ width: '100%', justifyContent: 'space-between' }}>
-        <ColumnContainer style={{ alignItems: 'flex-start', gap: 12 }}>
+      <FlexContainer width={'100%'} direction="row" justifyContent="space-between">
+        <FlexContainer direction="column" alignItems="flex-start" gap={12}>
           <EllipsisTitle
             maxWidth={550} //개선안 찾기
             ellipsisContent={`[${postInfo.title}`}
             subContent="] 글에서 동행 신청이 왔습니다."
             onClick={() => {
-              console.log(postInfo.id); //todo: post 로 이동
+              navigate(`/accompany/${postInfo.id}`);
             }}
           />
 
@@ -59,9 +63,8 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
             nickname={requestInfo.requester.nickname}
             profileImagePath={requestInfo.requester.profileImagePath}
           />
-
-          <DateText date={requestInfo.date} />
-        </ColumnContainer>
+          <DateText date={requestInfo.requestAt} />
+        </FlexContainer>
 
         <ButtonGroup>
           {requestStatus === ACCOMPANY_REQUEST_STATUS.REQUESTING.code ? (
@@ -111,7 +114,7 @@ const ReceiveRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps)
             <Button disabled={true}>{ACCOMPANY_REQUEST_STATUS[requestStatus].name}</Button>
           )}
         </ButtonGroup>
-      </RowContainer>
+      </FlexContainer>
     </ListContainerItem>
   );
 };
@@ -127,13 +130,28 @@ const ReceiveRequestList = () => {
   }, []);
 
   return (
-    <ListContainer>
-      {makeComponentProps(datas)?.map((requestListItem: RequestListItemProps, index: number) => {
-        return (
-          <ReceiveRequestListItem key={`receive-request-list-item-${index}`} {...requestListItem} />
-        );
-      })}
-    </ListContainer>
+    <NonNavbarPage>
+      <SideMenuContainer menuItemList={myfeedMenuList} activeMenuId="menu_receive_request">
+        <SideMenuContainer.SideMenuContent>
+          {isPageLoding(datas) ? (
+            <LoadingPage />
+          ) : (
+            <ListContainer>
+              {makeComponentProps(datas)?.map(
+                (requestListItem: RequestListItemProps, index: number) => {
+                  return (
+                    <ReceiveRequestListItem
+                      key={`receive-request-list-item-${index}`}
+                      {...requestListItem}
+                    />
+                  );
+                }
+              )}
+            </ListContainer>
+          )}
+        </SideMenuContainer.SideMenuContent>
+      </SideMenuContainer>
+    </NonNavbarPage>
   );
 };
 

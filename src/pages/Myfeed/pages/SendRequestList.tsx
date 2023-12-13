@@ -5,12 +5,11 @@ import { Button } from '../components/Button';
 import { ButtonGroup } from '../components/ButtonGroup';
 import DateText from '../components/DateText';
 import EllipsisTitle from '../components/EllipsisTitle';
-import { ColumnContainer } from '../layout/ColumnContainer';
 import { ListContainer, ListContainerItem } from '../layout/ListContainer';
-import { RowContainer } from '../layout/RowContainer';
+import { FlexContainer } from '../layout/FlexContainer';
 
 // utils
-import { RequestListItemProps } from './index.type';
+import { RequestListItemProps, myfeedMenuList } from './index.type';
 import {
   ACCOMPANY_REQUEST_STATUS,
   getSendRequestList,
@@ -19,6 +18,10 @@ import {
 } from '../api/requestApi';
 import DialogUtils, { DIALOG_BUTTON_STYLE } from 'src/Utils/DialogUtils';
 import SnackbarUtils, { SNACKBAR_STYLE } from 'src/Utils/SnackbarUtils';
+import { useNavigate } from 'react-router';
+import { NonNavbarPage } from 'src/pages/layout';
+import { SideMenuContainer } from '../layout/SideMenuContainer';
+import { LoadingPage, isPageLoding } from 'src/Utils/PageUtils';
 
 const nicknameStyle = {
   color: '#696E64',
@@ -30,24 +33,25 @@ const nicknameStyle = {
 
 const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) => {
   const [requestStatus, setRequestStatus] = useState<string>(requestInfo.status);
+  const navigate = useNavigate();
 
   return (
     <ListContainerItem>
-      <RowContainer style={{ width: '100%', justifyContent: 'space-between' }}>
-        <ColumnContainer style={{ alignItems: 'flex-start', gap: 12 }}>
+      <FlexContainer width={'100%'} direction="row" justifyContent="space-between">
+        <FlexContainer direction="column" alignItems="flex-start" gap={12}>
           <EllipsisTitle
             maxWidth={550} //개선안 찾기
             ellipsisContent={`[${postInfo.title}`}
             subContent="] 글로 보낸 동행 신청"
             onClick={() => {
-              console.log(postInfo.id);
+              navigate(`/accompany/${postInfo.id}`);
             }}
           />
 
           <div style={nicknameStyle}>{`by ${requestInfo.requester.nickname}`}</div>
 
-          <DateText date={requestInfo.date} />
-        </ColumnContainer>
+          <DateText date={requestInfo.requestAt} />
+        </FlexContainer>
 
         <ButtonGroup>
           {requestStatus === ACCOMPANY_REQUEST_STATUS.REQUESTING.code ? (
@@ -92,7 +96,7 @@ const SendRequestListItem = ({ postInfo, requestInfo }: RequestListItemProps) =>
             <Button disabled={true}>{ACCOMPANY_REQUEST_STATUS[requestStatus].name}</Button>
           )}
         </ButtonGroup>
-      </RowContainer>
+      </FlexContainer>
     </ListContainerItem>
   );
 };
@@ -108,11 +112,28 @@ const SendRequestList = () => {
   }, []);
 
   return (
-    <ListContainer>
-      {makeComponentProps(datas)?.map((requestListItem: RequestListItemProps, index: number) => {
-        return <SendRequestListItem key={`send-request-list-item-${index}`} {...requestListItem} />;
-      })}
-    </ListContainer>
+    <NonNavbarPage>
+      <SideMenuContainer menuItemList={myfeedMenuList} activeMenuId="menu_send_request">
+        <SideMenuContainer.SideMenuContent>
+          {isPageLoding(datas) ? (
+            <LoadingPage />
+          ) : (
+            <ListContainer>
+              {makeComponentProps(datas)?.map(
+                (requestListItem: RequestListItemProps, index: number) => {
+                  return (
+                    <SendRequestListItem
+                      key={`send-request-list-item-${index}`}
+                      {...requestListItem}
+                    />
+                  );
+                }
+              )}
+            </ListContainer>
+          )}
+        </SideMenuContainer.SideMenuContent>
+      </SideMenuContainer>
+    </NonNavbarPage>
   );
 };
 
