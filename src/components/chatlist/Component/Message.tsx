@@ -4,8 +4,7 @@ import { Cookies } from "react-cookie";
 const cookie = new Cookies();
 const Message = ({ message }) => {
 	const memberId = cookie.get('memberId');
-	const isMine = message.sender !== memberId;
-  
+	const isMine = message.memberId.value != memberId;
 	return (
 	  <Box
 		sx={{
@@ -34,7 +33,7 @@ const Message = ({ message }) => {
 			  borderRadius: isMine ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
 			}}
 		  >
-			<Typography variant="body1">{message.text}</Typography>
+			<Typography variant="body1">{message.content}</Typography>
 		  </Paper>
 		</Box>
 	  </Box>

@@ -10,15 +10,10 @@ import React from "react";
 import SendIcon from '@mui/icons-material/Send';
 import Message from "./Component/Message";
 
-const messages = [
-	{ id: 1, text: "Hi there!", sender: "bot" },
-	{ id: 2, text: "Hello!", sender: "user" },
-	{ id: 3, text: "How can I assist you today?", sender: "bot" },
-  ];
-
 
 const ChatRoom = ({ chatId }) => {
 	const [input, setInput] = React.useState("");
+	const [messages, setMessage] = React.useState([]);
 
 	const handleSend = () => {
 	  if (input.trim() !== "") {
@@ -36,11 +31,12 @@ const ChatRoom = ({ chatId }) => {
 		axiosInstance.get(`/api/v1/chat/${chatId}/message`)
 			.then((res) => {
 				console.log("chatroom:", res);
+				setMessage(res.data.data);
 			})
 			.catch((err) => {
 				console.log("chatroom:", err);
 			})
-	}, [])
+	}, [chatId])
 
 
 	return (
@@ -53,9 +49,9 @@ const ChatRoom = ({ chatId }) => {
 		  }}
 		>
 		  <Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
-			{messages.map((message) => (
-			  <Message key={message.id} message={message} />
-			))}
+			{messages ? messages.map((message) => (
+			  <Message key={message.messageId.value} message={message} />
+			)) : <p>메세지가 없습니다.</p>}
 		  </Box>
 		  <Box sx={{ p: 2, backgroundColor: "background.default" }}>
 			<Grid container spacing={2}>
