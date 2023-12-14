@@ -138,14 +138,27 @@ const FeedContainer = ({ memberId }: FeedProps) => {
         navigate(-1);
         return;
       } else {
-        const hostAccompanyListResult = await getAccompany({ memberId: id, role: ['HOST'] }, 1, 5);
+        const hostAccompanyListResult = await getAccompany(
+          {
+            memberId: id,
+            role: ['HOST'],
+            progressStatus: ['READY', 'CONFIRM'],
+            recruitStatus: ['RECRUITING'],
+          },
+          1,
+          5
+        );
 
-        // const completeAccompanyList = await getAccompany({ memberId: memberId, progressStatus: ['COMPLETE'] },1,5); //todo api수정중
+        const completeAccompanyList = await getAccompany(
+          { memberId: id, progressStatus: ['COMPLETE'] },
+          1,
+          5
+        );
 
         setDatas({
           profile: profileResult.data,
-          hostAccompanyList: hostAccompanyListResult.data?.accompany_member_list,
-          completeAccompanyList: null,
+          hostAccompanyList: hostAccompanyListResult.data?.accompany_list,
+          completeAccompanyList: completeAccompanyList.data?.accompany_list,
         });
       }
     })();
