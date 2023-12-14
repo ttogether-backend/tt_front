@@ -58,6 +58,7 @@ const ChatListPage = () => {
 	const [sendMsg, setSendMsg] = useState(false);
 	const [chatRoomList, setChatRoomList] = useState([]);
 	const [chatId, setChatId] = useState();
+	const [isUpdate, setIsUpdate] = useState(false);
 	const cookies = new Cookies();
 
 	useEffect(() => {
@@ -77,33 +78,57 @@ const ChatListPage = () => {
 			.catch((err) => {
 				console.log("chatroom: ", err);
 			})
-		const client = connect({ memberId : cookies.get('memberId'),
-		 onConnect: () => {
-			// 채팅방 목록 업데이트를 위한 구독 추가랑 테스트를 위한 메세지 전송
-			client.subscribe('/sub/chat-room', message => 
-				console.log(`Received: ${message.body}`));
-			client.publish({ destination: '/pub/message', body: 'test message'});
-		 }});
-		if (client) {
-			client.activate();
+		
+		if (!wsClient) {
+			try {
+				const memberId = cookies.get('memberId');
+				const client = new Client({
+					brokerURL: "ws://localhost:8000/api/v1/chat/ws",
+					connectHeaders: {
+						memberId: memberId,
+					},
+					debug: function (str) {
+						console.log("ws : ", str);
+					},
+					reconnectDelay: 5000, // 자동 재 연결
+					heartbeatIncoming: 4000,
+					heartbeatOutgoing: 4000,
+					onConnect: () => {
+						// 채팅방 목록 업데이트를 위한 구독 추가랑 테스트를 위한 메세지 전송
+						client.subscribe(`/sub/chat-room/${memberId}`, (message) => {
+							console.log(`Received: ${message.body}`);
+							setIsUpdate(!isUpdate)
+						});
+						client.publish({ destination: '/pub/message', body: 'test message' });
+					},
+				});
+				if (client) {
+					client.activate();
+					setWsClient(client);
+				}
+			} catch (err) {
+				console.log("ws connect error : ", err);
+			}
+			
 		}
-		setWsClient(client);
+		
 		// const _socket = new WebSocket('ws://localhost:8000/api/v1/chat/ws');
 		// ws.current = _socket;
 		// console.log(ws);
-	}, [])
+	}, [isUpdate])
+
 
 
 	return (
 		<Page>
 			<Container maxWidth="md" style={{ marginTop: '50px' }}>
 				<Grid container spacing={0} justifyContent="center">
-					<Grid xs={4}>
+					<Grid xs={5}>
 						<Item>
 							<ChatList chatRoomList={chatRoomList} />
 						</Item>
 					</Grid>
-					<Grid xs={8}>
+					<Grid xs={7}>
 						<React.Fragment>
 							{chatId ? <ChatRoom chatId={chatId} /> :
 								<Item>선택된 채팅방이 없습니다.</Item>}
