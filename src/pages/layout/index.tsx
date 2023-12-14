@@ -16,9 +16,10 @@ function useLogin() {
   const [userProfile, setUserProfile] = React.useState<UserProfile>();
   const cookies = new Cookies();
 
-  const setProfile = (() => {
+  const setProfile = (async () => {
 	const axiosInstance = createAxios();
-
+	const nickname = await window.localStorage.getItem('nickname');
+	console.log('localstorage: ', nickname);
 	if (!localStorage.getItem('nickname')) {
 		axiosInstance.get('/api/v1/members/' + cookies.get('memberId') + '/profile')
 		.then((res) => {
@@ -28,9 +29,8 @@ function useLogin() {
 				profileImagePath : res.data.result.data.profileImagePath
 			};
 			setUserProfile(profile);
-			setItemWithExpire('nickname', res.data.result.data.nickname, 3600000);
-			setItemWithExpire('profileImagePath', res.data.result.data.profilImagePath, 3600000);
-			console.log(profile);
+			setItemWithExpire('nickname', profile.nickname, 3600000);
+			setItemWithExpire('profileImagePath', profile.profileImagePath, 3600000);
 		})
 		.catch((err) => {
 			console.log(err);
@@ -61,8 +61,8 @@ function useLogin() {
 	const fetchData = async () => {
 		removeExpiredData();
 		if (cookies.get('accessToken')) {
-			await setLogin(true);
-			onSilentRefresh();
+			setLogin(true);
+			await onSilentRefresh();
 			setProfile();
 		}
 	}
