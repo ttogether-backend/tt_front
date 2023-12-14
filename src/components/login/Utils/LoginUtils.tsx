@@ -16,6 +16,8 @@ export const onSilentRefresh = () => {
 	})
 	.then((res) => {
 		cookies.set('accessToken', res.data.data.accessToken, {path: '/', expires: JWT_EXPRIY_TIME} );
+		cookies.set('refreshToken', refreshToken, {path: '/', expires: JWT_EXPRIY_TIME} );
+		cookies.set('memberId', memberId, {path: '/', expires: JWT_EXPRIY_TIME} );
 	})
 	
 }

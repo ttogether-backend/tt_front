@@ -4,7 +4,7 @@ import { Cookies } from "react-cookie";
 const cookie = new Cookies();
 const Message = ({ message }) => {
 	const memberId = cookie.get('memberId');
-	const isMine = message.memberId.value != memberId;
+	const isMine = message.memberId != memberId;
 	return (
 	  <Box
 		sx={{

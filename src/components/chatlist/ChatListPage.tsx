@@ -7,7 +7,7 @@ import { ChatListRoomPropsType } from "./ChatListRoom/ChatListRoom.types";
 import { Box, Container, Grid, Paper, styled } from "@mui/material";
 import React from "react";
 import ChatRoom from "./ChatRoom";
-import { Client } from '@stomp/stompjs';
+import { Client, IMessage } from '@stomp/stompjs';
 import { Cookies } from 'react-cookie';
 import { connect } from "./Utils/StompUtils";
 
@@ -58,7 +58,7 @@ const ChatListPage = () => {
 	const [sendMsg, setSendMsg] = useState(false);
 	const [chatRoomList, setChatRoomList] = useState([]);
 	const [chatId, setChatId] = useState();
-	const [isUpdate, setIsUpdate] = useState(false);
+	const [isUpdate, setIsUpdate] = useState<IMessage | undefined>();
 	const cookies = new Cookies();
 
 	useEffect(() => {
@@ -97,7 +97,7 @@ const ChatListPage = () => {
 						// 채팅방 목록 업데이트를 위한 구독 추가랑 테스트를 위한 메세지 전송
 						client.subscribe(`/sub/chat-room/${memberId}`, (message) => {
 							console.log(`Received: ${message.body}`);
-							setIsUpdate(!isUpdate)
+							setIsUpdate(message)
 						});
 						client.publish({ destination: '/pub/message', body: 'test message' });
 					},
