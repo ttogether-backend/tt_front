@@ -16,9 +16,10 @@ function useLogin() {
   const [userProfile, setUserProfile] = React.useState<UserProfile>();
   const cookies = new Cookies();
 
-  const setProfile = (() => {
+  const setProfile = (async () => {
 	const axiosInstance = createAxios();
-
+	const nickname = cookies.get('nickname');
+	console.log('localstorage: ', nickname);
 	if (!localStorage.getItem('nickname')) {
 		axiosInstance.get('/api/v1/members/' + cookies.get('memberId') + '/profile')
 		.then((res) => {
@@ -28,41 +29,36 @@ function useLogin() {
 				profileImagePath : res.data.result.data.profileImagePath
 			};
 			setUserProfile(profile);
-			setItemWithExpire('nickname', res.data.result.data.nickname, 3600000);
-			setItemWithExpire('profileImagePath', res.data.result.data.profilImagePath, 3600000);
-			console.log(profile);
+			const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 1 * 60 * 60 * 1000);
+			const config = {path: '/', expires: JWT_EXPRIY_TIME} 
+
+			cookies.set('nickname', profile.nickname, config);
+			cookies.set('profileImagePath', profile.profileImagePath, config);
 		})
 		.catch((err) => {
 			console.log(err);
 		})
 	} else {
-		const nickname = JSON.parse(localStorage.getItem('nickname')).value
-		const profileImagePath = JSON.parse(localStorage.getItem('profileImagePath')).value
-		setItemWithExpire('nickname', nickname.value, 3600000);
-		setItemWithExpire('profileImagePath', profileImagePath.value, 3600000);
+		const nickname = cookies.get('nickname');
+		const profileImagePath = cookies.get('profileImagePath');
+		const JWT_EXPRIY_TIME = new Date(new Date().getTime() + 1 * 60 * 60 * 1000);
+		const config = {path: '/', expires: JWT_EXPRIY_TIME} 
+
+		cookies.set('nickname', nickname, config);
+		cookies.set('profileImagePath', profileImagePath, config);
 		const profile = {
-			nickname : JSON.parse(localStorage.getItem('nickname')).value,
-			profileImagePath : JSON.parse(localStorage.getItem('profileImagePath')).value
+			nickname : nickname,
+			profileImagePath : profileImagePath
 		}
 		setUserProfile(profile);
 	}	
   })
 
-  const removeExpiredData = (() => {
-	const nickname = JSON.parse(localStorage.getItem('nickname'));
-	// console.log("nickname = ", nickname);
-	if (nickname && Date.now() < nickname.expire) {
-		localStorage.removeItem('nickname');
-		localStorage.removeItem('profileImagePath');
-	}
-  })
-
   useEffect(() => {
 	const fetchData = async () => {
-		removeExpiredData();
 		if (cookies.get('accessToken')) {
-			await setLogin(true);
-			onSilentRefresh();
+			setLogin(true);
+			await onSilentRefresh();
 			setProfile();
 		}
 	}

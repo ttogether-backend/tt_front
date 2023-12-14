@@ -7,6 +7,10 @@ import { ChatListRoomPropsType } from "./ChatListRoom/ChatListRoom.types";
 import { Box, Container, Grid, Paper, styled } from "@mui/material";
 import React from "react";
 import ChatRoom from "./ChatRoom";
+import { Client, IMessage } from '@stomp/stompjs';
+import { Cookies } from 'react-cookie';
+import { connect } from "./Utils/StompUtils";
+
 
 const setChatRoom = ({ data, chatId, setChatId }) => {
 	console.log("chatdata :", data);
@@ -44,15 +48,18 @@ const Item = styled(Paper)(({ theme }) => ({
 	padding: theme.spacing(1),
 	textAlign: 'center',
 	color: theme.palette.text.secondary,
+	height: "50vh",
+	display: "flex",
+	flexDirection: "row",
 }));
 
 const ChatListPage = () => {
-
-	const ws = useRef(null);
-	const [wsConnected, setWsConnected] = useState(false);
+	const [wsClient, setWsClient] = useState<Client | undefined>();
 	const [sendMsg, setSendMsg] = useState(false);
 	const [chatRoomList, setChatRoomList] = useState([]);
 	const [chatId, setChatId] = useState();
+	const [isUpdate, setIsUpdate] = useState<IMessage | undefined>();
+	const cookies = new Cookies();
 
 	useEffect(() => {
 		const axiosInstance = createAxios();
@@ -71,29 +78,57 @@ const ChatListPage = () => {
 			.catch((err) => {
 				console.log("chatroom: ", err);
 			})
+		
+		if (!wsClient) {
+			try {
+				const memberId = cookies.get('memberId');
+				const client = new Client({
+					brokerURL: "ws://localhost:8000/api/v1/chat/ws",
+					connectHeaders: {
+						memberId: memberId,
+					},
+					debug: function (str) {
+						console.log("ws : ", str);
+					},
+					reconnectDelay: 5000, // 자동 재 연결
+					heartbeatIncoming: 4000,
+					heartbeatOutgoing: 4000,
+					onConnect: () => {
+						// 채팅방 목록 업데이트를 위한 구독 추가랑 테스트를 위한 메세지 전송
+						client.subscribe(`/sub/chat-room/${memberId}`, (message) => {
+							console.log(`Received: ${message.body}`);
+							setIsUpdate(message)
+						});
+						client.publish({ destination: '/pub/message', body: 'test message' });
+					},
+				});
+				if (client) {
+					client.activate();
+					setWsClient(client);
+				}
+			} catch (err) {
+				console.log("ws connect error : ", err);
+			}
+			
+		}
+		
 		// const _socket = new WebSocket('ws://localhost:8000/api/v1/chat/ws');
 		// ws.current = _socket;
 		// console.log(ws);
-	}, [])
+	}, [isUpdate])
+
 
 
 	return (
 		<Page>
 			<Container maxWidth="md" style={{ marginTop: '50px' }}>
 				<Grid container spacing={0} justifyContent="center">
-					<Grid xs={4}>
-						<Box
-							sx={{
-								height: "50vh",
-								display: "flex",
-								flexDirection: "row",
-								bgcolor: "grey.200",
-							}}
-						>
+					<Grid xs={5}>
+						<Item>
 							<ChatList chatRoomList={chatRoomList} />
-						</Box>
+						</Item>
 					</Grid>
-					<Grid xs={8}>
+					<Grid xs={7}>
 						<React.Fragment>
 							{chatId ? <ChatRoom chatId={chatId} /> :
 								<Item>선택된 채팅방이 없습니다.</Item>}

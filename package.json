@@ -20,6 +20,7 @@
     "@mui/material": "next",
     "@mui/styled-engine-sc": "^5.14.8",
     "@mui/styles": "^5.14.7",
+    "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^4.32.6",
     "@tanstack/react-query-devtools": "^4.32.6",
     "axios": "^1.6.0",

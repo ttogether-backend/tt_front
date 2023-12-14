@@ -1393,6 +1393,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stomp/stompjs@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@stomp/stompjs@npm:7.0.0"
+  checksum: 94618b5a394339ed3098dae213eef27c462f504ba050208598c9ef396abb527b57e6333b2e78af4715693d6ba04fffb23df4b1bf7041bc0f1b3bc6e92138f1dc
+  languageName: node
+  linkType: hard
+
 "@tanem/svg-injector@npm:^10.1.68":
   version: 10.1.68
   resolution: "@tanem/svg-injector@npm:10.1.68"
@@ -6315,6 +6322,7 @@ __metadata:
     "@mui/material": next
     "@mui/styled-engine-sc": ^5.14.8
     "@mui/styles": ^5.14.7
+    "@stomp/stompjs": ^7.0.0
     "@tanstack/react-query": ^4.32.6
     "@tanstack/react-query-devtools": ^4.32.6
     "@types/node": ^20.4.9
