@@ -46,7 +46,9 @@ const ChatRoom = ({ chatId }) => {
 		axiosInstance.get(`/api/v1/chat/${chatId}/message`)
 			.then((res) => {
 				console.log("chatroom:", res);
-				setMessage(res.data.data);
+				if (res.data.data) {
+					setMessage(res.data.data)
+				}
 			})
 			.catch((err) => {
 				console.log("chatroom:", err);
@@ -68,6 +70,8 @@ const ChatRoom = ({ chatId }) => {
 					// 채팅방 목록 업데이트를 위한 구독 추가랑 테스트를 위한 메세지 전송
 					client.subscribe(`/sub/room/${chatId}`, (message) => {
 						console.log(`Received: ${message.body}`);
+						const newMessage = JSON.parse(message.body);
+						setMessage((messages) => [...messages, newMessage]);
 					});
 				},
 			});
