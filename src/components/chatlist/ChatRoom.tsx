@@ -54,7 +54,9 @@ const ChatRoom = ({ chatId }) => {
 				console.log("chatroom:", err);
 			})
 		try {
-			
+			if (wsClient) {
+				wsClient.deactivate();
+			}
 			const client = new Client({
 				brokerURL: "ws://localhost:8000/api/v1/chat/ws",
 				connectHeaders: {
