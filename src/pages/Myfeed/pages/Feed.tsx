@@ -24,6 +24,7 @@ interface FeedData {
 }
 
 interface FeedProps {
+  isMyfeed?: boolean;
   memberId?: string;
 }
 
@@ -83,7 +84,7 @@ const ProfileCard = ({
         </FlexContainer>
       ) : (
         <FlexContainer direction="column">
-          <Button style={{ width: 84, height: 44 }}>1:1채팅</Button>
+          <Button style={{ width: 84, height: 44 }}>1:1 채팅</Button>
         </FlexContainer>
       )}
     </FlexContainer>
@@ -123,36 +124,23 @@ const FeedContent = ({ title, moreContentLinkPath, contentDatas }: FeedContentPr
   );
 };
 
-const FeedContainer = ({ memberId }: FeedProps) => {
+const FeedContainer = ({ isMyfeed, memberId }: FeedProps) => {
   const [datas, setDatas] = useState<FeedData>(null);
   const navigate = useNavigate();
 
-  const isMyFeed = memberId ? false : true;
-
   useEffect(() => {
     (async function () {
-      const id = isMyFeed ? getCookie('memberId') : memberId; //todo lcoalstorage 로직으로 변경
-
-      const profileResult = await getProfile(id);
+      const profileResult = await getProfile(memberId);
 
       if (!profileResult) {
         alert('없는 회원입니다.');
         navigate(-1);
         return;
       } else {
-        const hostAccompanyListResult = await getAccompany(
-          {
-            memberId: id,
-            role: ['HOST'],
-            progressStatus: ['READY', 'CONFIRM'],
-            recruitStatus: ['RECRUITING'],
-          },
-          1,
-          5
-        );
+        const hostAccompanyListResult = await getAccompany({ memberId: memberId, role: ['HOST'] }, 1, 5);
 
         const completeAccompanyList = await getAccompany(
-          { memberId: id, progressStatus: ['COMPLETE'] },
+          { memberId: memberId, progressStatus: ['COMPLETE'] },
           1,
           5
         );
@@ -187,12 +175,12 @@ const FeedContainer = ({ memberId }: FeedProps) => {
         />
         <FeedContent
           title="동행 기록"
-          moreContentLinkPath={`/feed/${isMyFeed ? 'my' : memberId}/accompany/complete`}
+          moreContentLinkPath={`/feed/${isMyfeed ? 'my' : memberId}/accompany/complete`}
           contentDatas={makeComponentProps(datas?.completeAccompanyList)}
         />
         <FeedContent
           title="모집한 동행"
-          moreContentLinkPath={`/feed/${isMyFeed ? 'my' : memberId}/accompany/host`}
+          moreContentLinkPath={`/feed/${isMyfeed ? 'my' : memberId}/accompany/host`}
           contentDatas={makeComponentProps(datas?.hostAccompanyList)}
         />
       </FlexContainer>
@@ -215,23 +203,19 @@ const Feed = () => {
   };
 
   const isMyFeed = () => {
-    if (id) {
-      return false;
-    }
-
-    return true;
+    return id === 'my' || !id || id === getCookie('memberId');
   };
 
   return (
     <NonNavbarPage>
       {!isMyFeed() && validId() ? (
         <FlexContainer justifyContent="center">
-          <FeedContainer memberId={id} />
+          <FeedContainer isMyfeed={isMyFeed()} memberId={id} />
         </FlexContainer>
       ) : (
         <SideMenuContainer menuItemList={myfeedMenuList} activeMenuId="menu_profile">
           <SideMenuContainer.SideMenuContent>
-            <FeedContainer />
+            <FeedContainer isMyfeed={isMyFeed()} memberId={getCookie('memberId')} />
           </SideMenuContainer.SideMenuContent>
         </SideMenuContainer>
       )}

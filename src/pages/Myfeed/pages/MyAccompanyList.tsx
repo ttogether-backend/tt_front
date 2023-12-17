@@ -10,6 +10,7 @@ import { VerticalScrollContainer } from '../layout/VerticalScrollContainer';
 import { AccompanyCardProps } from 'src/shared/components/AccompanyCard/AccompanyCard.types';
 import { AccompanyCard } from 'src/shared/components/AccompanyCard';
 import { LoadingPage, isPageLoding } from 'src/Utils/PageUtils';
+import { useParams } from 'react-router';
 
 const tabInfo = {
   0: {
@@ -38,7 +39,9 @@ const tabInfo = {
 };
 
 const MyAccompanyList = () => {
-  const [tabValue, setValue] = useState(0);
+  const { type } = useParams();
+
+  const [tabValue, setValue] = useState(type === 'complete' ? 1 : type === 'host' ? 2 : 0);
   const [datas, setDatas] = useState<any>(null);
   const handleChange = (newValue: number) => {
     setValue(newValue);

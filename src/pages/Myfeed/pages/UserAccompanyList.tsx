@@ -5,7 +5,6 @@ import { FlexContainer } from '../layout/FlexContainer';
 import { useEffect, useState } from 'react';
 import { Tabs } from '../components/Tabs';
 import { getAccompany, makeComponentProps } from '../api/feedApi';
-import { getCookie } from 'src/components/login/cookie';
 import { VerticalScrollContainer } from '../layout/VerticalScrollContainer';
 import { AccompanyCardProps } from 'src/shared/components/AccompanyCard/AccompanyCard.types';
 import { AccompanyCard } from 'src/shared/components/AccompanyCard';
@@ -48,7 +47,7 @@ const UserAccompanyList = () => {
     (async function () {
       const result = await getAccompany(
         {
-          memberId: getCookie('memberId'),
+          memberId: id,
           ...tabInfo[tabValue].searchCondition,
         },
         1,

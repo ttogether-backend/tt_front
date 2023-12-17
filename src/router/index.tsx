@@ -52,6 +52,7 @@ const Router = () => {
 				<Route path="/feed/my/send-accompany-request" element={<PrivateRoute component={<SendRequestList />} />} />
 				<Route path="/feed/my/receive-accompany-request" element={<PrivateRoute component={<ReceiveRequestList />} />} />
 				<Route path="/feed/my/accompany" element={<PrivateRoute component={<MyAccompanyList />} />} />
+				<Route path="/feed/my/accompany/:type" element={<PrivateRoute component={<MyAccompanyList />} />} />
 				<Route path="/feed/my" element={<PrivateRoute component={<Feed />} />} />
 				<Route path="/feed/:id" element={<PrivateRoute component={<Feed />} />} />
 				<Route path="/feed/:id/accompany/:type" element={<PrivateRoute component={<UserAccompanyList />} />} />
