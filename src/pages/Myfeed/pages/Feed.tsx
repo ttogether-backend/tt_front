@@ -83,7 +83,7 @@ const ProfileCard = ({
         </FlexContainer>
       ) : (
         <FlexContainer direction="column">
-          <Button style={{ width: 84, height: 44 }}>1:1 채팅</Button>
+          <Button style={{ width: 84, height: 44 }}>1:1채팅</Button>
         </FlexContainer>
       )}
     </FlexContainer>
@@ -127,9 +127,11 @@ const FeedContainer = ({ memberId }: FeedProps) => {
   const [datas, setDatas] = useState<FeedData>(null);
   const navigate = useNavigate();
 
+  const isMyFeed = memberId ? false : true;
+
   useEffect(() => {
     (async function () {
-      const id = memberId ? memberId : getCookie('memberId'); //todo lcoalstorage 로직으로 변경
+      const id = isMyFeed ? getCookie('memberId') : memberId; //todo lcoalstorage 로직으로 변경
 
       const profileResult = await getProfile(id);
 
@@ -138,14 +140,27 @@ const FeedContainer = ({ memberId }: FeedProps) => {
         navigate(-1);
         return;
       } else {
-        const hostAccompanyListResult = await getAccompany({ memberId: id, role: ['HOST'] }, 1, 5);
+        const hostAccompanyListResult = await getAccompany(
+          {
+            memberId: id,
+            role: ['HOST'],
+            progressStatus: ['READY', 'CONFIRM'],
+            recruitStatus: ['RECRUITING'],
+          },
+          1,
+          5
+        );
 
-        // const completeAccompanyList = await getAccompany({ memberId: memberId, progressStatus: ['COMPLETE'] },1,5); //todo api수정중
+        const completeAccompanyList = await getAccompany(
+          { memberId: id, progressStatus: ['COMPLETE'] },
+          1,
+          5
+        );
 
         setDatas({
           profile: profileResult.data,
-          hostAccompanyList: hostAccompanyListResult.data?.accompany_member_list,
-          completeAccompanyList: null,
+          hostAccompanyList: hostAccompanyListResult.data?.accompany_list,
+          completeAccompanyList: completeAccompanyList.data?.accompany_list,
         });
       }
     })();
@@ -172,12 +187,12 @@ const FeedContainer = ({ memberId }: FeedProps) => {
         />
         <FeedContent
           title="동행 기록"
-          moreContentLinkPath={`/feed/${datas?.profile?.member_id}/completed-accompany`}
+          moreContentLinkPath={`/feed/${isMyFeed ? 'my' : memberId}/accompany/complete`}
           contentDatas={makeComponentProps(datas?.completeAccompanyList)}
         />
         <FeedContent
           title="모집한 동행"
-          moreContentLinkPath={`/feed/${datas?.profile?.member_id}/hosted-accompany`}
+          moreContentLinkPath={`/feed/${isMyFeed ? 'my' : memberId}/accompany/host`}
           contentDatas={makeComponentProps(datas?.hostAccompanyList)}
         />
       </FlexContainer>
