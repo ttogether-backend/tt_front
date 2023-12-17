@@ -164,7 +164,7 @@ const FeedContainer = ({ isMyfeed, memberId }: FeedProps) => {
         direction="column"
         gap={40}
         width={'1048px'}
-        style={{ marginTop: memberId ? 144 : 0, marginBottom: 238 }}
+        style={{ marginTop: !isMyfeed ? 144 : 0, marginBottom: 238 }}
       >
         <ProfileCard
           isMyFeed={!memberId}
