@@ -68,6 +68,10 @@ const ChatRoom = ({ chatId }) => {
 				reconnectDelay: 5000, // 자동 재 연결
 				heartbeatIncoming: 4000,
 				heartbeatOutgoing: 4000,
+				disconnectHeaders: {
+					roomId: chatId,
+					memberId: memberId,
+				},
 				onConnect: () => {
 					// 채팅방 목록 업데이트를 위한 구독 추가랑 테스트를 위한 메세지 전송
 					client.subscribe(`/sub/room/${chatId}`, (message) => {
@@ -98,7 +102,7 @@ const ChatRoom = ({ chatId }) => {
 		>
 			<Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
 				{messages ? messages.map((message) => (
-					<Message key={message.messageId.value} message={message} />
+					<Message key={message.messageId ? message.messageId.value : 'last read'} message={message} />
 				)) : <p>메세지가 없습니다.</p>}
 			</Box>
 			<Box sx={{ p: 2, backgroundColor: "background.default" }}>
