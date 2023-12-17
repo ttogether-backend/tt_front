@@ -48,6 +48,7 @@ const ItemContainer = styled.li`
   background: #fff;
   color: #868b91;
   font-weight: 500;
+  font-size: 16px;
 
   &.active {
     background: #F1F8F3;

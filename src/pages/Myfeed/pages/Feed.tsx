@@ -83,7 +83,7 @@ const ProfileCard = ({
         </FlexContainer>
       ) : (
         <FlexContainer direction="column">
-          <Button style={{ width: 84, height: 44 }}>1:1 채팅</Button>
+          <Button style={{ width: 84, height: 44 }}>1:1채팅</Button>
         </FlexContainer>
       )}
     </FlexContainer>
@@ -127,9 +127,11 @@ const FeedContainer = ({ memberId }: FeedProps) => {
   const [datas, setDatas] = useState<FeedData>(null);
   const navigate = useNavigate();
 
+  const isMyFeed = memberId ? false : true;
+
   useEffect(() => {
     (async function () {
-      const id = memberId ? memberId : getCookie('memberId'); //todo lcoalstorage 로직으로 변경
+      const id = isMyFeed ? memberId : getCookie('memberId'); //todo lcoalstorage 로직으로 변경
 
       const profileResult = await getProfile(id);
 
@@ -185,12 +187,12 @@ const FeedContainer = ({ memberId }: FeedProps) => {
         />
         <FeedContent
           title="동행 기록"
-          moreContentLinkPath={`/feed/${datas?.profile?.member_id}/completed-accompany`}
+          moreContentLinkPath={`/feed/${isMyFeed ? 'my' : memberId}/accompany/complete`}
           contentDatas={makeComponentProps(datas?.completeAccompanyList)}
         />
         <FeedContent
           title="모집한 동행"
-          moreContentLinkPath={`/feed/${datas?.profile?.member_id}/hosted-accompany`}
+          moreContentLinkPath={`/feed/${isMyFeed ? 'my' : memberId}/accompany/host`}
           contentDatas={makeComponentProps(datas?.hostAccompanyList)}
         />
       </FlexContainer>
