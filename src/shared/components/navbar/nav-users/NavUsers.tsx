@@ -34,7 +34,7 @@ const NavUsers: React.FC<{ login?: boolean }> = ({ login }) => {
 							</Link>
 						</li>
 						<li>
-							<Link to="" className={styles.chat}>
+							<Link to="/chat" className={styles.chat}>
 								채팅
 							</Link>
 						</li>
