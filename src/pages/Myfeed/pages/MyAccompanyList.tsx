@@ -24,18 +24,11 @@ const tabInfo = {
     index: 1,
     label: '완료한 동행',
     searchCondition: {
-      progressStatus: ['COMPLETE'],
+      progressStatus: ['COMPLETE', 'CANCEL'],
     },
   },
   2: {
     index: 2,
-    label: '취소한 동행',
-    searchCondition: {
-      progressStatus: ['CANCEL'],
-    },
-  },
-  3: {
-    index: 3,
     label: '모집한 동행',
     searchCondition: {
       role: ['HOST'],
@@ -75,7 +68,6 @@ const MyAccompanyList = () => {
               <Tabs.Tab label={tabInfo[0].label} />
               <Tabs.Tab label={tabInfo[1].label} />
               <Tabs.Tab label={tabInfo[2].label} />
-              <Tabs.Tab label={tabInfo[3].label} />
             </Tabs>
 
             {isPageLoding(datas) ? (

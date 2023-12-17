@@ -131,7 +131,7 @@ const FeedContainer = ({ memberId }: FeedProps) => {
 
   useEffect(() => {
     (async function () {
-      const id = isMyFeed ? memberId : getCookie('memberId'); //todo lcoalstorage 로직으로 변경
+      const id = isMyFeed ? getCookie('memberId') : memberId; //todo lcoalstorage 로직으로 변경
 
       const profileResult = await getProfile(id);
 
