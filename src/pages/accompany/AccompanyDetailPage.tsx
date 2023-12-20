@@ -9,7 +9,7 @@ import {
 } from '../../components/accompany/Detail/AccompanyDetail.types';
 import Comment from 'src/components/accompany/Detail/AccompanyDetail.Comment';
 import Main from 'src/components/accompany/Detail/AccompanyDetail.Main';
-import axios from 'axios';
+
 import { Cookies } from 'react-cookie';
 import createAxios from 'src/Utils/axiosInstance';
 
@@ -73,7 +73,6 @@ const AccompanyDetailPage = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    console.log('ee');
     const cookies = new Cookies();
     const axiosInstance = createAxios();
 

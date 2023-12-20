@@ -1,4 +1,5 @@
-import { DatePicker } from 'src/shared/components/Datepicker/Datepicker';
+import { FC, useState, useEffect } from 'react';
+import DateRangePicker from './DateRangePicker';
 import {
   Badge,
   Box,
@@ -12,16 +13,57 @@ import {
   TypeWrapper,
 } from './AccompanyForm.styles';
 import { Range } from 'src/shared/components/Range/Range';
+import { SingleSelector } from 'src/shared/components/Range/SingleSelector';
 import { RangeDataList } from 'src/shared/components/Range/Range.types';
+import { DataList } from 'src/shared/components/Range/SingleSelector.types';
 import Checkbox from 'src/shared/components/Checkbox/Checkbox';
-import { useState } from 'react';
-import { AccompanyType } from './AccompanyForm.types';
+import { AccompanyType, LocationInfo } from './AccompanyForm.types';
 
-const AccompanyBasicInfo = () => {
-  const [isNoEndDate, setIsNoEndDate] = useState(false);
+const AccompanyBasicInfo = ({ setBasicInfo }) => {
   const [isAnyAge, setIsAnyAge] = useState(false);
+  const [selectedType, setSelectedType] = useState<AccompanyType>(AccompanyType.culture);
 
-  const personnel: RangeDataList[] = [
+  const handleButtonClick = (type: AccompanyType) => {
+    setSelectedType(type);
+    setBasicInfo({
+      category: type,
+    });
+  };
+
+  const handleLocation = (value: string) => {
+    setBasicInfo({
+      location_info: [
+        {
+          location_id: 0,
+          country: 'string',
+          city: 'string',
+          latitude: 'string',
+          longitude: 'string',
+          name: value,
+          address: 'string',
+        },
+      ],
+    });
+  };
+
+  const handleRecruitNum = (value: number) => {
+    setBasicInfo({
+      recruit_number: value,
+    });
+  };
+  const handleIsAnyAge = (value: boolean) => {
+    setIsAnyAge(value);
+    setBasicInfo({
+      is_age_free: value,
+    });
+  };
+  const handleAgeRange = (value: number[]) => {
+    setBasicInfo({
+      min_recruit_age: value[0],
+      max_recruit_age: value[1],
+    });
+  };
+  const personnel: DataList[] = [
     {
       value: 1,
       unit: '명',
@@ -100,13 +142,28 @@ const AccompanyBasicInfo = () => {
       <Box>
         <Label>동행 종류</Label>
         <TypeWrapper>
-          <Button name={AccompanyType.culture} isSelected={true} background="#85B3B5">
+          <Button
+            name={AccompanyType.culture}
+            isSelected={selectedType === AccompanyType.culture}
+            onClick={() => handleButtonClick(AccompanyType.culture)}
+            background="#85B3B5"
+          >
             문화
           </Button>
-          <Button name={AccompanyType.food} isSelected={false} background="#D97736">
+          <Button
+            name={AccompanyType.food}
+            isSelected={selectedType === AccompanyType.food}
+            onClick={() => handleButtonClick(AccompanyType.food)}
+            background="#D97736"
+          >
             맛집
           </Button>
-          <Button name={AccompanyType.travel} isSelected={false} background="#5BB13D">
+          <Button
+            name={AccompanyType.travel}
+            isSelected={selectedType === AccompanyType.travel}
+            onClick={() => handleButtonClick(AccompanyType.travel)}
+            background="#5BB13D"
+          >
             여행
           </Button>
         </TypeWrapper>
@@ -115,8 +172,12 @@ const AccompanyBasicInfo = () => {
       <Box>
         <Label>동행 장소</Label>
         <PlaceWrapper>
-          <ResultInput />
-          <SearchButton>검색하기</SearchButton>
+          <ResultInput
+            onChange={(e) => {
+              handleLocation(e.target.value);
+            }}
+          />
+          {/* <SearchButton>검색하기</SearchButton> */}
         </PlaceWrapper>
       </Box>
 
@@ -136,23 +197,26 @@ const AccompanyBasicInfo = () => {
               marginBottom: '16px',
             }}
           >
-            <Checkbox
+            {/* <Checkbox
               id={'endDate'}
               checked={isNoEndDate}
               onChange={() => setIsNoEndDate(!isNoEndDate)}
             />{' '}
             <CheckboxLabel onClick={() => setIsNoEndDate(!isNoEndDate)}>
               종료 기간 미정
-            </CheckboxLabel>
+            </CheckboxLabel> */}
           </div>
         </div>
 
-        <DatePicker />
+        <DateRangePicker setBasicInfo={setBasicInfo} />
       </Box>
 
       <Box>
         <Label>모집 인원</Label>
-        <Range dataList={personnel} getRangeValue={(value) => console.log(value)} />
+        <SingleSelector
+          dataList={personnel}
+          getSingleDataValue={(value) => handleRecruitNum(value)}
+        />
       </Box>
 
       <div
@@ -176,12 +240,12 @@ const AccompanyBasicInfo = () => {
               marginBottom: '16px',
             }}
           >
-            <Checkbox id={'anyAge'} checked={isAnyAge} onChange={() => setIsAnyAge(!isAnyAge)} />{' '}
+            <Checkbox id={'anyAge'} checked={isAnyAge} onChange={() => handleIsAnyAge(!isAnyAge)} />{' '}
             <CheckboxLabel onClick={() => setIsAnyAge(!isAnyAge)}>무관</CheckboxLabel>
           </div>
         </div>
 
-        <Range dataList={age} getRangeValue={(value) => console.log(value)} />
+        <Range dataList={age} getRangeValue={(value) => handleAgeRange(value)} />
       </div>
 
       {/* <Label>여행 키워드</Label> */}

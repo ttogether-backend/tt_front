@@ -7,16 +7,28 @@ import {
   TitleInput,
   TitleLength,
 } from './AccompanyForm.styles';
-import { useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
-const AccompanyContent = () => {
+const AccompanyContent = ({ setContentInfo }) => {
   const [titleLength, setTitleLength] = useState<number>(0);
-
+  const [titleContent, setTitleContent] = useState<string>('');
+  const [content, setContent] = useState<string>('테스트');
   const maxLength = 24;
 
   const onChangeTitle = (value: string) => {
     const titleLength = value.length;
     setTitleLength(titleLength);
+    setContentInfo({
+      title: value,
+    });
+  };
+
+  const handleEditorChange = (newContent) => {
+    console.log('New Editor Content:', newContent);
+    setContent(newContent);
+    setContentInfo({
+      content: content,
+    });
   };
 
   return (
@@ -57,8 +69,7 @@ const AccompanyContent = () => {
           alignItems: 'flex-end',
         }}
       >
-        <Editor content={'테스트'} setContent={(value) => console.log(value)} />
-        <SubmitButton>등록하기</SubmitButton>
+        <Editor content={content} setContent={handleEditorChange} />
       </div>
     </div>
   );

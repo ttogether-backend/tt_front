@@ -9,24 +9,34 @@ export const AccompanyCard: React.FC<AccompanyCardProps> = (
 ) => {
   return (
     <Style.AccompanyCard>
-      <Link to={`/accompany/${props.accomId}`}>
+      <Link to={`/accompany/${props.accomPostId}`}>
         {props.isAccomList && (
           <Style.UserBox>
-          <div className="profile">
-            <div className="img">
-              <img src={props.profileImgSrc} alt="" />
+            <div className="profile">
+              <div className="img">
+                <img src={props.profileImgSrc} alt="" />
+              </div>
+              <div className="username">{props.username}</div>
+              <div className="age">{props.age}</div>
             </div>
-            <div className="username">{props.username}</div>
-            <div className="age">{props.age}</div>
-          </div>
-          <Style.Auth authNum={props.authNum}>{props.auth}</Style.Auth>
-        </Style.UserBox>
-          )}
+            <Style.Auth authNum={props.authNum}>{props.auth}</Style.Auth>
+          </Style.UserBox>
+        )}
         <Style.CardBox>
           <div className="img-box">
             <Style.AccompanyState name="eat">
-              <Badges badgeType='type' text='' subType={props.category} styleType={{subType: `${props.category}`, text:''}}/>
-              <Badges badgeType='status' text='' subType={props.status} styleType={{subType: `${props.status}`, text:''}}/>
+              <Badges
+                badgeType="type"
+                text=""
+                subType={props.category}
+                styleType={{ subType: `${props.category}`, text: '' }}
+              />
+              <Badges
+                badgeType="status"
+                text=""
+                subType={props.status}
+                styleType={{ subType: `${props.status}`, text: '' }}
+              />
             </Style.AccompanyState>
             <div className="img-wrap">
               <img src={props.thumbSrc} alt="" />
@@ -37,7 +47,8 @@ export const AccompanyCard: React.FC<AccompanyCardProps> = (
                 <span>{props.date}</span>
               </div>
               <div className="personnel-wrap">
-                <span className="cnt">{props.cnt}명</span> / <span className="personnel">{props.personnel}명</span>
+                <span className="cnt">{props.cnt}명</span> /{' '}
+                <span className="personnel">{props.personnel}명</span>
               </div>
             </div>
           </div>
@@ -58,6 +69,4 @@ export const AccompanyCard: React.FC<AccompanyCardProps> = (
   );
 };
 
-
-AccompanyCard.defaultProps = {
-};
+AccompanyCard.defaultProps = {};

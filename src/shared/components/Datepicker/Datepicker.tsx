@@ -13,15 +13,14 @@ import { LeftChevronIcon } from 'src/assets/icon/LeftChevronIcon.tsx';
 import { RightChevronIcon } from 'src/assets/icon/RightChevronIcon.tsx';
 import { WaveIcon } from 'src/assets/icon/WaveIcon.tsx';
 
-export const DatePicker: FC = () => {
+export const DatePicker: FC<{ onDateChange: (startDate: Date, endDate: Date) => void }> = ({
+  onDateChange,
+}) => {
   // const dateState: RecoilState<Date> = atom({ key: 'dateState', default: new Date() });
   // const [selectedDate, setSelectedDate] = useRecoilState(dateState);
 
   const [startDate, setStartDate] = useState<any>(new Date());
   const [endDate, setEndDate] = useState<any>(new Date());
-  console.log('startDate', startDate);
-  console.log('endDate', endDate);
-
   const CustomInput = React.forwardRef<
     HTMLInputElement,
     React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -126,7 +125,10 @@ export const DatePicker: FC = () => {
         locale={ko}
         dateFormat="yyyy.MM.dd"
         selected={startDate}
-        onChange={(date: Date) => setStartDate(date)}
+        onChange={(date: Date) => {
+          setStartDate(date);
+          onDateChange(date, endDate); // Pass the values to the parent component
+        }}
         selectsStart
         startDate={startDate}
         endDate={endDate}
@@ -195,7 +197,10 @@ export const DatePicker: FC = () => {
         locale={ko}
         dateFormat="yyyy.MM.dd"
         selected={endDate}
-        onChange={(date: Date) => setEndDate(date)}
+        onChange={(date: Date) => {
+          setEndDate(date);
+          onDateChange(startDate, date); // Pass the values to the parent component
+        }}
         selectsEnd
         startDate={startDate}
         endDate={endDate}
