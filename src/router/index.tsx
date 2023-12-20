@@ -25,6 +25,8 @@ import ChatRoomPage from 'src/components/chatlist/ChatRoom.tsx';
 import Feed from 'src/pages/Myfeed/pages/Feed.tsx';
 import SendRequestList from 'src/pages/Myfeed/pages/SendRequestList.tsx';
 import ReceiveRequestList from 'src/pages/Myfeed/pages/ReceiveRequestList.tsx';
+import MyAccompanyList from 'src/pages/Myfeed/pages/MyAccompanyList.tsx';
+import UserAccompanyList from 'src/pages/Myfeed/pages/UserAccompanyList.tsx';
 
 const Router = () => {
 	return (
@@ -49,8 +51,11 @@ const Router = () => {
 
 				<Route path="/feed/my/send-accompany-request" element={<PrivateRoute component={<SendRequestList />} />} />
 				<Route path="/feed/my/receive-accompany-request" element={<PrivateRoute component={<ReceiveRequestList />} />} />
+				<Route path="/feed/my/accompany" element={<PrivateRoute component={<MyAccompanyList />} />} />
+				<Route path="/feed/my/accompany/:type" element={<PrivateRoute component={<MyAccompanyList />} />} />
 				<Route path="/feed/my" element={<PrivateRoute component={<Feed />} />} />
 				<Route path="/feed/:id" element={<PrivateRoute component={<Feed />} />} />
+				<Route path="/feed/:id/accompany/:type" element={<PrivateRoute component={<UserAccompanyList />} />} />
 
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/signup" element={<SignUpPage />} />

@@ -5,9 +5,16 @@ import { Avatar, Badge, Divider, ListItem, ListItemAvatar, ListItemText } from '
 import { dateFormatting } from '../Utils/DateFormatting';
 export default function ChatListItem(props) {
 	const { chatRoom, profileProps, accompanyPost, messageInfo, chatId, setChatId } = props;
+	const [msgCount, setMsgCount] = React.useState(chatRoom.messageCount);
+
+	// React.useEffect(() => {
+		// setIsRead(false);
+	// }, [props])
+	console.log("chatListItem : ", props);
 	return (
 		<div style={{ width: '100%' }} onClick={() => {
 			setChatId(chatRoom.id)
+			setMsgCount(0)
 		}}>
 			<ListItem alignItems="flex-start">
 				<ListItemAvatar>
@@ -25,7 +32,7 @@ export default function ChatListItem(props) {
 							>
 								{chatRoom.memberCount + " "}
 							</Typography>
-							<Badge badgeContent={chatRoom.messageCount} color="primary" />
+							{msgCount > 0 && <Badge badgeContent={msgCount} color="primary" />}
 							<div style={{ position: "absolute", right: 0 }}>
 								
 								<Typography sx={{ display: 'inline' }}

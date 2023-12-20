@@ -8,10 +8,12 @@ interface GetAccompanyParam {
   memberId: string;
   role?: RoleType[];
   progressStatus?: ProgressStatusType[];
+  recruitStatus?: RecruitStatusType[];
 }
 
 type RoleType = 'HOST' | 'GUEST';
 type ProgressStatusType = 'READY' | 'CONFIRM' | 'CANCEL' | 'COMPLETE';
+type RecruitStatusType = 'RECRUITING' | 'COMPLETE';
 
 export const getProfile = async (memberId: string) => {
   const path = MEMBER_PATH + `/${memberId}/profile`;
@@ -34,12 +36,18 @@ export const getAccompany = async (param: GetAccompanyParam, pageNo: number, pag
     });
   }
 
+  if (param?.recruitStatus || param?.recruitStatus instanceof Array) {
+    param.recruitStatus.forEach((value: RecruitStatusType) => {
+      path += `&recruitStatus=${value}`;
+    });
+  }
+
   path += `&pageNo=${pageNo}` + `&pageSize=${pageSize}`;
 
   return (await getData(path)).data;
 };
 
-export const makeComponentProps = (datas: any[]):AccompanyCardProps[] => {
+export const makeComponentProps = (datas: any[]): AccompanyCardProps[] => {
   return datas?.map((value) => {
     return {
       isAccomList: true,

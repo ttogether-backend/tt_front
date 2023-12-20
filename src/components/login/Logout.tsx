@@ -20,8 +20,8 @@ const Logout = (() => {
 		else {
 			console.log("로그인 된 상태가 아닙니다")
 		}
-		navigate('/');
-	}, [navigate]);
+		setTimeout(function(){ window.location.replace('http://localhost:5173/')}, 100);
+	}, []);
 	return (
 		<>
 		</>
