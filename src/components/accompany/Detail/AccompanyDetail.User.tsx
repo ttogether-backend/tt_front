@@ -18,7 +18,6 @@ const User = (props: UserPropsType) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '20px',
       }}
     >
       <div

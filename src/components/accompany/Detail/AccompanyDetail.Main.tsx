@@ -1,7 +1,8 @@
 import BasicInfo from './AccompanyDetail.BasicInfo';
 import Content from './AccompanyDetail.Content';
 import Header from './AccompanyDetail.Header';
-import { Divider, Wrapper } from './AccompanyDetail.styles';
+import Participant from './AccompanyDetail.Participant2';
+import { Divider, Wrapper, UserBox } from './AccompanyDetail.styles';
 
 const Main = ({ headerData, basicInfoData, contentData }) => {
   console.log(basicInfoData);
@@ -13,7 +14,9 @@ const Main = ({ headerData, basicInfoData, contentData }) => {
         <Content {...contentData} />
       </Wrapper>
 
-      <Divider />
+      <UserBox>
+        <Participant />
+      </UserBox>
     </>
   );
 };

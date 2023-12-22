@@ -9,6 +9,7 @@ export interface HeaderType {
   category: Category;
   recruit_status: RecruitStatus;
   view_count: number;
+  progess_status: AccompanyStatus;
 }
 export enum Category {
   TRAVEL = '여행',

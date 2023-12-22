@@ -95,7 +95,7 @@ const AccompanyDetailPage = () => {
         //const { image_list } = data?.image_list;
         //const { document_list } = data?.document_list;
 
-        setHeaderData({ title, category, recruit_status, view_count });
+        setHeaderData({ title, category, recruit_status, view_count, progess_status });
         setBasicInfoData({
           progess_status,
           location_info_list,
@@ -120,7 +120,7 @@ const AccompanyDetailPage = () => {
       {headerData && basicInfoData && (
         <Main headerData={headerData} basicInfoData={basicInfoData} contentData={contentData} />
       )}
-      <Comment />
+      {/* <Comment /> */}
     </Page>
   );
 };

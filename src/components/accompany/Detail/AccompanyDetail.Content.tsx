@@ -11,8 +11,11 @@ import {
   KeywordTitle,
 } from './AccompanyDetail.styles';
 import Participant from './AccompanyDetail.Participant';
+import DOMPurify from 'dompurify';
 
 const Content = ({ content }) => {
+  const sanitizedHtml = DOMPurify.sanitize(content);
+
   return (
     <div
       style={{
@@ -37,14 +40,14 @@ const Content = ({ content }) => {
         </KeywordBox> */}
 
         <ContentImg />
-        <ContentText>{content}</ContentText>
-
+        <ContentText>
+          <div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />
+        </ContentText>
+        {/* 
         <AttachmentList>
           <ClipIcon /> <FileName>첨부파일.pdf</FileName> <FileSize>(254KB)</FileSize>
-        </AttachmentList>
+        </AttachmentList> */}
       </div>
-
-      <Participant />
     </div>
   );
 };

@@ -12,6 +12,13 @@ export const Divider = styled.div`
   margin: 40px 0;
 `;
 
+export const UserBox = styled.div`
+  width: 100%;
+  height: 160px;
+  background: #f1f2f1;
+  margin: 40px 0 0;
+`;
+
 export const TagBox = styled.div`
   display: flex;
   margin-bottom: 19px;
@@ -257,12 +264,6 @@ export const MoreOptions = styled.ul<{ top: string }>`
 export const ParticipantBox = styled.div`
   width: 340px;
   padding: 24px 24px 20px;
-  border-radius: 10px;
-  border: 1px solid #d4d5d2;
-
-  :first-of-type {
-    margin-bottom: 24px;
-  }
 `;
 
 export const AccompanyOwner = styled.div`
@@ -276,9 +277,9 @@ export const AccompanyOwner = styled.div`
 
 export const ChatButton = styled.div`
   padding: 12px 0;
-  margin-bottom: 8px;
   border-radius: 10px;
-  background: #cfecc5;
+  background: black;
+  color: white;
   text-align: center;
   font-size: 16px;
   font-weight: 600;

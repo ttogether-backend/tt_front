@@ -1,13 +1,14 @@
+import react, { FC } from 'react';
 import { InfoBox, Label, StatusValue, Value } from './AccompanyDetail.styles';
+import { AccompanyDetailPropsType, AccompanyStatus } from './AccompanyDetail.types';
 
-const BasicInfo = ({
+const BasicInfo: FC<AccompanyDetailPropsType['BasicInfoType']> = ({
   progess_status,
   location_info_list,
   period,
   recruit_number,
   recruit_age_range,
 }) => {
-  console.log(location_info_list);
   return (
     <div
       style={{
@@ -18,7 +19,7 @@ const BasicInfo = ({
     >
       <InfoBox>
         <Label>동행 상태</Label>
-        <StatusValue>{progess_status}</StatusValue>
+        <StatusValue>{AccompanyStatus[progess_status]}</StatusValue>
       </InfoBox>
 
       <InfoBox>

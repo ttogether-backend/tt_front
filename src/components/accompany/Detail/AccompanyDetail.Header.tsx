@@ -1,3 +1,4 @@
+import react, { FC, useState } from 'react';
 import { MoreIcon } from 'src/assets/icon/MoreIcon';
 import {
   CreatedAt,
@@ -8,8 +9,24 @@ import {
   Title,
   ViewCount,
 } from './AccompanyDetail.styles';
+import {
+  AccompanyDetailPropsType,
+  Category,
+  RecruitStatus,
+  AccompanyStatus,
+} from './AccompanyDetail.types';
+import { UpdateStatusDialog } from '../../../shared/components/modals/UpdateStatusDialog';
+import { UpdateStatusObject } from '../../../shared/components/modals/UpdateStatusDialog/UpdateStatusDialog.types';
 
-const Header = ({ title, category, recruit_status, view_count }) => {
+const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
+  title,
+  category,
+  recruit_status,
+  view_count,
+  progess_status,
+}) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       <div
@@ -20,10 +37,10 @@ const Header = ({ title, category, recruit_status, view_count }) => {
         <div>
           <TagBox>
             <Tag background="#5bb13d" color="#fff">
-              {category}
+              {Category[category]}
             </Tag>
             <Tag background="#f0f9ec" color="#376b25">
-              {recruit_status}
+              {RecruitStatus[recruit_status]}
             </Tag>
           </TagBox>
 
@@ -37,7 +54,9 @@ const Header = ({ title, category, recruit_status, view_count }) => {
             <Title> {title} </Title>
             <MoreIcon />
             <MoreOptions top={'56px'}>
-              <li>동행 모집 상태 변경</li>
+              <li style={{ cursor: 'pointer' }} onClick={() => setModalOpen(true)}>
+                동행 모집 상태 변경
+              </li>
               <li>수정</li>
               <li>삭제</li>
             </MoreOptions>
@@ -49,6 +68,20 @@ const Header = ({ title, category, recruit_status, view_count }) => {
           </InfoBox>
         </div>
       </div>
+      <UpdateStatusDialog
+        currentStatus={{
+          accompanyId: 1,
+          status: AccompanyStatus[progess_status],
+          recruitStatus: RecruitStatus[recruit_status],
+        }}
+        isOpen={modalOpen}
+        handleClose={() => {
+          setModalOpen(false);
+        }}
+        handleConfirm={(updateStatusObject: UpdateStatusObject) => {
+          console.log(updateStatusObject);
+        }}
+      />
     </>
   );
 };
