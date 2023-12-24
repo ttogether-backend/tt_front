@@ -5,13 +5,13 @@ import { RecoilState, useRecoilState, atom } from 'recoil';
 import { Cookies } from 'react-cookie';
 import createAxios from 'src/Utils/axiosInstance';
 
-const postId: RecoilState<number> = atom({ key: 'postId', default: -1 });
+const recoilPostId: RecoilState<number> = atom({ key: 'postId', default: -1 });
 
 const AccompanyCreatePage = () => {
   const cookies = new Cookies();
   const axiosInstance = createAxios();
-
-  const [selectedPostId, setSelectedPostId] = useRecoilState(postId);
+  const [postId, setPostId] = useState(-1);
+  const [selectedPostId, setSelectedPostId] = useRecoilState(recoilPostId);
 
   useEffect(() => {
     if (selectedPostId < 0) {
@@ -24,12 +24,15 @@ const AccompanyCreatePage = () => {
         .then((res) => {
           if (res.data.result.code == 'SUCCESS') {
             setSelectedPostId(res.data.result.data.creating_accompany_post.accompanyPostId.value);
+            setPostId(res.data.result.data.creating_accompany_post.accompanyPostId.value);
           }
         });
+    } else {
+      setPostId(selectedPostId);
     }
   }, []);
 
-  return <div>{selectedPostId > 0 ? <AccompanyForm postId={selectedPostId} /> : null}</div>;
+  return <div>{postId > 0 ? <AccompanyForm postId={postId} /> : null}</div>;
 };
 
 export default AccompanyCreatePage;

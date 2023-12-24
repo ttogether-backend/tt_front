@@ -27,45 +27,69 @@ import SendRequestList from 'src/pages/Myfeed/pages/SendRequestList.tsx';
 import ReceiveRequestList from 'src/pages/Myfeed/pages/ReceiveRequestList.tsx';
 import MyAccompanyList from 'src/pages/Myfeed/pages/MyAccompanyList.tsx';
 import UserAccompanyList from 'src/pages/Myfeed/pages/UserAccompanyList.tsx';
+import Test from '../pages/Test.tsx';
 
 const Router = () => {
-	return (
-		<BrowserRouter>
-			<Routes>
-				{/* <Route path="/" element={<Layout />} /> */}
-				<Route path="/" element={<Home />} />
-				<Route path="/accompany/create" element={<PrivateRoute component={<AccompanyCreatePage />} />} />
-				<Route path="/accompany/modify" element={<PrivateRoute component={<AccompanyModifyPage />} />} />
-				<Route path="/accompany/:id" element={<AccompanyDetailPage />} />
-				<Route path="/accompany/" element={<AccompanyListPage />} />
-				{/* <Route path="/users/personal/verificareUser/password" element={<AuthPassword />} /> */}
-				{/* <Route path="/users/personal/verificareUser" element={<Verificare />} /> */}
-				<Route path="/users/personal" element={<UserPersonal />} />
-				<Route path="/users/:userid" element={<MypageMain />} />
-				<Route path="/auth/sns" element={<VerificareUser />} />
-				<Route path="/auth/password" element={<AuthPassword />} />
-				<Route path="/users/withdrawal" element={<Withdrawal />} />
-				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
-				<Route path="/terms-of-service" element={<TermsOfService />} />
-				<Route path="/test" element={<Test1 />} />
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* <Route path="/" element={<Layout />} /> */}
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/accompany/create"
+          element={<PrivateRoute component={<AccompanyCreatePage />} />}
+        />
+        <Route
+          path="/accompany/modify"
+          element={<PrivateRoute component={<AccompanyModifyPage />} />}
+        />
+        <Route path="/accompany/:id" element={<AccompanyDetailPage />} />
+        <Route path="/accompany/" element={<AccompanyListPage />} />
+        {/* <Route path="/users/personal/verificareUser/password" element={<AuthPassword />} /> */}
+        {/* <Route path="/users/personal/verificareUser" element={<Verificare />} /> */}
+        <Route path="/users/personal" element={<UserPersonal />} />
+        <Route path="/users/:userid" element={<MypageMain />} />
+        <Route path="/auth/sns" element={<VerificareUser />} />
+        <Route path="/auth/password" element={<AuthPassword />} />
+        <Route path="/users/withdrawal" element={<Withdrawal />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/test" element={<Test1 />} />
 
-				<Route path="/feed/my/send-accompany-request" element={<PrivateRoute component={<SendRequestList />} />} />
-				<Route path="/feed/my/receive-accompany-request" element={<PrivateRoute component={<ReceiveRequestList />} />} />
-				<Route path="/feed/my/accompany" element={<PrivateRoute component={<MyAccompanyList />} />} />
-				<Route path="/feed/my/accompany/:type" element={<PrivateRoute component={<MyAccompanyList />} />} />
-				<Route path="/feed/my" element={<PrivateRoute component={<Feed />} />} />
-				<Route path="/feed/:id" element={<PrivateRoute component={<Feed />} />} />
-				<Route path="/feed/:id/accompany/:type" element={<PrivateRoute component={<UserAccompanyList />} />} />
+        <Route
+          path="/feed/my/send-accompany-request"
+          element={<PrivateRoute component={<SendRequestList />} />}
+        />
+        <Route
+          path="/feed/my/receive-accompany-request"
+          element={<PrivateRoute component={<ReceiveRequestList />} />}
+        />
+        <Route
+          path="/feed/my/accompany"
+          element={<PrivateRoute component={<MyAccompanyList />} />}
+        />
+        <Route
+          path="/feed/my/accompany/:type"
+          element={<PrivateRoute component={<MyAccompanyList />} />}
+        />
+        <Route path="/feed/my" element={<PrivateRoute component={<Feed />} />} />
+        <Route path="/feed/:id" element={<PrivateRoute component={<Feed />} />} />
+        <Route
+          path="/feed/:id/accompany/:type"
+          element={<PrivateRoute component={<UserAccompanyList />} />}
+        />
 
-				<Route path="/login" element={<LoginPage />} />
-				<Route path="/signup" element={<SignUpPage />} />
-				<Route path="/logout" element={<Logout />} />
-				<Route path="/chat" element={<PrivateRoute component={<ChatListPage />} />} />
-				{/* <Route path="/chat/:chatid" element={<PrivateRoute component={<ChatRoomPage />} authenticated={token} />} /> */}
-				<Route path="*" element={<NotFound />} />
-			</Routes>
-		</BrowserRouter>
-	);
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/chat" element={<PrivateRoute component={<ChatListPage />} />} />
+
+        <Route path="/googleMaptest" element={<Test />} />
+        {/* <Route path="/chat/:chatid" element={<PrivateRoute component={<ChatRoomPage />} authenticated={token} />} /> */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default Router;
