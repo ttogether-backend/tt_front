@@ -19,8 +19,7 @@ function useLogin() {
   const setProfile = (async () => {
 	const axiosInstance = createAxios();
 	const nickname = cookies.get('nickname');
-	console.log('localstorage: ', nickname);
-	if (!localStorage.getItem('nickname')) {
+	if (!nickname) {
 		axiosInstance.get('/api/v1/members/' + cookies.get('memberId') + '/profile')
 		.then((res) => {
 			console.log("profile : ", res);
