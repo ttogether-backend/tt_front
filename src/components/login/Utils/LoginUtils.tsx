@@ -59,3 +59,8 @@ export const setItemWithExpire = (key, value, tts) =>  {
 	const objString = JSON.stringify(obj);
 	localStorage.setItem(key, objString);
 }
+
+export const redirectHome = () => {
+	const homeurl = "http://localhost:5173/";
+	setTimeout(function(){ window.location.replace(homeurl)}, 100);
+}
