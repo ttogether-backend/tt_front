@@ -1,6 +1,7 @@
 import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { redirectHome } from './Utils/LoginUtils';
 
 
 const Logout = (() => {
@@ -20,7 +21,7 @@ const Logout = (() => {
 		else {
 			console.log("로그인 된 상태가 아닙니다")
 		}
-		setTimeout(function(){ window.location.replace('http://localhost:5173/')}, 100);
+		redirectHome();
 	}, []);
 	return (
 		<>

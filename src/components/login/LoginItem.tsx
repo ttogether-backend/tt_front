@@ -7,7 +7,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { LoginTitle, LoginItemDiv, LoginItemWrap, ExtraButton } from './LoginItem.style';
-import { onLoginSuccess, kakaoLogin } from "./Utils/LoginUtils";
+import { onLoginSuccess, kakaoLogin, redirectHome } from "./Utils/LoginUtils";
 import { useNavigate, Link } from 'react-router-dom';
 
 type loginType = {
@@ -16,8 +16,7 @@ type loginType = {
 };
 
 
-const LoginItem = () => {
-	const navigate = useNavigate();
+const LoginItem = () => {	const homeurl = "http://localhost:5173/"
 
 
 	const {
@@ -38,7 +37,7 @@ const LoginItem = () => {
 				if (res.data.success) {
 					// console.log("accessToken:", accessToken, "refreshToken:", refreshToken);
 					onLoginSuccess(res.data);
-					navigate('/');
+					redirectHome();
 				}
 			})
 			.catch((error) => {
