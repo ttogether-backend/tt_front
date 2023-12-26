@@ -27,7 +27,6 @@ import SendRequestList from 'src/pages/Myfeed/pages/SendRequestList.tsx';
 import ReceiveRequestList from 'src/pages/Myfeed/pages/ReceiveRequestList.tsx';
 import MyAccompanyList from 'src/pages/Myfeed/pages/MyAccompanyList.tsx';
 import UserAccompanyList from 'src/pages/Myfeed/pages/UserAccompanyList.tsx';
-import Test from '../pages/Test.tsx';
 
 const Router = () => {
   return (
@@ -84,7 +83,6 @@ const Router = () => {
         <Route path="/logout" element={<Logout />} />
         <Route path="/chat" element={<PrivateRoute component={<ChatListPage />} />} />
 
-        <Route path="/googleMaptest" element={<Test />} />
         {/* <Route path="/chat/:chatid" element={<PrivateRoute component={<ChatRoomPage />} authenticated={token} />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>

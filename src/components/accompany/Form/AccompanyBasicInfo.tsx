@@ -18,11 +18,21 @@ import { RangeDataList } from 'src/shared/components/Range/Range.types';
 import { DataList } from 'src/shared/components/Range/SingleSelector.types';
 import Checkbox from 'src/shared/components/Checkbox/Checkbox';
 import { AccompanyType, LocationInfo } from './AccompanyForm.types';
+import { MapDialog } from './MapDialog';
 
 const AccompanyBasicInfo = ({ setBasicInfo }) => {
   const [isAnyAge, setIsAnyAge] = useState(false);
   const [selectedType, setSelectedType] = useState<AccompanyType>(AccompanyType.culture);
-
+  const [openModal, setOpenModal] = useState(false);
+  const [locationInfo, setLocationInfo] = useState<LocationInfo>({
+    location_id: 0,
+    country: '',
+    city: '',
+    latitude: '',
+    longitude: '',
+    name: '',
+    address: '',
+  });
   const handleButtonClick = (type: AccompanyType) => {
     setSelectedType(type);
     setBasicInfo({
@@ -172,12 +182,8 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
       <Box>
         <Label>동행 장소</Label>
         <PlaceWrapper>
-          <ResultInput
-            onChange={(e) => {
-              handleLocation(e.target.value);
-            }}
-          />
-          {/* <SearchButton>검색하기</SearchButton> */}
+          <ResultInput onClick={(e) => setOpenModal(true)}>{locationInfo.name}</ResultInput>
+          <SearchButton onClick={(e) => setOpenModal(true)}>검색하기</SearchButton>
         </PlaceWrapper>
       </Box>
 
@@ -248,7 +254,18 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
         <Range dataList={age} getRangeValue={(value) => handleAgeRange(value)} />
       </div>
 
-      {/* <Label>여행 키워드</Label> */}
+      <MapDialog
+        isOpen={openModal}
+        isCloseBackgroundClick={true}
+        setLocationInfo={setLocationInfo}
+        handleClose={() => {
+          setOpenModal(false);
+        }}
+        handleConfirm={function () {
+          throw new Error('Function not implemented.');
+        }}
+        // handleConfirm:(accordionItem:AccordionItem) => any;
+      />
     </div>
   );
 };
