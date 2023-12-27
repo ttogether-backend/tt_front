@@ -12,60 +12,6 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import createAxios from 'src/Utils/axiosInstance';
 
-const getAccompanyList = async () => {
-  const cookies = new Cookies();
-  const axiosInstance = createAxios();
-
-  axiosInstance
-    .post('/api/v1/accompany/posts/init')
-    .then((res) => {
-      console.log('res', res);
-      var postId = res.data.result.data.creating_accompany_post.accompanyPostId.value;
-      console.log(postId);
-      axiosInstance
-        .post(
-          '/api/v1/accompany/posts/' + postId,
-          {
-            category: 'TRAVEL',
-            title: '뚜기와 함께하는 여행',
-            content: '제주도로 가기',
-            expected_start_at: '2024-01-20',
-            expected_end_at: '2024-09-20',
-            thumbnail_url:
-              'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbK77rj%2FbtrDyF4hWX8%2FlPMPnDbvxPv4sWpdGZ3bhK%2Fimg.jpg',
-            recruit_number: 1,
-            is_age_free: false,
-            min_recruit_age: 20,
-            max_recruit_age: 30,
-            location_info: [
-              {
-                location_id: 3,
-                country: 'korea',
-                city: 'seoul',
-                latitude: '12354',
-                longitude: '4897',
-                name: '오뚜기',
-                address: '서울시양천구',
-              },
-            ],
-            add_content: '밥 먹고싶어요',
-          },
-          {
-            headers: {
-              memberId: cookies.get('memberId'),
-              post_id: postId,
-            },
-          }
-        )
-        .then((res) => {
-          console.log('postId res', res);
-        });
-    })
-    .catch((Error) => {
-      console.log(Error);
-    });
-};
-
 const AccompanyListPage = () => {
   const [accompanyCardList, setAccompanyCardList] = useState(null);
   const [filteredAccompanyCardList, setFilteredAccompanyCardList] = useState([]);
@@ -165,10 +111,10 @@ const AccompanyListPage = () => {
       // Age 필터
       if (choicedAge.length > 0) {
         filteredList = filteredList.filter((data) => {
-          const { minRecruitAge, maxRecruitAge } = data.recruit_age_range;
+          const { min_recruit_age, max_recruit_age } = data.recruit_age_range;
           if (choicedAge.length === 1)
-            return choicedAge[0] === minRecruitAge || choicedAge[0] === maxRecruitAge;
-          else return choicedAge[0] <= maxRecruitAge && choicedAge[1] >= minRecruitAge;
+            return choicedAge[0] === min_recruit_age || choicedAge[0] === max_recruit_age;
+          else return choicedAge[0] <= max_recruit_age && choicedAge[1] >= min_recruit_age;
         });
       }
 
@@ -189,8 +135,8 @@ const AccompanyListPage = () => {
         const [startPeriod, endPeriod] = choicedPeriod;
         filteredList = filteredList.filter(
           (data) =>
-            new Date(data.period.startAt) >= new Date(startPeriod) &&
-            new Date(data.period.endAt) <= new Date(endPeriod)
+            new Date(data.period.start_at) >= new Date(startPeriod) &&
+            new Date(data.period.end_at) <= new Date(endPeriod)
         );
       }
 
@@ -295,11 +241,12 @@ const AccompanyListPage = () => {
                 auth="1차 인증"
                 profileImgSrc={data.host.profile_image_path}
                 username={data.host.nickname}
-                age={`${data.recruit_age_range.minRecruitAge}대 ~ ${data.recruit_age_range.maxRecruitAge}대`}
-                thumbSrc={data.thumbnail_url}
+                age={`${data.recruit_age_range.min_recruit_age}대 ~ ${data.recruit_age_range.max_recruit_age}대`}
+                // thumbSrc={data.thumbnail_url}
+                thumbSrc="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbK77rj%2FbtrDyF4hWX8%2FlPMPnDbvxPv4sWpdGZ3bhK%2Fimg.jpg"
                 category={data.category}
                 status={data.status}
-                date={`${data.period.startAt} ~ ${data.period.endAt}`}
+                date={`${data.period.start_at} ~ ${data.period.end_at}`}
                 cnt={data.joining_member_count}
                 personnel={data.recruit_number}
                 title={data.title}

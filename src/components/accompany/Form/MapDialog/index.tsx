@@ -62,7 +62,7 @@ export const MapDialog = ({
 
         var leng = placeDetails.address_components.length - 1;
         setLocationInfo({
-          location_id: selectedItem.place_id,
+          location_id: null,
           country: leng > 2 ? placeDetails?.address_components[leng]?.long_name : '',
           city: leng > 2 ? placeDetails?.address_components[leng - 1]?.long_name : '',
           latitude: placeDetails.geometry.location.lat(),
@@ -70,7 +70,6 @@ export const MapDialog = ({
           name: selectedItem?.structured_formatting?.main_text,
           address: placeDetails?.formatted_address,
         });
-        console.log('placeDetails', placeDetails);
       }
     );
     setSelectedItem(selectedItem);

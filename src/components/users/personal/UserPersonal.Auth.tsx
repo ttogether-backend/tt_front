@@ -123,9 +123,9 @@ const Auth = () => {
           )}
         </InfoItem>
       </Box>
-      <Link to={'/deleteUser'} className="deleteUser">
+      {/* <Link to={'/deleteUser'} className="deleteUser">
         계정 삭제하기
-      </Link>
+      </Link> */}
     </ProfileBox>
   );
 };

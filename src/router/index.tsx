@@ -44,8 +44,11 @@ const Router = () => {
         />
         <Route path="/accompany/:id" element={<AccompanyDetailPage />} />
         <Route path="/accompany/" element={<AccompanyListPage />} />
-        {/* <Route path="/users/personal/verificareUser/password" element={<AuthPassword />} /> */}
-        {/* <Route path="/users/personal/verificareUser" element={<Verificare />} /> */}
+        <Route path="/users/personal/verificareUser/password" element={<AuthPassword />} />
+        <Route
+          path="/users/personal/verificareUser"
+          element={<PrivateRoute component={<Verificare />} />}
+        />
         <Route path="/users/personal" element={<UserPersonal />} />
         <Route path="/users/:userid" element={<MypageMain />} />
         <Route path="/auth/sns" element={<VerificareUser />} />

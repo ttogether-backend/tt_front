@@ -39,23 +39,6 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
       category: type,
     });
   };
-
-  const handleLocation = (value: string) => {
-    setBasicInfo({
-      location_info: [
-        {
-          location_id: 0,
-          country: 'string',
-          city: 'string',
-          latitude: 'string',
-          longitude: 'string',
-          name: value,
-          address: 'string',
-        },
-      ],
-    });
-  };
-
   const handleRecruitNum = (value: number) => {
     setBasicInfo({
       recruit_number: value,
@@ -73,6 +56,13 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
       max_recruit_age: value[1],
     });
   };
+
+  useEffect(() => {
+    setBasicInfo({
+      location_info: [locationInfo],
+    });
+  }, [locationInfo]);
+
   const personnel: DataList[] = [
     {
       value: 1,

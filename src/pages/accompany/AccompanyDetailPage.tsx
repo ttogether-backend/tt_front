@@ -21,42 +21,29 @@ const AccompanyDetailPage = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    const cookies = new Cookies();
     const axiosInstance = createAxios();
 
     axiosInstance
       .get('/api/v1/accompany/posts/' + id)
       .then((res) => {
-        console.log(res);
         const data = res.data.result.data;
         const {
           title,
           category,
           recruit_status,
-          progess_status,
+          progress_status,
           location_info_list,
           period,
           recruit_number,
           recruit_age_range,
         } = data?.accompany_post_detail?.accompany_summary;
-        console.log(Object.keys(data?.accompany_post_detail?.accompany_summary));
+
         const { content, view_count } = data?.accompany_post_detail;
         //const { image_list } = data?.image_list;
         //const { document_list } = data?.document_list;
-        console.log(
-          'd',
-          title,
-          category,
-          recruit_status,
-          progess_status,
-          location_info_list,
-          period,
-          recruit_number,
-          recruit_age_range
-        );
-        setHeaderData({ title, category, recruit_status, view_count, progess_status });
+        setHeaderData({ title, category, recruit_status, view_count, progress_status });
         setBasicInfoData({
-          progess_status,
+          progress_status,
           location_info_list,
           period,
           recruit_number,
@@ -75,12 +62,14 @@ const AccompanyDetailPage = () => {
 
   //getAccompanyList();
   return (
-    <Page>
-      {headerData && basicInfoData && (
-        <Main headerData={headerData} basicInfoData={basicInfoData} contentData={contentData} />
-      )}
-      {/* <Comment /> */}
-    </Page>
+    <>
+      <Page>
+        {headerData && basicInfoData && (
+          <Main headerData={headerData} basicInfoData={basicInfoData} contentData={contentData} />
+        )}
+        {/* <Comment /> */}
+      </Page>
+    </>
   );
 };
 
