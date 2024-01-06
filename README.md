@@ -11,6 +11,7 @@
 
 <br />
 <b>투게더 트래블</b>은 음식, 여행, 취미 생활을 같이 즐길 동행인을 구하는 웹 서비스입니다.<br />
+<br /><br />
 
 ![Jan-06-2024 19-11-20](https://github.com/ttogether-backend/tt_front/assets/50770882/06ae66ad-c83b-4ecb-9cac-884151df68e7)
 
@@ -29,7 +30,7 @@
 
 - 코어: React, TypeScript
 - 상태 관리: React-Query, Recoil
-- 스타일링: styledcomponents
+- 스타일링: styled-components
 - 패키지 매니저: Yarn Berry, Pnpm
 - 빌드: Vite
 
