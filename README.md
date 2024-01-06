@@ -1,72 +1,60 @@
-# Travel Together boilerplate
+<br />
+<p align="center">
+<img src="https://drive.google.com/uc?id=1q-O4nCCoD7YdNcBNcE4fzXAMkcCfG3W1" width=500 /> <br />
+</p>
+
+<br />
+
+# Travel Together
+
+<b>투게더 트래블</b>은 음식, 여행, 취미 생활을 같이 즐길 동행인을 구하는 웹 서비스입니다.<br />
+
+![Jan-06-2024 19-11-20](https://github.com/ttogether-backend/tt_front/assets/50770882/06ae66ad-c83b-4ecb-9cac-884151df68e7)
+
+## 기술 스택
+
+<br />
+<p align="center">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white"> <img src="https://img.shields.io/badge/Recoil-3578E5?style=for-the-badge&logo=Recoil&logoColor=white"> <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
+</p>
 
 ### 개발 환경
 
-- 코어: React, TypeScript, Next.js
+- 코어: React, TypeScript
 - 상태 관리: React-Query, Recoil
-- 스타일링: Emotion +a
+- 스타일링: styledcomponents
 - 패키지 매니저: Yarn Berry, Pnpm
 - 빌드: Vite
 
-### TODO
+## Getting Started
 
-- [ ] MSW 설정 추가
-- [ ] husky를 이용한 커밋 컨벤션 추가
-- [ ] 유저 로그인 , 세션 만료 리디렉션 공통 로직 추가 ('로그인 기능' 아님!)
-- [ ] 에러 처리 로직 추가
-  - [ ] Error Boundary
-  - [ ] API 공통 에러/ 네트워크 에러 처리 다이얼로그
-- [ ] 공통 컴포넌트 추가
-  - [ ] NavBar
-  - [ ] Footer
-  - [ ] 잘못된 경로 진입시 보여주는 Not Found 페이지
-- [ ] 공통으로 사용하는 라이브러리 패키지 install
-  - [ ] emotion
-  - [ ] react-query
-  - [ ] recoil
-  - [ ] react-router-dom
-
-# Add Dependency
 ```shell
-$ yarn add package-name@1.2.3
-$ yarn
+$ yarn vite
 ```
+
+### Prerequisites
+
+```shell
+$ npm install -g yarn
+$ yarn install
+```
+
 # Run Server
 
 ```shell
 # .yarn 폴더 없는 경우
 # .yarnrc.yml 파일 삭제 후 다음 명령 실행
-$ yarn set version 3.6.1 
+$ yarn set version 3.6.1
 $ yarn # 의존 패키지 fetch 및 link 생성
 $ yarn vite # 서버 run
 ```
 
-# React + TypeScript + Vite
+## Deployment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Add additional notes about how to deploy this on a live system
 
-Currently, two official plugins are available:
+## Authors
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Billie Thompson** - _Initial work_ - [PurpleBooth](https://github.com/PurpleBooth)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```json
-{
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module",
-    "project": ["./tsconfig.json", "./tsconfig.node.json"],
-    "tsconfigRootDir": "__dirname"
-  }
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.

@@ -10,7 +10,7 @@ export const Range: React.FC<RangePropsType> = (props: RangePropsType) => {
 
   useEffect(() => {
     // 컴포넌트가 처음 마운트될 때, rangeValue의 초기값을 선택된 값으로 설정
-    if (rangeValue) {
+    if (rangeValue.length > 0) {
       setValue(rangeValue);
       const updatedData = rangeData.map((data) => ({
         ...data,
