@@ -94,10 +94,11 @@ const ChatRoom = ({ chatId }) => {
 	return (
 		<Box
 			sx={{
-				height: "50vh",
+				width: 'auto',
+				height: "700px",
 				display: "flex",
 				flexDirection: "column",
-				bgcolor: "grey.200",
+				bgcolor: "white",
 			}}
 		>
 			<Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
@@ -111,7 +112,7 @@ const ChatRoom = ({ chatId }) => {
 						<TextField
 							fullWidth
 							size="small"
-							placeholder="Type a message"
+							placeholder="배려하는 마음으로 건강한 동행 문화를 만들어요"
 							variant="outlined"
 							value={input}
 							onChange={handleInputChange}
@@ -121,12 +122,10 @@ const ChatRoom = ({ chatId }) => {
 						<Button
 							fullWidth
 							size="large"
-							color="primary"
 							variant="contained"
 							endIcon={<SendIcon />}
 							onClick={handleSend}
 						>
-							Send
 						</Button>
 					</Grid>
 				</Grid>

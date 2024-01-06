@@ -88,6 +88,7 @@ const Router = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/chat" element={<PrivateRoute component={<ChatListPage />} />} />
+		<Route path="/chat/:memberId" element={<PrivateRoute component={<ChatListPage />} />} />
 
         {/* <Route path="/chat/:chatid" element={<PrivateRoute component={<ChatRoomPage />} authenticated={token} />} /> */}
         <Route path="*" element={<NotFound />} />

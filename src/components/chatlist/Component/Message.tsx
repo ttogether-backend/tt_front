@@ -20,7 +20,7 @@ const Message = ({ message }) => {
 			alignItems: "center",
 		  }}
 		>
-		  <Avatar sx={{ bgcolor: isMine ? "primary.main" : "secondary.main" }}>
+		  <Avatar sx={{ bgcolor: isMine ? "#83CE69" : "#F1F2F1" }}>
 			{isMine ? "B" : "U"}
 		  </Avatar>
 		  <Paper
@@ -29,7 +29,7 @@ const Message = ({ message }) => {
 			  p: 2,
 			  ml: isMine ? 1 : 0,
 			  mr: isMine ? 0 : 1,
-			  backgroundColor: isMine ? "primary.light" : "secondary.light",
+			  backgroundColor: isMine ? "#F1F2F1" : "#83CE69",
 			  borderRadius: isMine ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
 			}}
 		  >
