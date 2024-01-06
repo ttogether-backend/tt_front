@@ -56,11 +56,11 @@ const AccompanyDetailPage = () => {
         console.log(Error);
       });
   }, []);
+
   useEffect(() => {
     console.log('eesss', basicInfoData);
   }, [basicInfoData]);
 
-  //getAccompanyList();
   return (
     <>
       <Page>

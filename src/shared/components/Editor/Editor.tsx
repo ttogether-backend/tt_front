@@ -1,11 +1,20 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { EditorPropsType } from './Editor.types';
 import { SReactQuill } from './Editor.styles';
 
 const Editor: React.FC<EditorPropsType> = (props: EditorPropsType) => {
-  const { content, setContent } = props;
+  const { initValue, handleValue } = props;
+  const [content, setContent] = useState<string>(initValue);
   const quillRef = useRef(null);
+
+  useEffect(() => {
+    setContent(initValue);
+  }, [initValue]);
+
+  useEffect(() => {
+    handleValue(content);
+  }, [content]);
 
   const modules = {
     toolbar: {
@@ -46,7 +55,7 @@ const Editor: React.FC<EditorPropsType> = (props: EditorPropsType) => {
     <SReactQuill
       ref={quillRef}
       placeholder={'내용을 입력해주세요.'}
-      value={content || ''}
+      value={content}
       modules={modules}
       formats={formats}
       onChange={(value) => setContent(value)}

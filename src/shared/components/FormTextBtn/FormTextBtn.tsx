@@ -7,10 +7,7 @@ export const FormTextBtn: React.FC<FormTextBtnPropsType> = (
   props: React.PropsWithChildren<FormTextBtnPropsType>
 ) => {
   return (
-    <Style.FormTextContainer
-      {...props}
-        width={props.width}
-    >
+    <Style.FormTextContainer {...props} width={props.width}>
       <Style.FormTextInput
         {...props}
         width={props.width}
@@ -19,30 +16,21 @@ export const FormTextBtn: React.FC<FormTextBtnPropsType> = (
         fontWeight={props.fontWeight}
         background={props.background}
         padding={props.padding}
+        type={props.type}
+        autoComplete={props.autoComplete}
         border={props.border}
         borderColor={props.borderColor}
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onchange}
       />
-      <Style.FormBtn
-        {...props}
-        onClick={props.onclick}
-      />
-      {
-        props.useLoading && props.isLoading ?
-          <Style.LoadingIcon
-            isLoading={props.isLoading}
-          />
-          : 
-          null
-      }
+      <Style.FormBtn {...props} onClick={props.onclick} />
+      {props.useLoading && props.isLoading ? (
+        <Style.LoadingIcon isLoading={props.isLoading} />
+      ) : null}
     </Style.FormTextContainer>
   );
-    
-
 };
-
 
 FormTextBtn.defaultProps = {
   width: '100%',

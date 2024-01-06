@@ -6,11 +6,22 @@ export const Range: React.FC<RangePropsType> = (props: RangePropsType) => {
   const { dataList, getRangeValue, rangeValue } = props;
 
   const [rangeData, setRangeData] = useState<RangeDataList[]>(dataList);
-  const [value, setValue] = useState<number[]>(rangeValue || []);
+  const [value, setValue] = useState<number[]>([]);
+
+  useEffect(() => {
+    // 컴포넌트가 처음 마운트될 때, rangeValue의 초기값을 선택된 값으로 설정
+    if (rangeValue) {
+      setValue(rangeValue);
+      const updatedData = rangeData.map((data) => ({
+        ...data,
+        isSelected: rangeValue.includes(data.value),
+      }));
+      setRangeData(updatedData);
+    }
+  }, [rangeValue]);
 
   const onClick = (selectedValue: number) => {
     let updatedData = [];
-
     if (value.length >= 2) {
       updatedData = rangeData.map((data) => {
         if (data.value === selectedValue) {
@@ -42,6 +53,7 @@ export const Range: React.FC<RangePropsType> = (props: RangePropsType) => {
 
     setRangeData(updatedData);
     setValue((prev) => [...prev, selectedValue]);
+    getRangeValue(updatedData);
   };
 
   const selectedRangeData = useMemo(() => {
@@ -64,10 +76,6 @@ export const Range: React.FC<RangePropsType> = (props: RangePropsType) => {
 
     return updatedRangeData;
   }, [rangeData, value]);
-
-  useEffect(() => {
-    getRangeValue(value);
-  }, [value]);
 
   return (
     <>

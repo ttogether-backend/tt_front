@@ -80,10 +80,12 @@ const UserPersonal = () => {
           <ProfilePhotoBox />
           <div className="right">
             <Info {...infoData} />
-            <Auth />
+            {/* <Auth /> */}
           </div>
         </ProfileBoxWrap>
       </Container>
+
+      <div style={{ height: 'calc(100vh - 128px - 655px - 360px)' }}></div>
     </Page>
   );
 };

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import {
   ProfileBox,
   Box,
@@ -12,14 +13,20 @@ import {
 } from './UserPersonal.styles';
 import { FormTextBtn } from '../../../shared/components/FormTextBtn/FormTextBtn';
 
+import { useRecoilState } from 'recoil';
+import { recoilIsVerified } from '../../../pages/auth/password/authPassword';
+
 const Auth = () => {
   const [password, setPassword] = useState('********'); // 로그인할 때 따로 저장해둔 거 불러옴 (로그인 성공 시에만 저장해야됨)
   const [modifyPassword, setModifyPassword] = useState(false); // 비밀번호 수정상태
   const [modifyEmergency, setmodifyEmergency] = useState(false); // 비상연락망 수정상태
-  const [verified, setVerified] = useState(true); // 임시 인증된상태
+  const [isVerified, setIsVerified] = useRecoilState(recoilIsVerified);
 
+  // 페이지를 나갈 때 재인증했다는 Recoil 상태 초기화
   useEffect(() => {
-    setVerified(false);
+    return () => {
+      setIsVerified(false);
+    };
   }, []);
 
   return (
@@ -32,11 +39,11 @@ const Auth = () => {
         <InfoItem>
           <Label>
             비밀번호
-            {/* {!modifyPassword && verified && (
-                <ModifyBtn onClick={() => setModifyPassword(true)}>수정</ModifyBtn>
-                )} */}
+            {!modifyPassword && isVerified && (
+              <ModifyBtn onClick={() => setModifyPassword(true)}>수정</ModifyBtn>
+            )}
           </Label>
-          {modifyPassword ? (
+          {modifyPassword && isVerified ? (
             <InputBox>
               <FormTextBtn
                 placeholder="수정할 비밀번호를 입력하세요."
@@ -68,11 +75,11 @@ const Auth = () => {
         <InfoItem>
           <Label>
             비상연락망
-            {/* {!modifyEmergency && verified && (
-                <ModifyBtn onClick={() => setmodifyEmergency(true)}>수정</ModifyBtn>
-                )} */}
+            {!modifyEmergency && isVerified && (
+              <ModifyBtn onClick={() => setmodifyEmergency(true)}>수정</ModifyBtn>
+            )}
           </Label>
-          {modifyEmergency ? (
+          {modifyEmergency && isVerified ? (
             <>
               <Desc status={'normal'}>1건이 등록되어 있습니다.</Desc>
               <p className="info gray fw600">전화번호</p>
@@ -113,7 +120,7 @@ const Auth = () => {
           )}
         </InfoItem>
         <InfoItem>
-          {!verified && (
+          {!isVerified && (
             <Label>
               <div></div>
               <ModifyBtn>

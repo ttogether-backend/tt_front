@@ -60,9 +60,7 @@ const AccompanyForm = ({ postId }) => {
   useEffect(() => {
     console.log('postInfo', postInfo);
   }, [postInfo]);
-
   const handleSubmitBtn = () => {
-    console.log('e', postId);
     axiosInstance
       .post('/api/v1/accompany/posts/' + postId, postInfo, {
         headers: {

@@ -150,10 +150,6 @@ const AccompanyListPage = () => {
     filterAccompanyList();
   }, [choicedCategory, choicedAge, choicedPersonnel, choicedPeriod, accompanyCardList, isComplete]);
 
-  useEffect(() => {
-    console.log('fil', filteredAccompanyCardList);
-  }, [filteredAccompanyCardList]);
-
   return (
     <Page activeNav="accompany">
       <Style.Container>

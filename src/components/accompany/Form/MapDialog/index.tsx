@@ -61,10 +61,17 @@ export const MapDialog = ({
         setDetailedItem(placeDetails);
 
         var leng = placeDetails.address_components.length - 1;
+        console.log('placeDetails', placeDetails);
         setLocationInfo({
           location_id: null,
-          country: leng > 2 ? placeDetails?.address_components[leng]?.long_name : '',
-          city: leng > 2 ? placeDetails?.address_components[leng - 1]?.long_name : '',
+          country:
+            leng > 2
+              ? placeDetails?.address_components[leng]?.long_name
+              : placeDetails?.formatted_address,
+          city:
+            leng > 2
+              ? placeDetails?.address_components[leng - 1]?.long_name
+              : placeDetails?.formatted_address,
           latitude: placeDetails.geometry.location.lat(),
           longitude: placeDetails.geometry.location.lng(),
           name: selectedItem?.structured_formatting?.main_text,

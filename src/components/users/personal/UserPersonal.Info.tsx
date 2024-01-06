@@ -8,6 +8,7 @@ import { AccordionDialog } from './AccordionDialog';
 import { InfoType } from './UserPersonal.types';
 import { TravelTypes } from './TravelType';
 import { AccordionItem } from 'src/components/users/personal/AccordionDialog/AccordionDialog.types';
+
 import createAxios from 'src/Utils/axiosInstance';
 
 const Info: FC<InfoType> = ({ nickname, bio, profile_image_url }) => {
@@ -26,10 +27,8 @@ const Info: FC<InfoType> = ({ nickname, bio, profile_image_url }) => {
   useEffect(() => {
     setNewNickname(nickname);
     setNewBio(bio);
-    console.log(nickname, bio, newNickname, newBio);
   }, [nickname, bio]);
 
-  // 중복 검사 로직은 API 가능해지면 추가
   function NickNameChange(e) {
     const axiosInstance = createAxios();
 

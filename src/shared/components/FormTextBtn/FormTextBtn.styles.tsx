@@ -15,6 +15,8 @@ export const FormTextInput = styled.input<FormTextPropsType>`
   border-color: ${(props) => props.borderColor};
   font-size: ${(props) => props.fontSize}px;
   font-weight: ${(props) => props.fontWeight};
+  type: ${(props) => props.type};
+  autocomplete: ${(props) => props.autoComplete};
   padding: ${(props) => props.padding};
   padding-right: 32px;
   background: ${(props) => props.background};

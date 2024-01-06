@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import { RecoilState, useRecoilState, atom } from 'recoil';
 
 import {
   onLoginSuccess,
@@ -12,6 +14,10 @@ import { FormTextBtn } from '../../../shared/components/FormTextBtn/FormTextBtn'
 import { VerificareBoxWrap, Desc } from '../auth.styles';
 import Page from 'src/pages/layout';
 
+import createAxios from 'src/Utils/axiosInstance';
+
+export const recoilIsVerified: RecoilState<boolean> = atom({ key: 'isVerified', default: false });
+
 type loginType = {
   email: string;
   password: string;
@@ -20,6 +26,9 @@ type loginType = {
 const AuthPassword = () => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [, setIsVerified] = useRecoilState(recoilIsVerified);
+  const axiosInstance = createAxios();
+  const navigate = useNavigate();
 
   const {
     register, // input field 지정
@@ -27,19 +36,21 @@ const AuthPassword = () => {
     formState: { errors },
   } = useForm<loginType>();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (password) => {
+    console.log('password', password);
 
-    axios
-      .post('/api/v1/members/login/email', {
-        email: data.email,
-        password: data.password,
+    axiosInstance
+      .post('/api/v1/members/profile/password', {
+        password: password,
       })
       .then((res) => {
         console.log(res);
-        if (res.data.success) {
-          // console.log("accessToken:", accessToken, "refreshToken:", refreshToken);
-          onLoginSuccess(res.data);
+        if (res.data.success && res.data.data) {
+          console.log('success');
+          setIsVerified(true);
+          navigate('/users/personal');
+        } else {
+          setPasswordError('비밀번호가 틀렸습니다. 다시 확인해주세요.');
         }
       })
       .catch((error) => {
@@ -60,9 +71,11 @@ const AuthPassword = () => {
           <FormTextBtn
             placeholder="비밀번호를 입력하세요."
             value={password}
+            type="password"
+            autoComplete="off"
             onchange={(e) => setPassword(e.target.value)}
           />
-          {passwordError && <Desc status={'error'}>비밀번호를 입력해주세요.</Desc>}
+          {passwordError && <Desc status={'error'}>{passwordError}</Desc>}
           <button type="submit" onClick={(e) => onSubmit(password)}>
             인증하기
           </button>
