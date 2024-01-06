@@ -1,4 +1,7 @@
 import react, { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
 import { MoreIcon } from 'src/assets/icon/MoreIcon';
 import {
   CreatedAt,
@@ -17,15 +20,35 @@ import {
 } from './AccompanyDetail.types';
 import { UpdateStatusDialog } from '../../../shared/components/modals/UpdateStatusDialog';
 import { UpdateStatusObject } from '../../../shared/components/modals/UpdateStatusDialog/UpdateStatusDialog.types';
+import { AlertDialog } from '../../../shared/components/modals/AlertDialog';
+import { dialogButtonStyleCode } from '../../../shared/components/modals//common/DialogButton.types';
+import { useNavigate } from 'react-router-dom';
+
+import createAxios from 'src/Utils/axiosInstance';
 
 const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
   title,
   category,
   recruit_status,
   view_count,
-  progess_status,
+  progress_status,
 }) => {
+  const axiosInstance = createAxios();
+  const navigate = useNavigate();
+
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, isDeleteModalOpen] = useState(false);
+  const { id } = useParams();
+
+  function handleDeletePost() {
+    axiosInstance.delete('/api/v1/accompany/posts/' + id).then((res) => {
+      console.log(res.data);
+      if (res.data.result.code == 'SUCCESS') {
+        isDeleteModalOpen(false);
+        navigate('/accompany');
+      }
+    });
+  }
 
   return (
     <>
@@ -57,8 +80,12 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
               <li style={{ cursor: 'pointer' }} onClick={() => setModalOpen(true)}>
                 동행 모집 상태 변경
               </li>
-              <li>수정</li>
-              <li>삭제</li>
+              <Link to={`/accompany/${id}/modify`}>
+                <li>수정</li>
+              </Link>
+              <a>
+                <li onClick={() => isDeleteModalOpen(true)}>삭제</li>
+              </a>
             </MoreOptions>
           </div>
 
@@ -71,7 +98,7 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
       <UpdateStatusDialog
         currentStatus={{
           accompanyId: 1,
-          status: AccompanyStatus[progess_status],
+          status: AccompanyStatus[progress_status],
           recruitStatus: RecruitStatus[recruit_status],
         }}
         isOpen={modalOpen}
@@ -81,6 +108,31 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
         handleConfirm={(updateStatusObject: UpdateStatusObject) => {
           console.log(updateStatusObject);
         }}
+      />
+      <AlertDialog
+        title="동행글 삭제"
+        message="동행글을 삭제할까요?"
+        isCloseBackgroundClick={true}
+        isOpen={deleteModalOpen}
+        handleClose={() => {
+          isDeleteModalOpen(false);
+        }}
+        buttons={[
+          {
+            style: dialogButtonStyleCode.red,
+            label: '삭제하기',
+            handleClick: () => {
+              handleDeletePost();
+            },
+          },
+          {
+            style: dialogButtonStyleCode.black,
+            label: '취소',
+            handleClick: () => {
+              isDeleteModalOpen(false);
+            },
+          },
+        ]}
       />
     </>
   );

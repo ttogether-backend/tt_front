@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from 'react';
-import DateRangePicker from './DateRangePicker';
+import DateRangePicker from '../Form/DateRangePicker';
 import {
   Badge,
   Box,
@@ -11,19 +11,20 @@ import {
   SearchButton,
   SectionTitle,
   TypeWrapper,
-} from './AccompanyForm.styles';
+} from '../Form/AccompanyForm.styles';
 import { Range } from 'src/shared/components/Range/Range';
 import { SingleSelector } from 'src/shared/components/Range/SingleSelector';
 import { RangeDataList } from 'src/shared/components/Range/Range.types';
 import { DataList } from 'src/shared/components/Range/SingleSelector.types';
 import Checkbox from 'src/shared/components/Checkbox/Checkbox';
-import { AccompanyType, LocationInfo } from './AccompanyForm.types';
-import { MapDialog } from './MapDialog';
+import { AccompanyType, LocationInfo } from '../Form/AccompanyForm.types';
+import { MapDialog } from '../Form/MapDialog';
 
-const AccompanyBasicInfo = ({ setBasicInfo }) => {
+const AccompanyBasicInfo = ({ postInfo, setBasicInfo, recruitAgeRange }) => {
   const [isAnyAge, setIsAnyAge] = useState(false);
   const [selectedType, setSelectedType] = useState<AccompanyType>(AccompanyType.culture);
   const [openModal, setOpenModal] = useState(false);
+  const [range, setRange] = useState([]);
   const [locationInfo, setLocationInfo] = useState<LocationInfo>({
     location_id: 0,
     country: '',
@@ -33,6 +34,12 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
     name: '',
     address: '',
   });
+  console.log('postInfo', postInfo);
+
+  useEffect(() => {
+    setRange([postInfo.min_recruit_age, postInfo.max_recruit_age]);
+  }, [postInfo]);
+
   const handleButtonClick = (type: AccompanyType) => {
     setSelectedType(type);
     setBasicInfo({
@@ -45,6 +52,7 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
     });
   };
   const handleIsAnyAge = (value: boolean) => {
+    console.log('value', value);
     setIsAnyAge(value);
     setBasicInfo({
       is_age_free: value,
@@ -154,7 +162,7 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
         <TypeWrapper>
           <Button
             name={AccompanyType.culture}
-            isSelected={selectedType === AccompanyType.culture}
+            isSelected={postInfo.category === AccompanyType.culture}
             onClick={() => handleButtonClick(AccompanyType.culture)}
             background="#85B3B5"
           >
@@ -162,7 +170,7 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
           </Button>
           <Button
             name={AccompanyType.food}
-            isSelected={selectedType === AccompanyType.food}
+            isSelected={postInfo.category === AccompanyType.food}
             onClick={() => handleButtonClick(AccompanyType.food)}
             background="#D97736"
           >
@@ -170,7 +178,7 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
           </Button>
           <Button
             name={AccompanyType.travel}
-            isSelected={selectedType === AccompanyType.travel}
+            isSelected={postInfo.category === AccompanyType.travel}
             onClick={() => handleButtonClick(AccompanyType.travel)}
             background="#5BB13D"
           >
@@ -182,7 +190,9 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
       <Box>
         <Label>동행 장소</Label>
         <PlaceWrapper>
-          <ResultInput onClick={(e) => setOpenModal(true)}>{locationInfo.name}</ResultInput>
+          <ResultInput onClick={(e) => setOpenModal(true)}>
+            {postInfo.location_info[0].name}
+          </ResultInput>
           <SearchButton onClick={(e) => setOpenModal(true)}>검색하기</SearchButton>
         </PlaceWrapper>
       </Box>
@@ -222,6 +232,7 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
         <SingleSelector
           dataList={personnel}
           setSingleDataValue={(value) => handleRecruitNum(value)}
+          singleDataValue={postInfo.recruit_number}
         />
       </Box>
 
@@ -251,7 +262,11 @@ const AccompanyBasicInfo = ({ setBasicInfo }) => {
           </div>
         </div>
 
-        <Range dataList={age} getRangeValue={(value) => handleAgeRange(value)} rangeValue={[]} />
+        <Range
+          dataList={age}
+          getRangeValue={(value) => handleAgeRange(value)}
+          rangeValue={recruitAgeRange}
+        />
       </div>
 
       <MapDialog

@@ -6,6 +6,8 @@ export interface FormTextBtnPropsType {
   fontSize?: number;
   fontWeight?: number;
   padding?: string;
+  type?: string;
+  autoComplete?: string;
   background?: string;
   placeholder?: string;
   value?: string;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DatePicker } from 'src/shared/components/Datepicker/Datepicker';
 import { DateRangePropsType } from './DateRangePicker.types';
 
@@ -22,6 +22,13 @@ const DateRangePicker = ({ setBasicInfo }) => {
       });
     }
   };
+
+  useEffect(() => {
+    setBasicInfo({
+      expected_start_at: formatDate(new Date()),
+      expected_end_at: formatDate(new Date()),
+    });
+  }, []);
 
   return <DatePicker onDateChange={handleDateChange} />;
 };

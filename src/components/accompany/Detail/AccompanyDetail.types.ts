@@ -9,7 +9,7 @@ export interface HeaderType {
   category: Category;
   recruit_status: RecruitStatus;
   view_count: number;
-  progess_status: AccompanyStatus;
+  progress_status: AccompanyStatus;
 }
 export enum Category {
   TRAVEL = '여행',
@@ -22,7 +22,7 @@ export enum RecruitStatus {
 }
 
 export interface BasicInfoType {
-  progess_status: AccompanyStatus;
+  progress_status: AccompanyStatus;
   location_info_list: LocationInfoList[];
   period: Period,
   recruit_number: number,
@@ -42,12 +42,12 @@ export interface LocationInfoList {
   address: string;
 }
 export interface Period {
-  startAt?: string,
-  endAt?: number
+  start_at?: string,
+  end_at?: number
 }
 export interface RecruitAgeRange {
-  minRecruitAge?: number,
-  maxRecruitAge?: number
+  min_recruit_age?: number,
+  max_recruit_age?: number
 }
 
 export interface ContentType {

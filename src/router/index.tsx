@@ -27,7 +27,6 @@ import SendRequestList from 'src/pages/Myfeed/pages/SendRequestList.tsx';
 import ReceiveRequestList from 'src/pages/Myfeed/pages/ReceiveRequestList.tsx';
 import MyAccompanyList from 'src/pages/Myfeed/pages/MyAccompanyList.tsx';
 import UserAccompanyList from 'src/pages/Myfeed/pages/UserAccompanyList.tsx';
-import Test from '../pages/Test.tsx';
 
 const Router = () => {
   return (
@@ -40,14 +39,20 @@ const Router = () => {
           element={<PrivateRoute component={<AccompanyCreatePage />} />}
         />
         <Route
-          path="/accompany/modify"
+          path="/accompany/:id/modify"
           element={<PrivateRoute component={<AccompanyModifyPage />} />}
         />
         <Route path="/accompany/:id" element={<AccompanyDetailPage />} />
         <Route path="/accompany/" element={<AccompanyListPage />} />
-        {/* <Route path="/users/personal/verificareUser/password" element={<AuthPassword />} /> */}
-        {/* <Route path="/users/personal/verificareUser" element={<Verificare />} /> */}
-        <Route path="/users/personal" element={<UserPersonal />} />
+        <Route
+          path="/users/personal/verificareUser/password"
+          element={<PrivateRoute component={<AuthPassword />} />}
+        />
+        <Route
+          path="/users/personal/verificareUser"
+          element={<PrivateRoute component={<Verificare />} />}
+        />
+        <Route path="/users/personal" element={<PrivateRoute component={<UserPersonal />} />} />
         <Route path="/users/:userid" element={<MypageMain />} />
         <Route path="/auth/sns" element={<VerificareUser />} />
         <Route path="/auth/password" element={<AuthPassword />} />
@@ -84,7 +89,6 @@ const Router = () => {
         <Route path="/logout" element={<Logout />} />
         <Route path="/chat" element={<PrivateRoute component={<ChatListPage />} />} />
 
-        <Route path="/googleMaptest" element={<Test />} />
         {/* <Route path="/chat/:chatid" element={<PrivateRoute component={<ChatRoomPage />} authenticated={token} />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>

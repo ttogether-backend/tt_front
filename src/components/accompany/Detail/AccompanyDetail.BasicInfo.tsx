@@ -3,7 +3,7 @@ import { InfoBox, Label, StatusValue, Value } from './AccompanyDetail.styles';
 import { AccompanyDetailPropsType, AccompanyStatus } from './AccompanyDetail.types';
 
 const BasicInfo: FC<AccompanyDetailPropsType['BasicInfoType']> = ({
-  progess_status,
+  progress_status,
   location_info_list,
   period,
   recruit_number,
@@ -19,7 +19,7 @@ const BasicInfo: FC<AccompanyDetailPropsType['BasicInfoType']> = ({
     >
       <InfoBox>
         <Label>동행 상태</Label>
-        <StatusValue>{AccompanyStatus[progess_status]}</StatusValue>
+        <StatusValue>{AccompanyStatus[progress_status]}</StatusValue>
       </InfoBox>
 
       <InfoBox>
@@ -30,7 +30,7 @@ const BasicInfo: FC<AccompanyDetailPropsType['BasicInfoType']> = ({
       <InfoBox>
         <Label>동행 일자</Label>
         <Value>
-          {period.startAt} ~ {period.endAt}
+          {period.start_at} ~ {period.end_at}
         </Value>
       </InfoBox>
 
@@ -42,7 +42,7 @@ const BasicInfo: FC<AccompanyDetailPropsType['BasicInfoType']> = ({
       <InfoBox>
         <Label>모집 연령</Label>
         <Value>
-          {recruit_age_range.minRecruitAge}대 ~ {recruit_age_range.maxRecruitAge}대
+          {recruit_age_range.min_recruit_age}대 ~ {recruit_age_range.max_recruit_age}대
         </Value>
       </InfoBox>
     </div>

@@ -6,27 +6,35 @@ import { SingleSelectorPropsType, DataList, SingleItemPropsType } from './Single
 export const SingleSelector: React.FC<SingleSelectorPropsType> = (
   props: SingleSelectorPropsType
 ) => {
-  const { dataList, getSingleDataValue, singleDataValue } = props;
+  const { dataList, setSingleDataValue, singleDataValue } = props;
   const [singledata, setSingleData] = useState<DataList[]>(dataList);
-  const [singleDataList, setSingleDataList] = useState([]);
-  const [value, setValue] = useState<number>(singleDataValue);
+  const [value, setValue] = useState<number>(0); // 초기값을 0으로 설정
 
   const onClick = (selectedValue: number) => {
     let updatedData = [];
 
-    // 단일 값만 선택되도록 수정
     updatedData = dataList.map((data) => ({
       ...data,
       isSelected: data.value === selectedValue,
     }));
     setSingleData(updatedData);
     setValue(selectedValue);
+
+    setSingleDataValue(selectedValue);
   };
 
   useEffect(() => {
-    getSingleDataValue(value);
-    console.log('val', value);
-  }, [value]);
+    let updatedData = [];
+    console.log('singleDataValue', singleDataValue);
+    updatedData = dataList.map((data) => ({
+      ...data,
+      isSelected: data.value === singleDataValue,
+    }));
+    setSingleData(updatedData);
+    setValue(singleDataValue);
+
+    setSingleDataValue(singleDataValue);
+  }, [singleDataValue]);
 
   return (
     <>
@@ -50,8 +58,8 @@ export const SingleSelector: React.FC<SingleSelectorPropsType> = (
 const SingleSelectorItem: React.FC<SingleItemPropsType> = (props: SingleItemPropsType) => {
   const { data, index, dataList, onClick } = props;
 
-  const selectedDataList = dataList.filter((data) => data.isSelected);
   const selectedItem = dataList.find((item) => item.value === data.value);
+
   return (
     <>
       <RangeBox key={data.value}>

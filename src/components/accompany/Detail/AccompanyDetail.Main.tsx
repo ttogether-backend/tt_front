@@ -14,6 +14,7 @@ const Main = ({ headerData, basicInfoData, contentData }) => {
         <Content {...contentData} />
       </Wrapper>
 
+      <div style={{ height: 'calc(100vh - 128px - 60px - 563px - 40px - 160px - 360px)' }}></div>
       <UserBox>
         <Participant />
       </UserBox>

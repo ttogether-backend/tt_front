@@ -14,6 +14,7 @@ const AccompanyCreatePage = () => {
   const [selectedPostId, setSelectedPostId] = useRecoilState(recoilPostId);
 
   useEffect(() => {
+    console.log('selectedPostId', selectedPostId);
     if (selectedPostId < 0) {
       axiosInstance
         .post('/api/v1/accompany/posts/init', {
@@ -23,8 +24,8 @@ const AccompanyCreatePage = () => {
         })
         .then((res) => {
           if (res.data.result.code == 'SUCCESS') {
-            setSelectedPostId(res.data.result.data.creating_accompany_post.accompanyPostId.value);
-            setPostId(res.data.result.data.creating_accompany_post.accompanyPostId.value);
+            setSelectedPostId(res.data.result.data.creating_accompany_post.accompany_post_id.value);
+            setPostId(res.data.result.data.creating_accompany_post.accompany_post_id.value);
           }
         });
     } else {

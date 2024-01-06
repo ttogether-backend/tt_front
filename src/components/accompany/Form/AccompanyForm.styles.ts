@@ -72,8 +72,22 @@ export const PlaceWrapper = styled.div`
   width: 100%;
 `;
 
-export const ResultInput = styled.input`
-  width: 100%;
+export const MapSearchInput = styled.input`
+  width: 70%;
+  height: 50px;
+  padding: 18px 6px;
+  border-radius: 10px;
+  border: 1px solid #d4d5d2;
+  font-size: 18px;
+  background: #f1f2f1;
+
+  :focus {
+    outline: none;
+  }
+`;
+
+export const ResultInput = styled.div`
+  width: 70%;
   height: 50px;
   padding: 18px 6px;
   border-radius: 10px;
@@ -86,21 +100,6 @@ export const ResultInput = styled.input`
     outline: none;
   }
 `;
-
-// export const ResultInput = styled.div`
-//   width: 70%;
-//   height: 50px;
-//   padding: 18px 6px;
-//   border-radius: 10px;
-//   border: 1px solid #d4d5d2;
-//   font-size: 18px;
-//   background: #f1f2f1;
-//   cursor: pointer;
-
-//   :focus {
-//     outline: none;
-//   }
-// `;
 
 export const SearchButton = styled.div`
   width: 30%;

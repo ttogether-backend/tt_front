@@ -1,7 +1,7 @@
 export interface SingleSelectorPropsType {
     dataList: DataList[];
     singleDataValue?: number;
-    getSingleDataValue: (value: number) => void;
+    setSingleDataValue: (value: number) => void;
   }
   
   export interface DataList {

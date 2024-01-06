@@ -6,13 +6,13 @@ import {
   SubmitButton,
   TitleInput,
   TitleLength,
-} from './AccompanyForm.styles';
+} from '../Form/AccompanyForm.styles';
 import { useEffect, useState, useCallback } from 'react';
 
-const AccompanyContent = ({ setContentInfo }) => {
+const AccompanyContent = ({ postInfo, setContentInfo }) => {
   const [titleLength, setTitleLength] = useState<number>(0);
   const [titleContent, setTitleContent] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const [content, setContent] = useState<string>(postInfo.content);
   const maxLength = 24;
 
   const onChangeTitle = (value: string) => {
@@ -24,12 +24,15 @@ const AccompanyContent = ({ setContentInfo }) => {
   };
 
   const handleEditorChange = (newContent) => {
-    console.log('New Editor Content:', newContent);
-    //setContent(newContent);
-    setContentInfo({
-      content: content,
-    });
+    // setContent(newContent);
+    // setContentInfo({
+    //   content: content,
+    // });
   };
+
+  // useEffect(() => {
+  //   setContent(postInfo.content);
+  // }, [postInfo]);
 
   return (
     <div
@@ -51,6 +54,7 @@ const AccompanyContent = ({ setContentInfo }) => {
         <TitleInput
           placeholder="제목을 입력하세요."
           maxLength={maxLength}
+          value={postInfo.title}
           onChange={(e) => {
             if (titleLength === maxLength) {
               return;
@@ -70,7 +74,7 @@ const AccompanyContent = ({ setContentInfo }) => {
         }}
       >
         <Editor
-          initValue=""
+          initValue={postInfo.content}
           handleValue={(value) => {
             setContentInfo({
               content: value,
