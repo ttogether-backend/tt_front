@@ -94,7 +94,7 @@ const ChatRoom = ({ chatId }) => {
 	return (
 		<Box
 			sx={{
-				width: 'auto',
+				width: "100%",
 				height: "700px",
 				display: "flex",
 				flexDirection: "column",

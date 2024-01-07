@@ -49,6 +49,7 @@ const Item = styled(Paper)(({ theme }) => ({
 	textAlign: 'center',
 	color: theme.palette.text.secondary,
 	height: "700px",
+	weight: "100%",
 	display: "flex",
 	flexDirection: "row",
 }));
@@ -123,15 +124,18 @@ const ChatListPage = () => {
 	return (
 		<Page>
 			<Container style={{ width: '1000px', height: '700px', marginTop: '5em', marginBottom: '5em' }}>
-				<Grid container spacing={0} style={{ width: '800px', height: '700px'}}>
-					<Grid item xs={4}>
-						<ChatList chatRoomList={chatRoomList} />
+				<Grid container spacing={1}>
+					<Grid item xs={5}>
+						<Item>
+							<ChatList chatRoomList={chatRoomList} />
+						</Item>
 					</Grid>
-					<Grid item xs={8} >
-						<React.Fragment>
+					<Grid item xs={7} >
+						<Item>
 							{chatId ? <ChatRoom chatId={chatId} /> :
-								<Item>선택된 채팅방이 없습니다.</Item>}
-						</React.Fragment>
+										<p>선택된 채팅방이 없습니다.</p>}
+						</Item>
+						
 					</Grid>
 				</Grid>
 			</Container>
