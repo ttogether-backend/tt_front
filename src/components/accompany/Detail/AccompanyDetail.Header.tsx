@@ -27,6 +27,7 @@ import { useNavigate } from 'react-router-dom';
 import createAxios from 'src/Utils/axiosInstance';
 
 const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
+  accompany_id,
   title,
   category,
   recruit_status,
@@ -48,6 +49,26 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
         navigate('/accompany');
       }
     });
+  }
+
+  function handleRecruitStatus(recruitStatus) {
+    axiosInstance
+      .patch('/api/v1/' + { accompany_id } + 'recruit-status', recruitStatus)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.result.code == 'SUCCESS') {
+        }
+      });
+  }
+
+  function handleProgressStatus(progressStatus) {
+    axiosInstance
+      .patch('/api/v1/' + { accompany_id } + 'progress-status', progressStatus)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.result.code == 'SUCCESS') {
+        }
+      });
   }
 
   return (
@@ -98,15 +119,17 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
       <UpdateStatusDialog
         currentStatus={{
           accompanyId: 1,
-          status: AccompanyStatus[progress_status],
-          recruitStatus: RecruitStatus[recruit_status],
+          status: progress_status,
+          recruitStatus: recruit_status,
         }}
         isOpen={modalOpen}
         handleClose={() => {
           setModalOpen(false);
         }}
         handleConfirm={(updateStatusObject: UpdateStatusObject) => {
-          console.log(updateStatusObject);
+          handleRecruitStatus({ recruit_status: updateStatusObject.recruitStatus });
+          handleProgressStatus({ progress_status: updateStatusObject.status });
+          console.log('updateStatusObject', updateStatusObject);
         }}
       />
       <AlertDialog

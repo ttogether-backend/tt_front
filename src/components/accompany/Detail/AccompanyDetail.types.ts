@@ -5,6 +5,7 @@ export interface AccompanyDetailPropsType {
 }
 
 export interface HeaderType {
+  accompany_id: number;
   title: string;
   category: Category;
   recruit_status: RecruitStatus;

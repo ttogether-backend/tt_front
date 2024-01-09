@@ -25,9 +25,14 @@ export const UpdateStatusDialog: React.FC<UpdateStatusDialogProps> = ({
   handleClose,
   handleConfirm,
 }) => {
+  React.useEffect(() => {
+    console.log('ss', currentStatus);
+  }, [currentStatus]);
+
   const canChangeRecruitStatus =
     currentStatus.status == accompanyStatus.COMPLETE ||
     currentStatus.status == accompanyStatus.CANCEL;
+
   const [updateStatusObject, setUpdateStatusObject] =
     React.useState<UpdateStatusObject>(currentStatus);
 
@@ -64,18 +69,15 @@ export const UpdateStatusDialog: React.FC<UpdateStatusDialogProps> = ({
 
   const handleChangeRecruitStatus = (
     event: React.MouseEvent<HTMLElement>,
-    newRecruitStatus: string,
+    newRecruitStatus: string
   ) => {
-    console.log({ ...updateStatusObject, recruitStatus: newRecruitStatus});
-    setUpdateStatusObject({ ...updateStatusObject, recruitStatus: newRecruitStatus});
+    console.log({ ...updateStatusObject, recruitStatus: newRecruitStatus });
+    setUpdateStatusObject({ ...updateStatusObject, recruitStatus: newRecruitStatus });
   };
 
-  const handleChangeStatus = (
-    event: React.MouseEvent<HTMLElement>,
-    newStatus: string,
-  ) => {
-    console.log({ ...updateStatusObject, recruitStatus: newStatus});
-    setUpdateStatusObject({ ...updateStatusObject, status: newStatus});
+  const handleChangeStatus = (event: React.MouseEvent<HTMLElement>, newStatus: string) => {
+    console.log({ ...updateStatusObject, recruitStatus: newStatus });
+    setUpdateStatusObject({ ...updateStatusObject, status: newStatus });
   };
 
   return (
@@ -114,17 +116,23 @@ export const UpdateStatusDialog: React.FC<UpdateStatusDialogProps> = ({
           <Stack spacing={2}>
             <Stack spacing={2}>
               <Typography sx={dialogStyles.subTitle}>동행 모집 상태 변경</Typography>
-              
-              <CustomToggleGroup value={updateStatusObject.recruitStatus} onChange={handleChangeRecruitStatus} exclusive>
-              <CustomButton
+
+              <CustomToggleGroup
+                value={updateStatusObject.recruitStatus}
+                onChange={handleChangeRecruitStatus}
+                exclusive
+              >
+                <CustomButton
                   value={accompanyRecruitStatus.RECRUITING}
                   disabled={canChangeRecruitStatus}
+                  selected={currentStatus.recruitStatus === accompanyRecruitStatus.RECRUITING}
                 >
                   모집 중
                 </CustomButton>
                 <CustomButton
                   value={accompanyRecruitStatus.COMPLETE}
                   disabled={canChangeRecruitStatus}
+                  selected={currentStatus.recruitStatus === accompanyRecruitStatus.COMPLETE}
                 >
                   모집 완료
                 </CustomButton>
@@ -133,19 +141,25 @@ export const UpdateStatusDialog: React.FC<UpdateStatusDialogProps> = ({
             <Stack></Stack>
             <Stack spacing={2}>
               <Typography sx={dialogStyles.subTitle}>동행 상태 변경</Typography>
-              
-              <CustomToggleGroup value={updateStatusObject.status} onChange={handleChangeStatus} exclusive>
-              {buttonsByCurrentStatus[currentStatus.status ?? accompanyStatus.READY]?.map((item: any) => {
-                  return (
-                    <CustomButton
-                      value={item?.value}
-                      disabled={updateStatusObject.status == item?.value && item?.disabled}
-                      key={`status-update-button-${item?.value}`}
-                    >
-                      {item?.label}
-                    </CustomButton>
-                  );
-                })}
+
+              <CustomToggleGroup
+                value={updateStatusObject.status}
+                onChange={handleChangeStatus}
+                exclusive
+              >
+                {buttonsByCurrentStatus[currentStatus.status ?? accompanyStatus.READY]?.map(
+                  (item: any) => {
+                    return (
+                      <CustomButton
+                        value={item?.value}
+                        disabled={updateStatusObject.status == item?.value && item?.disabled}
+                        key={`status-update-button-${item?.value}`}
+                      >
+                        {item?.label}
+                      </CustomButton>
+                    );
+                  }
+                )}
               </CustomToggleGroup>
             </Stack>
           </Stack>

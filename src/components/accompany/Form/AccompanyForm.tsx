@@ -9,6 +9,8 @@ import { AccompanyType, PostInfo } from './AccompanyForm.types';
 import { useNavigate, Link } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import createAxios from 'src/Utils/axiosInstance';
+import { AlertDialog } from '../../../shared/components/modals/AlertDialog';
+import { dialogButtonStyleCode } from '../../../shared/components/modals//common/DialogButton.types';
 
 const initPostInfo: PostInfo = {
   category: AccompanyType.travel,
@@ -40,6 +42,7 @@ const AccompanyForm = ({ postId }) => {
   const navigate = useNavigate();
 
   const [postInfo, setPostInfo] = useState(initPostInfo);
+  const [openModal, setOpenModal] = useState(false);
 
   // AccompanyBasicInfo에서 사용할 정보 업데이트 함수
   const setBasicInfo = (basicInfo) => {
@@ -60,6 +63,7 @@ const AccompanyForm = ({ postId }) => {
   useEffect(() => {
     console.log('postInfo', postInfo);
   }, [postInfo]);
+
   const handleSubmitBtn = () => {
     axiosInstance
       .post('/api/v1/accompany/posts/' + postId, postInfo, {
@@ -70,8 +74,7 @@ const AccompanyForm = ({ postId }) => {
       })
       .then((res) => {
         if (res.data.result.code == 'SUCCESS') {
-          alert('등록 완료');
-          navigate('/accompany');
+          setOpenModal(true);
         }
       });
   };
@@ -101,6 +104,26 @@ const AccompanyForm = ({ postId }) => {
           </SubmitButton>
         </div>
       </Page>
+
+      <AlertDialog
+        title="동행글 등록"
+        message="등록이 완료되었습니다."
+        isCloseBackgroundClick={true}
+        isOpen={openModal}
+        handleClose={() => {
+          setOpenModal(false);
+        }}
+        buttons={[
+          {
+            style: dialogButtonStyleCode.black,
+            label: '확인',
+            handleClick: () => {
+              setOpenModal(false);
+              navigate('/accompany');
+            },
+          },
+        ]}
+      />
     </>
   );
 };

@@ -28,6 +28,7 @@ const AccompanyDetailPage = () => {
       .then((res) => {
         const data = res.data.result.data;
         const {
+          accompany_id,
           title,
           category,
           recruit_status,
@@ -41,7 +42,14 @@ const AccompanyDetailPage = () => {
         const { content, view_count } = data?.accompany_post_detail;
         //const { image_list } = data?.image_list;
         //const { document_list } = data?.document_list;
-        setHeaderData({ title, category, recruit_status, view_count, progress_status });
+        setHeaderData({
+          accompany_id,
+          title,
+          category,
+          recruit_status,
+          view_count,
+          progress_status,
+        });
         setBasicInfoData({
           progress_status,
           location_info_list,
