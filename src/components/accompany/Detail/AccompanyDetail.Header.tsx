@@ -1,4 +1,4 @@
-import react, { FC, useState } from 'react';
+import react, { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -33,13 +33,29 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
   recruit_status,
   view_count,
   progress_status,
+  setProgressStatus,
 }) => {
   const axiosInstance = createAxios();
   const navigate = useNavigate();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, isDeleteModalOpen] = useState(false);
+  const [recruitStatus, setRecruitStatus] = useState('');
+  const [recruitErrorMsg, setRecruitErrorMsg] = useState('');
+  const [progressErrorMsg, setProgressErrorMsg] = useState('');
+
   const { id } = useParams();
+
+  useEffect(() => {
+    if (recruit_status) {
+      console.log('recruit_status', recruit_status);
+      setRecruitStatus(recruit_status);
+    }
+  }, [recruit_status]);
+
+  useEffect(() => {
+    console.log('recruitStatus', recruitStatus);
+  }, [recruitStatus]);
 
   function handleDeletePost() {
     axiosInstance.delete('/api/v1/accompany/posts/' + id).then((res) => {
@@ -51,22 +67,28 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
     });
   }
 
-  function handleRecruitStatus(recruitStatus) {
+  function handleRecruitStatus(obj) {
     axiosInstance
-      .patch('/api/v1/' + { accompany_id } + 'recruit-status', recruitStatus)
+      .patch('/api/v1/accompany/' + accompany_id + '/recruit-status', obj)
       .then((res) => {
         console.log(res.data);
         if (res.data.result.code == 'SUCCESS') {
+          setRecruitStatus(obj.recruit_status);
+        } else {
+          setRecruitErrorMsg(res.data.result.message);
         }
       });
   }
 
-  function handleProgressStatus(progressStatus) {
+  function handleProgressStatus(obj) {
     axiosInstance
-      .patch('/api/v1/' + { accompany_id } + 'progress-status', progressStatus)
+      .patch('/api/v1/accompany/' + accompany_id + '/progress-status', obj)
       .then((res) => {
         console.log(res.data);
         if (res.data.result.code == 'SUCCESS') {
+          setProgressStatus(obj.progress_status);
+        } else {
+          setProgressErrorMsg(res.data.result.message);
         }
       });
   }
@@ -84,7 +106,7 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
               {Category[category]}
             </Tag>
             <Tag background="#f0f9ec" color="#376b25">
-              {RecruitStatus[recruit_status]}
+              {RecruitStatus[recruitStatus]}
             </Tag>
           </TagBox>
 
@@ -120,7 +142,7 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
         currentStatus={{
           accompanyId: 1,
           status: progress_status,
-          recruitStatus: recruit_status,
+          recruitStatus: recruitStatus,
         }}
         isOpen={modalOpen}
         handleClose={() => {
@@ -131,6 +153,42 @@ const Header: FC<AccompanyDetailPropsType['HeaderType']> = ({
           handleProgressStatus({ progress_status: updateStatusObject.status });
           console.log('updateStatusObject', updateStatusObject);
         }}
+      />
+      <AlertDialog
+        title="동행 모집 상태 수정 실패"
+        message={recruitErrorMsg}
+        isCloseBackgroundClick={true}
+        isOpen={recruitErrorMsg != ''}
+        handleClose={() => {
+          setRecruitErrorMsg('');
+        }}
+        buttons={[
+          {
+            style: dialogButtonStyleCode.black,
+            label: '확인',
+            handleClick: () => {
+              setRecruitErrorMsg('');
+            },
+          },
+        ]}
+      />
+      <AlertDialog
+        title="동행 상태 수정 실패"
+        message={progressErrorMsg}
+        isCloseBackgroundClick={true}
+        isOpen={progressErrorMsg != ''}
+        handleClose={() => {
+          setProgressErrorMsg('');
+        }}
+        buttons={[
+          {
+            style: dialogButtonStyleCode.black,
+            label: '확인',
+            handleClick: () => {
+              setProgressErrorMsg('');
+            },
+          },
+        ]}
       />
       <AlertDialog
         title="동행글 삭제"

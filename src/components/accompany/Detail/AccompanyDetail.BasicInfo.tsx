@@ -1,14 +1,18 @@
-import react, { FC } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { InfoBox, Label, StatusValue, Value } from './AccompanyDetail.styles';
 import { AccompanyDetailPropsType, AccompanyStatus } from './AccompanyDetail.types';
 
 const BasicInfo: FC<AccompanyDetailPropsType['BasicInfoType']> = ({
-  progress_status,
   location_info_list,
   period,
   recruit_number,
   recruit_age_range,
+  progressStatus,
 }) => {
+  useEffect(() => {
+    console.log('ef', progressStatus);
+  }, [progressStatus]);
+
   return (
     <div
       style={{
@@ -19,7 +23,7 @@ const BasicInfo: FC<AccompanyDetailPropsType['BasicInfoType']> = ({
     >
       <InfoBox>
         <Label>동행 상태</Label>
-        <StatusValue>{AccompanyStatus[progress_status]}</StatusValue>
+        <StatusValue>{AccompanyStatus[progressStatus]}</StatusValue>
       </InfoBox>
 
       <InfoBox>

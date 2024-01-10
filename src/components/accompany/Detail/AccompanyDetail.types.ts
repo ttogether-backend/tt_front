@@ -11,6 +11,7 @@ export interface HeaderType {
   recruit_status: RecruitStatus;
   view_count: number;
   progress_status: AccompanyStatus;
+  setProgressStatus: (obj: Object) => void;
 }
 export enum Category {
   TRAVEL = '여행',
@@ -23,8 +24,8 @@ export enum RecruitStatus {
 }
 
 export interface BasicInfoType {
-  progress_status: AccompanyStatus;
-  location_info_list: LocationInfoList[];
+  progressStatus?: string,
+  location_info_list: LocationInfoList[],
   period: Period,
   recruit_number: number,
   recruit_age_range: RecruitAgeRange;

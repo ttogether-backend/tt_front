@@ -26,7 +26,8 @@ export const UpdateStatusDialog: React.FC<UpdateStatusDialogProps> = ({
   handleConfirm,
 }) => {
   React.useEffect(() => {
-    console.log('ss', currentStatus);
+    console.log('currentStatus', currentStatus);
+    setUpdateStatusObject(currentStatus);
   }, [currentStatus]);
 
   const canChangeRecruitStatus =
@@ -76,7 +77,7 @@ export const UpdateStatusDialog: React.FC<UpdateStatusDialogProps> = ({
   };
 
   const handleChangeStatus = (event: React.MouseEvent<HTMLElement>, newStatus: string) => {
-    console.log({ ...updateStatusObject, recruitStatus: newStatus });
+    console.log({ ...updateStatusObject, status: newStatus });
     setUpdateStatusObject({ ...updateStatusObject, status: newStatus });
   };
 
@@ -125,14 +126,12 @@ export const UpdateStatusDialog: React.FC<UpdateStatusDialogProps> = ({
                 <CustomButton
                   value={accompanyRecruitStatus.RECRUITING}
                   disabled={canChangeRecruitStatus}
-                  selected={currentStatus.recruitStatus === accompanyRecruitStatus.RECRUITING}
                 >
                   모집 중
                 </CustomButton>
                 <CustomButton
                   value={accompanyRecruitStatus.COMPLETE}
                   disabled={canChangeRecruitStatus}
-                  selected={currentStatus.recruitStatus === accompanyRecruitStatus.COMPLETE}
                 >
                   모집 완료
                 </CustomButton>

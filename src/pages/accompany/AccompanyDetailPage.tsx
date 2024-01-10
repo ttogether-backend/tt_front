@@ -51,7 +51,6 @@ const AccompanyDetailPage = () => {
           progress_status,
         });
         setBasicInfoData({
-          progress_status,
           location_info_list,
           period,
           recruit_number,

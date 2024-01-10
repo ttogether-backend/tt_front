@@ -1,16 +1,26 @@
+import { useState, useEffect, FC } from 'react';
+
 import BasicInfo from './AccompanyDetail.BasicInfo';
 import Content from './AccompanyDetail.Content';
 import Header from './AccompanyDetail.Header';
 import Participant from './AccompanyDetail.Participant2';
 import { Divider, Wrapper, UserBox } from './AccompanyDetail.styles';
+import { AccompanyDetailPropsType, AccompanyStatus } from './AccompanyDetail.types';
 
 const Main = ({ headerData, basicInfoData, contentData }) => {
-  console.log(basicInfoData);
+  const [progressStatus, setProgressStatus] = useState('');
+
+  useEffect(() => {
+    if (headerData.progress_status) {
+      setProgressStatus(headerData.progress_status);
+    }
+  }, [headerData.progress_status]);
+
   return (
     <>
       <Wrapper>
-        <Header {...headerData} />
-        <BasicInfo {...basicInfoData} />
+        <Header {...headerData} setProgressStatus={setProgressStatus} />
+        <BasicInfo {...basicInfoData} progressStatus={progressStatus} />
         <Content {...contentData} />
       </Wrapper>
 
