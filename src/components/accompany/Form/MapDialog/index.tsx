@@ -32,7 +32,7 @@ export const MapDialog = ({
   handleClose,
   handleConfirm,
 }) => {
-  const APIKey = 'AIzaSyAqKCB391AenPrVmJmA3s_dWTdAazw0FOA';
+  const APIKey = '';
 
   const { placesService, placePredictions, getPlacePredictions, isPlacePredictionsLoading } =
     useGoogle({
@@ -93,7 +93,7 @@ export const MapDialog = ({
         open={isOpen}
         aria-labelledby="select-list-dialog-title"
         aria-describedby="select-list-dialog-description"
-        onClose={isCloseBackgroundClick ? handleClose : () => {}}
+        onClose={isCloseBackgroundClick ? handleClose : () => { }}
         PaperProps={{
           sx: {
             ...dialogStyles.layout,
